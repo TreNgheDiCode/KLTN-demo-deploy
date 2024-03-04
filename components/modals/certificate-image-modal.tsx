@@ -9,7 +9,7 @@ import {
   ModalFooter,
   ModalHeader,
 } from "@nextui-org/react";
-import { useEdgeStore } from "@/lib/edgestore";
+import { useEdgeStore } from "@/hooks/use-edgestore";
 
 interface CertificateImageModalProps {
   isOpen: boolean;

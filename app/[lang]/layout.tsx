@@ -3,7 +3,7 @@ import { ModalProvider } from "@/components/providers/modal-provider";
 import { Providers } from "@/components/providers/providers";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
-import { EdgeStoreProvider } from "@/lib/edgestore";
+import { EdgeStoreProvider } from "@/hooks/use-edgestore";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";

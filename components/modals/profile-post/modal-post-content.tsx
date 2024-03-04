@@ -7,7 +7,7 @@ import {
   MultiImageDropzone,
 } from "@/components/multi-image-dropzone";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
-import { useEdgeStore } from "@/lib/edgestore";
+import { useEdgeStore } from "@/hooks/use-edgestore";
 import { PostSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {

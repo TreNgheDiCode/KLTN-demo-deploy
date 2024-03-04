@@ -11,8 +11,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { CommentImageDropzone } from "./single-image-comment";
 import { toast } from "sonner";
-import { useEdgeStore } from "@/lib/edgestore";
-import { Comment } from "@/actions/comment";
+import { useEdgeStore } from "@/hooks/use-edgestore";
+import { Comment } from "@/actions/profile/comment";
 import { useRouter } from "next/navigation";
 
 interface ProfileCommentFormProps {

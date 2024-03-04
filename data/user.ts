@@ -19,40 +19,6 @@ export const getUserByEmail = async (email: string) => {
   }
 };
 
-export const getUserById = async (id: string) => {
-  try {
-    const user = await db.user.findUnique({
-      where: {
-        id,
-      },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        emailVerified: true,
-        image: true,
-        studentCode: true,
-        dob: true,
-        gender: true,
-        phoneNumber: true,
-        idCardNumber: true,
-        address: true,
-        degreeType: true,
-        certificateType: true,
-        certificateImg: true,
-        gradeType: true,
-        gradeScore: true,
-        isTwoFactorEnabled: true,
-        status: true,
-      },
-    });
-
-    return user;
-  } catch {
-    return null;
-  }
-};
-
 export const getUserByIdCardNumber = async (id: string) => {
   try {
     const user = await db.user.findUnique({

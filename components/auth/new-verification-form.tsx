@@ -4,7 +4,7 @@ import { CardWrapper } from "./card-wrapper";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { BeatLoader } from "react-spinners";
-import { newVerification } from "@/actions/new-verification";
+import { newVerification } from "@/actions/auth/new-verification";
 import { toast } from "sonner";
 
 export const NewVerificationForm = () => {

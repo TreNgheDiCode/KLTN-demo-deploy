@@ -1,6 +1,6 @@
 import { GetProfileLib } from "@/lib/profile/profile";
 import { PostLib, ProfileLib } from "@/types";
-import { ProfileHeader } from "./_components/profile-header";
+import { ProfileHeader } from "../../../../../../components/profile/profile-header";
 import { GetPostsLib } from "@/lib/profile/post";
 
 const ProfileIdLayout = async ({

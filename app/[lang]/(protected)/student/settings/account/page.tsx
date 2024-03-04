@@ -1,10 +1,8 @@
-"use client";
+import { currentUser } from "@/lib/user";
+import { AccountForm } from "../../../../../../components/settings/account-form";
 
-import { useCurrentUser } from "@/hooks/use-current-user";
-import { AccountForm } from "./_components/account-form";
-
-const SettingsAccountPage = () => {
-  const user = useCurrentUser();
+const SettingsAccountPage = async () => {
+  const user = await currentUser();
 
   return <AccountForm user={user!} />;
 };

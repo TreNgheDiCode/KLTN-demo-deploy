@@ -1,6 +1,6 @@
 "use client";
 
-import { SettingsHeader } from "../../_components/settings-header";
+import { SettingsHeader } from "./settings-header";
 
 export const DisplayForm = () => {
   return (

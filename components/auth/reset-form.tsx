@@ -11,7 +11,7 @@ import { Button, Input } from "@nextui-org/react";
 import { Mail } from "lucide-react";
 import { Form, FormControl, FormField, FormItem } from "../ui/form";
 import { useState } from "react";
-import { reset } from "@/actions/reset";
+import { reset } from "@/actions/auth/reset";
 import { toast } from "sonner";
 
 type ResetFormType = z.infer<typeof ResetSchema>;

@@ -1,8 +1,8 @@
 import { GetProfileLib } from "@/lib/profile/profile";
 import { PostLib, ProfileLib } from "@/types";
-import { ProfileInformation } from "./_components/profile-information";
-import { ProfilePosts } from "./_components/profile-post";
-import { ProfilePostsList } from "./_components/profile-posts-list";
+import { ProfileInformation } from "../../../../../../components/profile/profile-information";
+import { ProfilePosts } from "../../../../../../components/profile/post/profile-post";
+import { ProfilePostsList } from "../../../../../../components/profile/post/profile-posts-list";
 import { GetPostsLib } from "@/lib/profile/post";
 
 const ProfileIdPage = async ({

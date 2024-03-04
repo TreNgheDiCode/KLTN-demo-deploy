@@ -8,7 +8,7 @@ import { CardWrapper } from "./card-wrapper";
 
 import { NewPasswordSchema } from "@/schemas";
 
-import { newPassword } from "@/actions/new-password";
+import { newPassword } from "@/actions/auth/new-password";
 import { Button, Input } from "@nextui-org/react";
 import { Eye, EyeOff, Key } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";

@@ -1,10 +1,6 @@
 "use server";
 
-import {
-  getUserByEmail,
-  getUserById,
-  getUserByIdCardNumber,
-} from "@/data/user";
+import { getUserByIdCardNumber } from "@/data/user";
 import { db } from "@/lib/db";
 import { currentUser } from "@/lib/user";
 import { CommentSchema } from "@/schemas";
