@@ -47,7 +47,7 @@ export const HeroHeader = ({ schools }: HeroHeaderProps) => {
 
   return (
     <div className="relative">
-      <div className="absolute bottom-6 right-14 z-50 w-4/12 text-primary">
+      <div className="absolute bottom-6 right-14 z-10 w-4/12 text-primary">
         <Carousel
           className="w-full text-primary"
           opts={{ align: "center", loop: true }}

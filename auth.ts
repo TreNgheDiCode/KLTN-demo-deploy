@@ -15,16 +15,6 @@ import { UserEmailLib } from "./types";
 
 export type ExtendedUser = DefaultSession["user"] & {
   studentCode: string;
-  dob: Date;
-  gender: Gender;
-  phoneNumber: string;
-  idCardNumber: string;
-  address: string;
-  degreeType: DegreeType;
-  certificateType: CertificateType;
-  certificateImg: string;
-  gradeType: GradeType;
-  gradeScore: number;
   isTwoFactorEnabled: boolean;
   status: StudentStatus;
 };
@@ -54,6 +44,12 @@ export const {
         if (token.studentCode) {
           session.user.studentCode = token.studentCode as string;
         }
+        if (token.status) {
+          session.user.status = token.status as StudentStatus;
+        }
+        if (token.isTwoFactorEnabled) {
+          session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
+        }
       }
       return session;
     },
@@ -68,6 +64,8 @@ export const {
 
       token.sub = existingUser.id;
       token.studentCode = existingUser.studentCode;
+      token.status = existingUser.status;
+      token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
 
       return token;
     },
