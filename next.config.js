@@ -14,6 +14,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "files.edgestore.dev",
       },
+      {
+        protocol: "https",
+        hostname: "utfs.io",
+      },
     ],
   },
 };

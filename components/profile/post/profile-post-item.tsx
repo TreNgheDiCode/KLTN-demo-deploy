@@ -1,6 +1,6 @@
 "use client";
 
-import { Like } from "@/actions/like";
+import { Like } from "@/actions/profile/like";
 import { PostCommentLib } from "@/types";
 import {
   Avatar,
@@ -29,8 +29,8 @@ import {
 } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { startTransition } from "react";
-import { ProfileCommentForm } from "./profile-comment-form";
-import { ProfileCommentsList } from "./profile-comments-list";
+import { ProfileCommentForm } from "./comment/profile-comment-form";
+import { ProfileCommentsList } from "./comment/profile-comments-list";
 
 interface ProfilePostItemProps {
   name: string;

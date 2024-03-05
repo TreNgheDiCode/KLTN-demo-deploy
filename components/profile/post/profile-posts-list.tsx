@@ -108,7 +108,7 @@ export const ProfilePostsList = ({
           isModified={post.createdAt !== post.updatedAt}
           status={post.status}
           comments={post.comments}
-          likes={post.likes}
+          likes = {post.likes}
           profileId={profileId}
         />
       ))}

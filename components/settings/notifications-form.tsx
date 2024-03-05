@@ -1,7 +1,7 @@
 "use client";
 
 import { Divider } from "@nextui-org/react";
-import { SettingsHeader } from "../../_components/settings-header";
+import { SettingsHeader } from "./settings-header";
 
 export const NotificationsForm = () => {
   return (

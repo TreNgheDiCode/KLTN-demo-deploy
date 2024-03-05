@@ -1,4 +1,4 @@
-import { ProtectedNavbar } from "@/components/navbar/navbar";
+import { ProtectedNavbar } from "@/components/navbar/protected-navbar";
 import { Lang, getDictionary } from "@/data/dictionaries";
 import { currentUser } from "@/lib/user";
 import { redirect } from "next/navigation";

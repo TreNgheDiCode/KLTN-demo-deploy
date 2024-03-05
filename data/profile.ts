@@ -1,27 +1,6 @@
 import { db } from "@/lib/db";
 import { currentUser } from "@/lib/user";
 
-export const getProfileById = async (id: string) => {
-  try {
-    const user = await currentUser();
-
-    if (!user) {
-      return null;
-    }
-
-    const profile = await db.profile.findUnique({
-      where: {
-        id,
-        userId: user.id,
-      },
-    });
-
-    return profile;
-  } catch {
-    return null;
-  }
-};
-
 export const getProfileByStudentCode = async (code: string) => {
   try {
     const session = await currentUser();
@@ -44,6 +23,7 @@ export const getProfileByStudentCode = async (code: string) => {
         status: true,
         coverImage: true,
         id: true,
+        biography: true,
       },
     });
 

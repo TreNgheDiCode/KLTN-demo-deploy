@@ -1,6 +1,6 @@
 "use client";
 
-import { logout } from "@/actions/logout";
+import { logout } from "@/actions/auth/logout";
 import { ExtendedUser } from "@/auth";
 import { DictionaryLanguage } from "@/data/dictionaries";
 import {

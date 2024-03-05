@@ -54,45 +54,6 @@ export const {
         if (token.studentCode) {
           session.user.studentCode = token.studentCode as string;
         }
-        if (token.dob) {
-          session.user.dob = token.dob as Date;
-        }
-        if (token.gender) {
-          session.user.gender = token.gender as Gender;
-        }
-        if (token.phoneNumber) {
-          session.user.phoneNumber = token.phoneNumber as string;
-        }
-        if (token.idCardNumber) {
-          session.user.idCardNumber = token.idCardNumber as string;
-        }
-        if (token.address) {
-          session.user.address = token.address as string;
-        }
-        if (token.degreeType) {
-          session.user.degreeType = token.degreeType as DegreeType;
-        }
-        if (token.certificateType) {
-          session.user.certificateType =
-            token.certificateType as CertificateType;
-        }
-        if (token.certificateImg) {
-          session.user.certificateImg = token.certificateImg as string;
-        }
-        if (token.gradeType) {
-          session.user.gradeType = token.gradeType as GradeType;
-        }
-        if (token.gradeScore) {
-          session.user.gradeScore = token.gradeScore as number;
-        }
-
-        if (token.isTwoFactorEnabled) {
-          session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
-        }
-
-        if (token.status) {
-          session.user.status = token.status as StudentStatus;
-        }
       }
       return session;
     },

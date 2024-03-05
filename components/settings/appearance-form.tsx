@@ -1,7 +1,7 @@
 "use client";
 
 import { Divider, Radio, RadioGroup } from "@nextui-org/react";
-import { SettingsHeader } from "../../_components/settings-header";
+import { SettingsHeader } from "./settings-header";
 import { LightThemeCard } from "@/components/light-theme-card";
 import { DarkThemeCard } from "@/components/dark-theme-card";
 import { useTheme } from "next-themes";

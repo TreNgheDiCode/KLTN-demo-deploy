@@ -1,6 +1,6 @@
 "use client";
 
-import { LikeCmt } from "@/actions/likecmt";
+import { LikeCmt } from "@/actions/profile/likecmt";
 import { cn } from "@/lib/utils";
 import { Avatar, Image, Spinner } from "@nextui-org/react";
 import { PostCommentImage, PostCommentLike } from "@prisma/client";
