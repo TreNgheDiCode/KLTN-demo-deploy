@@ -4,7 +4,7 @@ export const GetProfileLib = async (studentCode: string) => {
       `${process.env.NEXT_PUBLIC_API}/api/profiles/${studentCode}`,
       {
         method: "GET",
-        cache: "force-cache",
+        cache: "no-store",
       },
     );
 

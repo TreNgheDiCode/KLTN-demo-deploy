@@ -67,18 +67,25 @@ export const ProtectedNavbar = ({ user, dict }: ProtectedNavbarProps) => {
         />
         <NavbarBrand>
           <Image
-            height={85}
-            width={92}
+            height={68}
+            width={200}
             priority={true}
             style={{ width: "auto", height: "auto" }}
             quality={100}
             alt="logo"
-            src="/logo-red.webp"
-            className="h-fit"
+            src="/logo_light.png"
+            className="h-fit dark:hidden"
           />
-          <p className="font-bold text-[#7D1F1F] dark:text-primary md:text-xs lg:text-base">
-            Quan Ly Du Hoc
-          </p>
+          <Image
+           height={68}
+           width={200}
+            priority={true}
+            style={{ width: "auto", height: "auto" }}
+            quality={100}
+            alt="logo"
+            src="/logo_dark.png"
+            className="hidden h-fit dark:block"
+          />
         </NavbarBrand>
       </NavbarContent>
       {/* Navigation */}

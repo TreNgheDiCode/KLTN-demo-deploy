@@ -1,4 +1,5 @@
 import {
+  Biography,
   Post,
   PostComment,
   PostCommentImage,
@@ -30,6 +31,7 @@ export type ProfileLib = Profile & {
       logoUrl: string;
     };
   };
+  biography: Biography
 };
 
 export type PostLib = Post & {
@@ -85,10 +87,12 @@ export type BasicComment = PostComment & {
   commentImage: PostCommentImage | null;
   children: { id: string }[];
   likes: PostCommentLike[];
+
 };
 
 export type ExtendedPost = Post & {
   images: PostImage[];
   comments: BasicComment[];
   likes: PostLike[];
+  saves: PostSave[];
 };
