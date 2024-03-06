@@ -14,6 +14,9 @@ export default async function Home({
   return (
     <main>
       <HeroHeader schools={schools || []} />
+      <div className="flex h-screen items-center justify-center bg-rose-500 text-primary">
+        Meomeo
+      </div>
     </main>
   );
 }

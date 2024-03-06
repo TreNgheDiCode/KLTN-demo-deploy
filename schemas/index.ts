@@ -8,11 +8,16 @@ import {
 } from "@prisma/client";
 
 export const LoginSchema = z.object({
-  email: z.string().email({
-    message: "Invalid type of email",
-  }),
-  password: z.string({
-    required_error: "Password is required",
+  email: z
+    .string()
+    .min(1, {
+      message: "Email is required",
+    })
+    .email({
+      message: "Invalid type of email",
+    }),
+  password: z.string().min(1, {
+    message: "Password is required",
   }),
 });
 
@@ -126,20 +131,12 @@ export const RegisterSchema = z
     addressLine: z.string().min(1, {
       message: "Address line is required",
     }),
-    schoolName: z
-      .string({
-        required_error: "School is required",
-      })
-      .min(1, {
-        message: "School is required",
-      }),
-    programName: z
-      .string({
-        required_error: "Program is required",
-      })
-      .min(1, {
-        message: "Program is required",
-      }),
+    schoolName: z.string().min(1, {
+      message: "School is required",
+    }),
+    programName: z.string().min(1, {
+      message: "Program is required",
+    }),
     degreeType: z.enum([DegreeType.HIGHSCHOOL, DegreeType.UNIVERSITY], {
       required_error: "Degree type is required",
       invalid_type_error: "Invalid type, please reselect",

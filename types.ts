@@ -11,6 +11,7 @@ import {
   Profile,
   Program,
   School,
+  StudentStatus,
 } from "@prisma/client";
 
 export type SchoolLib = School & {
@@ -31,7 +32,7 @@ export type ProfileLib = Profile & {
       logoUrl: string;
     };
   };
-  biography: Biography
+  biography: Biography;
 };
 
 export type PostLib = Post & {
@@ -56,6 +57,8 @@ export type UserEmailLib = {
   image?: string;
   studentCode: string;
   email: string;
+  status: StudentStatus;
+  isTwoFactorEnabled: boolean;
 };
 
 export type Ward = {
@@ -87,7 +90,6 @@ export type BasicComment = PostComment & {
   commentImage: PostCommentImage | null;
   children: { id: string }[];
   likes: PostCommentLike[];
-
 };
 
 export type ExtendedPost = Post & {
