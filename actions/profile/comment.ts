@@ -1,8 +1,7 @@
 "use server";
 
-import { getUserByIdCardNumber } from "@/data/user";
 import { db } from "@/lib/db";
-import { currentUser } from "@/lib/user";
+import { GetUserEmailLib, currentUser } from "@/lib/user";
 import { CommentSchema } from "@/schemas";
 import { z } from "zod";
 
@@ -24,7 +23,7 @@ export const Comment = async (
       return { error: "User not found" };
     }
 
-    const existingUser = await getUserByIdCardNumber(user.idCardNumber!);
+    const existingUser = await GetUserEmailLib(user.email!);
 
     if (!existingUser) {
       return { error: "User not found" };
