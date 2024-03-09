@@ -1,6 +1,6 @@
 import { ProtectedNavbar } from "@/components/navbar/protected-navbar";
 import { Lang, getDictionary } from "@/data/dictionaries";
-import { currentUser } from "@/lib/user";
+import { currentAccount } from "@/lib/account";
 import { redirect } from "next/navigation";
 
 const ProtectedLayout = async ({
@@ -10,7 +10,7 @@ const ProtectedLayout = async ({
   children: React.ReactNode;
   params: { lang: Lang };
 }) => {
-  const user = await currentUser();
+  const user = await currentAccount();
 
   if (!user) {
     redirect("/");
@@ -20,7 +20,7 @@ const ProtectedLayout = async ({
 
   return (
     <div className="h-full w-full">
-      <ProtectedNavbar user={user!} dict={dict} />
+      <ProtectedNavbar user={user} dict={dict} />
       {children}
     </div>
   );

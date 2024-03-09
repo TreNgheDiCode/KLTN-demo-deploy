@@ -1,15 +1,12 @@
 import {
-  Biography,
   Post,
   PostComment,
-  PostCommentImage,
   PostCommentLike,
   PostImage,
   PostLike,
   PostSave,
   PostShare,
   Profile,
-  Program,
   School,
   StudentStatus,
 } from "@prisma/client";
@@ -29,7 +26,7 @@ export type ProfileLib = Profile & {
     image: string;
     school: {
       name: string;
-      logoUrl: string;
+      logo: string;
     };
   };
   biography: Biography;
@@ -51,14 +48,16 @@ export type PostCommentLib = PostComment & {
   likes: PostCommentLike[];
 };
 
-export type UserEmailLib = {
+export type AccountEmailLib = {
   id: string;
   name: string;
   image?: string;
-  studentCode: string;
   email: string;
-  status: StudentStatus;
   isTwoFactorEnabled: boolean;
+  student: {
+    studentCode: string;
+    status: StudentStatus;
+  };
 };
 
 export type Ward = {

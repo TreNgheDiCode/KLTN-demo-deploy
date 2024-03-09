@@ -1,10 +1,15 @@
-import { currentUser } from "@/lib/user";
-import { AccountForm } from "../../../../../../components/settings/account-form";
+import { AccountForm } from "@/components/settings/account-form";
+import { currentAccount } from "@/lib/account";
+import { redirect } from "next/navigation";
 
 const SettingsAccountPage = async () => {
-  const user = await currentUser();
+  const user = await currentAccount();
 
-  return <AccountForm user={user!} />;
+  if (!user) {
+    redirect("/");
+  }
+
+  return <AccountForm user={user} />;
 };
 
 export default SettingsAccountPage;

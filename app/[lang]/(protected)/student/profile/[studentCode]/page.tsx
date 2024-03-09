@@ -30,7 +30,7 @@ const ProfileIdPage = async ({
           image={profile.user?.image || undefined}
         />
         <div className="flex flex-col gap-4 text-primary">
-          {posts?.length! > 0 && (
+          {posts?.length > 0 && (
             <ProfilePostsList
               posts={posts}
               name={profile.user?.name}

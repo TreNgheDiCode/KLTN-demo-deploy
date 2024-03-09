@@ -3,15 +3,9 @@ import NextAuth, { DefaultSession } from "next-auth";
 
 import authConfig from "@/auth.config";
 import { db } from "@/lib/db";
-import {
-  CertificateType,
-  DegreeType,
-  Gender,
-  GradeType,
-  StudentStatus,
-} from "@prisma/client";
-import { GetUserEmailLib } from "./lib/user";
-import { UserEmailLib } from "./types";
+import { StudentStatus } from "@prisma/client";
+import { GetAccountIdLib } from "./lib/account";
+import { AccountEmailLib } from "./types";
 
 export type ExtendedUser = DefaultSession["user"] & {
   studentCode: string;
@@ -56,15 +50,14 @@ export const {
     async jwt({ token }) {
       if (!token.email || !token.sub) return token;
 
-      const existingUser: UserEmailLib = await GetUserEmailLib(token.email);
+      const existingUser: AccountEmailLib = await GetAccountIdLib(token.sub);
 
       if (!existingUser) {
         return token;
       }
 
-      token.sub = existingUser.id;
-      token.studentCode = existingUser.studentCode;
-      token.status = existingUser.status;
+      token.studentCode = existingUser.student.studentCode;
+      token.status = existingUser.student.studentCode;
       token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
 
       return token;

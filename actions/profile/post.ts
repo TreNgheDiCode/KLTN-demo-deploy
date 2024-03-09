@@ -1,6 +1,6 @@
 "use server";
 
-import { currentUser } from "@/lib/user";
+import { currentAccount } from "@/lib/account";
 import { PostSchema } from "@/schemas";
 import { z } from "zod";
 
@@ -8,7 +8,7 @@ export const CreatePost = async (values: z.infer<typeof PostSchema>) => {
   try {
     console.log("TEST");
 
-    const user = await currentUser();
+    const user = await currentAccount();
 
     const req = await fetch(
       `${process.env.NEXT_PUBLIC_API}/api/profiles/${user?.studentCode}/posts`,
