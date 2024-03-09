@@ -120,14 +120,16 @@ export const PublicNavbar = () => {
       <NavbarContent as="div" justify="end" className="hidden md:flex">
         <Button
           variant="bordered"
-          size="lg"
+          radius="full"
+          size="md"
           className="border-[#7D1F1F] font-semibold text-[#7D1F1F] dark:border-primary dark:text-white"
         >
           Get Started
         </Button>
         <Button
           variant="shadow"
-          size="lg"
+          radius="full"
+          size="md"
           className="bg-[#7D1F1F] font-semibold text-white dark:text-primary"
         >
           Login

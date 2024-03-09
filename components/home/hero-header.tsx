@@ -1,10 +1,10 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import { SchoolLib } from "@/types";
 import { Button, Card, CardBody } from "@nextui-org/react";
-import Autoplay from "embla-carousel-autoplay";
 import Autoscroll from "embla-carousel-auto-scroll";
-import { Bookmark } from "lucide-react";
+import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import {
@@ -13,7 +13,6 @@ import {
   CarouselContent,
   CarouselItem,
 } from "../ui/carousel";
-import { cn } from "@/lib/utils";
 
 interface HeroHeaderProps {
   schools: SchoolLib[];
@@ -61,32 +60,44 @@ export const HeroHeader = ({ schools }: HeroHeaderProps) => {
           setApi={setApi}
         >
           <CarouselContent className="] h-full w-full rounded-lg ease-in-out ">
-            {schools.map((school, index) => (
-              <CarouselItem
-                onClick={() => onClick(index)}
-                key={school.name}
-                className={cn(
-                  "basis-1/2 pl-4 opacity-40 ",
-                  index === current && "opacity-100",
-                )}
-              >
-                <Card className="h-[calc(50vh-86px)]" shadow="lg">
-                  <CardBody className="relative">
-                    <h1 className="absolute bottom-3 left-3 z-10 break-words text-2xl font-semibold text-white">
-                      {school.name}
-                    </h1>
-                    <Image
-                      fill
-                      priority
-                      quality={100}
-                      alt="school_image"
-                      src={school.backgroundUrl}
-                      className="object-cover"
-                    />
-                  </CardBody>
-                </Card>
-              </CarouselItem>
-            ))}
+            {schools.map((school, index) => {
+              const colors = school.color.split("rgba("); // Split to isolate color definitions
+              const color1 = colors[1].replace(/,\s+/g, "").split(")"); // Remove spaces and store first color
+              const color2 = colors[2].replace(/,\s+/g, "").split(")"); // Remove spaces and store second color
+              const rotatedColor = `linear-gradient(0deg, rgba(${color1[0]})${color1[1]}, rgba(${color2[0]})${color2[1]})`;
+
+              console.log(rotatedColor);
+              return (
+                <CarouselItem
+                  onClick={() => onClick(index)}
+                  key={school.name}
+                  className={cn(
+                    "basis-1/2 pl-4 opacity-40 ",
+                    index === current && "opacity-100",
+                  )}
+                >
+                  <Card className="h-[calc(50vh-86px)]" shadow="lg">
+                    <CardBody className="relative">
+                      <h1 className="absolute bottom-3 left-3 z-10 break-words text-2xl font-semibold uppercase text-white">
+                        {school.name}
+                      </h1>
+                      <Image
+                        fill
+                        priority
+                        quality={100}
+                        alt="school_image"
+                        src={school.background}
+                        className="object-cover"
+                      />
+                      <div
+                        style={{ background: rotatedColor }}
+                        className="absolute inset-0"
+                      />
+                    </CardBody>
+                  </Card>
+                </CarouselItem>
+              );
+            })}
           </CarouselContent>
         </Carousel>
       </div>
@@ -103,12 +114,12 @@ export const HeroHeader = ({ schools }: HeroHeaderProps) => {
       >
         <CarouselContent className="ml-0 h-full w-full ">
           {schools.map((school) => {
-            const color = school.colorValue;
+            const color = school.color;
             return (
               <CarouselItem key={school.name} className="rounded-none pl-0 ">
                 <Card className="h-[calc(100vh-86px)] rounded-none">
                   <CardBody className="relative flex h-full flex-col justify-center gap-8 overflow-hidden p-0">
-                    <h1 className="z-10 line-clamp-2 w-1/2 pl-32 text-7xl font-bold text-white">
+                    <h1 className="z-10 line-clamp-3 w-1/2 pl-32 text-7xl font-bold uppercase text-white">
                       {school.name}
                     </h1>
                     <p className="z-10 line-clamp-3 w-1/2 pl-32 font-semibold text-white">
@@ -118,30 +129,24 @@ export const HeroHeader = ({ schools }: HeroHeaderProps) => {
                       <Button
                         variant="shadow"
                         color="primary"
-                        size="lg"
-                        className="min-w-[200px] font-semibold text-white"
-                        style={{ background: color }}
+                        size="md"
+                        className="min-w-[230px] bg-white font-semibold text-[#7D1F1F] dark:bg-background dark:text-primary"
                       >
                         Explore
                       </Button>
-                      <div
-                        className="flex size-12 items-center justify-center rounded-full"
-                        style={{ background: color }}
-                      >
-                        <Bookmark className="size-6 text-white" />
-                      </div>
                     </div>
-                    <div
-                      className="absolute inset-0"
-                      style={{ background: color }}
-                    >
+                    <div className="absolute inset-0">
                       <Image
                         fill
                         priority
                         quality={100}
                         alt="school_image"
-                        src={school.backgroundUrl}
-                        className="opacity-70"
+                        src={school.background}
+                        className="opacity-100"
+                      />
+                      <div
+                        className="absolute inset-0"
+                        style={{ background: color }}
                       />
                     </div>
                   </CardBody>
