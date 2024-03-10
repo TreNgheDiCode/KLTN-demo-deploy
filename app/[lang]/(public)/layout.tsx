@@ -7,9 +7,9 @@ const PublicLayout = async ({ children }: { children: React.ReactNode }) => {
 
   const loggedInAccount: AccountIdLib = await GetAccountIdLib(account?.id!);
   return (
-    <div className="h-full w-full scrollbar-hide">
+    <div className="relative">
       <PublicNavbar account={loggedInAccount} />
-      {children}
+      <div className="h-full w-full scrollbar-hide">{children}</div>
     </div>
   );
 };

@@ -3,7 +3,6 @@
 import { cn } from "@/lib/utils";
 import { SchoolLib } from "@/types";
 import { Button, Card, CardBody } from "@nextui-org/react";
-import Autoscroll from "embla-carousel-auto-scroll";
 import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
@@ -13,6 +12,7 @@ import {
   CarouselContent,
   CarouselItem,
 } from "../ui/carousel";
+import { motion } from "framer-motion";
 
 interface HeroHeaderProps {
   schools: SchoolLib[];
@@ -46,17 +46,15 @@ export const HeroHeader = ({ schools }: HeroHeaderProps) => {
 
   return (
     <div className="relative">
-      <div className="absolute bottom-6 right-14 z-10 w-6/12 text-primary">
+      <motion.div
+        initial={{ x: "-100vw" }}
+        animate={{ x: 0 }}
+        transition={{ type: "spring", stiffness: 20 }}
+        className="absolute bottom-6 right-14 z-10 w-6/12 overflow-x-hidden text-primary"
+      >
         <Carousel
           className="w-full text-primary"
           opts={{ align: "center", loop: true }}
-          plugins={[
-            Autoscroll({
-              speed: 1,
-              stopOnInteraction: false,
-              startDelay: 100,
-            }),
-          ]}
           setApi={setApi}
         >
           <CarouselContent className="] h-full w-full rounded-lg ease-in-out ">
@@ -76,12 +74,16 @@ export const HeroHeader = ({ schools }: HeroHeaderProps) => {
                 >
                   <Card className="h-[calc(50vh-86px)]" shadow="lg">
                     <CardBody className="relative">
-                      <h1 className="absolute bottom-3 left-3 z-10 break-words text-2xl font-semibold uppercase text-white">
+                      <motion.h1
+                        initial={{ x: "-100vw" }}
+                        animate={{ x: 0 }}
+                        transition={{ type: "spring", stiffness: 20 }}
+                        className="absolute bottom-3 left-3 z-10 break-words text-2xl font-semibold uppercase text-white"
+                      >
                         {school.name}
-                      </h1>
+                      </motion.h1>
                       <Image
                         fill
-                        priority
                         quality={100}
                         alt="school_image"
                         src={school.background}
@@ -98,9 +100,9 @@ export const HeroHeader = ({ schools }: HeroHeaderProps) => {
             })}
           </CarouselContent>
         </Carousel>
-      </div>
+      </motion.div>
       <Carousel
-        className=" w-full text-primary"
+        className="w-full text-primary"
         opts={{ align: "center", loop: true }}
         plugins={[
           Autoplay({
@@ -110,20 +112,35 @@ export const HeroHeader = ({ schools }: HeroHeaderProps) => {
         ]}
         setApi={setApi}
       >
-        <CarouselContent className="ml-0 h-full w-full ">
+        <CarouselContent className="ml-0 h-full w-full">
           {schools.map((school) => {
             const color = school.color;
             return (
               <CarouselItem key={school.name} className="rounded-none pl-0 ">
-                <Card className="h-[calc(100vh-86px)] rounded-none">
+                <Card className="h-screen rounded-none">
                   <CardBody className="relative flex h-full flex-col justify-center gap-8 overflow-hidden p-0">
-                    <h1 className="z-10 line-clamp-3 w-6/12 break-words pl-32 text-6xl font-bold uppercase text-white">
+                    <motion.h1
+                      initial={{ x: "-100vw" }}
+                      animate={{ x: 0 }}
+                      transition={{ type: "spring", stiffness: 20 }}
+                      className="z-10 line-clamp-3 w-6/12 break-words pl-32 text-6xl font-bold uppercase text-white"
+                    >
                       {school.name}
-                    </h1>
-                    <p className="z-10 line-clamp-5 w-5/12 pl-32 font-semibold text-white">
+                    </motion.h1>
+                    <motion.p
+                      initial={{ x: "-100vw" }}
+                      animate={{ x: 0 }}
+                      transition={{ type: "spring", stiffness: 20 }}
+                      className="z-10 line-clamp-5 w-5/12 pl-32 font-semibold text-white"
+                    >
                       {school.short}
-                    </p>
-                    <div className="z-10 ml-32 flex items-center gap-x-6">
+                    </motion.p>
+                    <motion.div
+                      initial={{ x: "-100vw" }}
+                      animate={{ x: 0 }}
+                      transition={{ type: "spring", stiffness: 20 }}
+                      className="z-10 ml-32 flex items-center gap-x-6"
+                    >
                       <Button
                         variant="shadow"
                         color="primary"
@@ -132,7 +149,7 @@ export const HeroHeader = ({ schools }: HeroHeaderProps) => {
                       >
                         Explore
                       </Button>
-                    </div>
+                    </motion.div>
                     <div className="absolute inset-0">
                       <Image
                         fill
