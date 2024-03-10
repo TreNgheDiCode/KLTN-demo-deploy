@@ -55,8 +55,6 @@ export const PublicNavbar = ({ account }: PublicNavbarProps) => {
     };
 
     const handleWheel = (e: WheelEvent) => {
-      e.preventDefault();
-
       const viewportsScrolled = Math.round(window.scrollY / window.innerHeight);
 
       if (e.deltaY > 0) {

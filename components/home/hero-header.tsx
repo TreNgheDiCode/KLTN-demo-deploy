@@ -4,15 +4,15 @@ import { cn } from "@/lib/utils";
 import { SchoolLib } from "@/types";
 import { Button, Card, CardBody } from "@nextui-org/react";
 import Autoplay from "embla-carousel-autoplay";
+import { motion, useInView } from "framer-motion";
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   Carousel,
   CarouselApi,
   CarouselContent,
   CarouselItem,
 } from "../ui/carousel";
-import { motion } from "framer-motion";
 
 interface HeroHeaderProps {
   schools: SchoolLib[];
@@ -20,6 +20,10 @@ interface HeroHeaderProps {
 
 export const HeroHeader = ({ schools }: HeroHeaderProps) => {
   const [api, setApi] = useState<CarouselApi>();
+  const [keyCarouselList, setKeyCarouselList] = useState(0);
+  const [keyTitle, setKeyTile] = useState(0);
+  const [keyShort, setKeyShort] = useState(0);
+  const [keyExplore, setKeyExplore] = useState(0);
 
   const [current, setCurrent] = useState(1);
 
@@ -44,9 +48,22 @@ export const HeroHeader = ({ schools }: HeroHeaderProps) => {
     });
   }, [api, current]);
 
+  const list = useRef(null);
+  const listInView = useInView(list);
+
+  useEffect(() => {
+    if (listInView) {
+      setKeyCarouselList((prev) => prev + 1);
+      setKeyTile((prev) => prev + 1);
+      setKeyExplore((prev) => prev + 1);
+      setKeyShort((prev) => prev + 1);
+    }
+  }, [listInView]);
+
   return (
-    <div className="relative">
+    <div ref={list} className="relative">
       <motion.div
+        key={keyCarouselList}
         initial={{ x: "-100vw" }}
         animate={{ x: 0 }}
         transition={{ type: "spring", stiffness: 20 }}
@@ -63,6 +80,7 @@ export const HeroHeader = ({ schools }: HeroHeaderProps) => {
               const color1 = colors[1].replace(/,\s+/g, "").split(")"); // Remove spaces and store first color
               const color2 = colors[2].replace(/,\s+/g, "").split(")"); // Remove spaces and store second color
               const rotatedColor = `linear-gradient(0deg, rgba(${color1[0]})${color1[1]}, rgba(${color2[0]})${color2[1]})`;
+
               return (
                 <CarouselItem
                   onClick={() => onClick(index)}
@@ -117,55 +135,51 @@ export const HeroHeader = ({ schools }: HeroHeaderProps) => {
             const color = school.color;
             return (
               <CarouselItem key={school.name} className="rounded-none pl-0 ">
-                <Card className="h-screen rounded-none">
-                  <CardBody className="relative flex h-full flex-col justify-center gap-8 overflow-hidden p-0">
-                    <motion.h1
-                      initial={{ x: "-100vw" }}
-                      animate={{ x: 0 }}
-                      transition={{ type: "spring", stiffness: 20 }}
-                      className="z-10 line-clamp-3 w-6/12 break-words pl-32 text-6xl font-bold uppercase text-white"
-                    >
-                      {school.name}
-                    </motion.h1>
-                    <motion.p
-                      initial={{ x: "-100vw" }}
-                      animate={{ x: 0 }}
-                      transition={{ type: "spring", stiffness: 20 }}
-                      className="z-10 line-clamp-5 w-5/12 pl-32 font-semibold text-white"
-                    >
-                      {school.short}
-                    </motion.p>
-                    <motion.div
-                      initial={{ x: "-100vw" }}
-                      animate={{ x: 0 }}
-                      transition={{ type: "spring", stiffness: 20 }}
-                      className="z-10 ml-32 flex items-center gap-x-6"
-                    >
-                      <Button
-                        variant="shadow"
-                        color="primary"
-                        size="md"
-                        className="min-w-[230px] bg-white font-semibold text-[#7D1F1F] dark:bg-background dark:text-primary"
+                <div>
+                  <Card className="h-screen rounded-none">
+                    <CardBody className="p-0">
+                      <motion.div
+                        key={keyTitle}
+                        initial={{ x: "-100vw" }}
+                        animate={{ x: 0 }}
+                        transition={{ type: "spring", stiffness: 20 }}
+                        className="relative z-10 flex h-full flex-col justify-center gap-8"
                       >
-                        Explore
-                      </Button>
-                    </motion.div>
-                    <div className="absolute inset-0">
-                      <Image
-                        fill
-                        priority
-                        quality={100}
-                        alt="school_image"
-                        src={school.background}
-                        className="opacity-100"
-                      />
-                      <div
-                        className="absolute inset-0"
-                        style={{ background: color }}
-                      />
-                    </div>
-                  </CardBody>
-                </Card>
+                        <h1 className="z-10 line-clamp-3 w-6/12 break-words pl-32 text-6xl font-bold uppercase text-white">
+                          {school.name}
+                        </h1>
+                        <p className="z-10 line-clamp-5 w-5/12 pl-32 font-semibold text-white">
+                          {school.short}
+                        </p>
+                        <div className="z-10 ml-32 flex items-center gap-x-6">
+                          <Button
+                            variant="shadow"
+                            color="primary"
+                            size="md"
+                            className="min-w-[230px] bg-white font-semibold text-[#7D1F1F] dark:bg-background dark:text-primary"
+                          >
+                            Explore
+                          </Button>
+                        </div>
+                      </motion.div>
+
+                      <div className="absolute inset-0">
+                        <Image
+                          fill
+                          priority
+                          quality={100}
+                          alt="school_image"
+                          src={school.background}
+                          className="opacity-100"
+                        />
+                        <div
+                          className="absolute inset-0"
+                          style={{ background: color }}
+                        />
+                      </div>
+                    </CardBody>
+                  </Card>
+                </div>
               </CarouselItem>
             );
           })}
