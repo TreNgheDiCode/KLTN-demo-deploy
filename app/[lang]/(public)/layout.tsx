@@ -1,9 +1,14 @@
 import { PublicNavbar } from "@/components/navbar/public-navbar";
+import { GetAccountIdLib, currentAccount } from "@/lib/account";
+import { AccountIdLib } from "@/types";
 
-const PublicLayout = ({ children }: { children: React.ReactNode }) => {
+const PublicLayout = async ({ children }: { children: React.ReactNode }) => {
+  const account = await currentAccount();
+
+  const loggedInAccount: AccountIdLib = await GetAccountIdLib(account?.id!);
   return (
     <div className="h-full w-full scrollbar-hide">
-      <PublicNavbar />
+      <PublicNavbar account={loggedInAccount} />
       {children}
     </div>
   );

@@ -1,5 +1,6 @@
 "use client";
 
+import { AccountIdLib } from "@/types";
 import {
   Button,
   Divider,
@@ -14,10 +15,16 @@ import {
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { AccountMenu } from "./account-menu";
 import { ThemeToggle } from "./theme-toggle";
 
-export const PublicNavbar = () => {
+interface PublicNavbarProps {
+  account?: AccountIdLib;
+}
+
+export const PublicNavbar = ({ account }: PublicNavbarProps) => {
   const pathname = usePathname();
+  const [isLoading, setLoading] = useState(false);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -118,22 +125,34 @@ export const PublicNavbar = () => {
         </NavbarItem>
       </NavbarContent>
       <NavbarContent as="div" justify="end" className="hidden md:flex">
-        <Button
-          variant="bordered"
-          radius="full"
-          size="md"
-          className="border-[#7D1F1F] font-semibold text-[#7D1F1F] dark:border-primary dark:text-white"
-        >
-          Get Started
-        </Button>
-        <Button
-          variant="shadow"
-          radius="full"
-          size="md"
-          className="bg-[#7D1F1F] font-semibold text-white dark:text-primary"
-        >
-          Login
-        </Button>
+        {account && <AccountMenu account={account} />}
+        {!account && (
+          <>
+            <Button
+              variant="bordered"
+              radius="full"
+              onClick={() => setLoading(true)}
+              isLoading={isLoading}
+              size="md"
+              className="border-[#7D1F1F] font-semibold text-[#7D1F1F] dark:border-primary dark:text-white"
+              href="/register"
+            >
+              Get Started
+            </Button>
+            <Button
+              as={Link}
+              onClick={() => setLoading(true)}
+              isLoading={isLoading}
+              variant="shadow"
+              radius="full"
+              size="md"
+              className="bg-[#7D1F1F] font-semibold text-white dark:text-primary"
+              href="/login"
+            >
+              Login
+            </Button>
+          </>
+        )}
       </NavbarContent>
       {/* Mobile Menu */}
       <NavbarMenu>

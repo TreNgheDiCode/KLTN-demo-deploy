@@ -46,7 +46,7 @@ export const HeroHeader = ({ schools }: HeroHeaderProps) => {
 
   return (
     <div className="relative">
-      <div className="absolute bottom-6 right-14 z-10 w-4/12 text-primary">
+      <div className="absolute bottom-6 right-14 z-10 w-6/12 text-primary">
         <Carousel
           className="w-full text-primary"
           opts={{ align: "center", loop: true }}
@@ -65,14 +65,12 @@ export const HeroHeader = ({ schools }: HeroHeaderProps) => {
               const color1 = colors[1].replace(/,\s+/g, "").split(")"); // Remove spaces and store first color
               const color2 = colors[2].replace(/,\s+/g, "").split(")"); // Remove spaces and store second color
               const rotatedColor = `linear-gradient(0deg, rgba(${color1[0]})${color1[1]}, rgba(${color2[0]})${color2[1]})`;
-
-              console.log(rotatedColor);
               return (
                 <CarouselItem
                   onClick={() => onClick(index)}
                   key={school.name}
                   className={cn(
-                    "basis-1/2 pl-4 opacity-40 ",
+                    "basis-1/3 pl-4 opacity-40 ",
                     index === current && "opacity-100",
                   )}
                 >
@@ -119,10 +117,10 @@ export const HeroHeader = ({ schools }: HeroHeaderProps) => {
               <CarouselItem key={school.name} className="rounded-none pl-0 ">
                 <Card className="h-[calc(100vh-86px)] rounded-none">
                   <CardBody className="relative flex h-full flex-col justify-center gap-8 overflow-hidden p-0">
-                    <h1 className="z-10 line-clamp-3 w-1/2 pl-32 text-7xl font-bold uppercase text-white">
+                    <h1 className="z-10 line-clamp-3 w-6/12 break-words pl-32 text-6xl font-bold uppercase text-white">
                       {school.name}
                     </h1>
-                    <p className="z-10 line-clamp-3 w-1/2 pl-32 font-semibold text-white">
+                    <p className="z-10 line-clamp-5 w-5/12 pl-32 font-semibold text-white">
                       {school.short}
                     </p>
                     <div className="z-10 ml-32 flex items-center gap-x-6">
