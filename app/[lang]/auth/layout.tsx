@@ -28,7 +28,7 @@ const AuthLayout = async ({
         />
         <div className="mx-4 flex items-center gap-x-2">
           <LanguageToggle />
-          <ModeToggle dict={dict} className=" text-black dark:text-white" />
+          <ModeToggle dict={dict} className=" text-primary" />
         </div>
       </div>
       <div className="flex h-full items-center justify-center bg-background">

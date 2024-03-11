@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/lib/db";
-import { GetUserEmailLib, currentUser } from "@/lib/user";
+import { GetAccountIdLib, currentAccount } from "@/lib/account";
 import { PostSchema } from "@/schemas";
 import { PostStatus } from "@prisma/client";
 import { z } from "zod";
@@ -16,13 +16,13 @@ export const CreateNewProfilePost = async (
       return { error: "Invalid post values" };
     }
 
-    const user = await currentUser();
+    const user = await currentAccount();
 
     if (!user) {
       return { error: "User not found" };
     }
 
-    const existingUser = await GetUserEmailLib(user.email!);
+    const existingUser = await GetAccountIdLib(user.email!);
 
     if (!existingUser) {
       return { error: "User not found" };

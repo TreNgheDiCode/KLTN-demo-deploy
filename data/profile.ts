@@ -1,9 +1,9 @@
 import { db } from "@/lib/db";
-import { currentUser } from "@/lib/user";
+import { currentAccount } from "@/lib/account";
 
 export const getProfileByStudentCode = async (code: string) => {
   try {
-    const session = await currentUser();
+    const session = await currentAccount();
     const user = await db.user.findUnique({
       where: {
         id: session?.id,

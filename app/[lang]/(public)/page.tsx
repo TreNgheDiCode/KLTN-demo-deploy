@@ -17,6 +17,9 @@ export default async function Home({
       <div className="flex h-screen items-center justify-center bg-rose-500 text-primary">
         Meomeo
       </div>
+      <div className="flex h-screen items-center justify-center bg-orange-500 text-primary">
+        Meomeo
+      </div>
     </main>
   );
 }

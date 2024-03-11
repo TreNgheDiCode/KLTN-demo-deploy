@@ -1,8 +1,8 @@
-import { currentUser } from "../user";
+import { currentAccount } from "../account";
 
 export const GetPostsLib = async () => {
   try {
-    const user = await currentUser();
+    const user = await currentAccount();
 
     const req = await fetch(
       `${process.env.NEXT_PUBLIC_API}/api/profiles/${user?.studentCode}/posts`,
