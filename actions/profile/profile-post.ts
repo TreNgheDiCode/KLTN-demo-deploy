@@ -1,8 +1,7 @@
 "use server";
 
-import { getUserByEmail, getUserByIdCardNumber } from "@/data/user";
 import { db } from "@/lib/db";
-import { currentUser } from "@/lib/user";
+import { GetUserEmailLib, currentUser } from "@/lib/user";
 import { PostSchema } from "@/schemas";
 import { PostStatus } from "@prisma/client";
 import { z } from "zod";
@@ -23,7 +22,7 @@ export const CreateNewProfilePost = async (
       return { error: "User not found" };
     }
 
-    const existingUser = await getUserByIdCardNumber(user.idCardNumber!);
+    const existingUser = await GetUserEmailLib(user.email!);
 
     if (!existingUser) {
       return { error: "User not found" };

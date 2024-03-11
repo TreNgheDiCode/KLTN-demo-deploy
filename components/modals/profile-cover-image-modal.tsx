@@ -13,8 +13,8 @@ import {
 import { SingleImageDropzone } from "../single-image-dropzone";
 import { startTransition, useState } from "react";
 import { toast } from "sonner";
-import { useEdgeStore } from "@/lib/edgestore";
-import { uploadProfileCoverImage } from "@/actions/profile-image";
+import { useEdgeStore } from "@/hooks/use-edgestore";
+import { uploadProfileCoverImage } from "@/actions/profile/profile-image";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
 

@@ -1,7 +1,6 @@
 "use client";
 
-import { Like } from "@/actions/like";
-import { Save } from "@/actions/save";
+import { Like } from "@/actions/profile/like";
 import { PostCommentLib } from "@/types";
 import {
   Avatar,
@@ -14,7 +13,7 @@ import {
   Divider,
   Image,
 } from "@nextui-org/react";
-import { PostImage, PostLike, PostSave, PostStatus } from "@prisma/client";
+import { PostImage, PostLike, PostStatus } from "@prisma/client";
 import { format } from "date-fns";
 import { vi } from "date-fns/locale/vi";
 import {
@@ -30,8 +29,8 @@ import {
 } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { startTransition } from "react";
-import { ProfileCommentForm } from "./profile-comment-form";
-import { ProfileCommentsList } from "./profile-comments-list";
+import { ProfileCommentForm } from "./comment/profile-comment-form";
+import { ProfileCommentsList } from "./comment/profile-comments-list";
 
 interface ProfilePostItemProps {
   name: string;
@@ -44,7 +43,6 @@ interface ProfilePostItemProps {
   status: PostStatus;
   content?: string;
   images?: PostImage[];
-  saves?: PostSave[];
   profileId: string;
 }
 
@@ -66,37 +64,26 @@ export const ProfilePostItem = ({
   comments,
   likes,
   images,
-  saves,
-  profileId
-}: ProfilePostItemProps) => 
-{
-  const isLike = likes?.some(like => like.profileId == profileId)
-  const isSave = saves?.some(save => save.profileId == profileId)
+  profileId,
+}: ProfilePostItemProps) => {
+  const isLike = likes?.some((like) => like.profileId == profileId);
   const router = useRouter();
-  
+
   const parentComments = comments?.filter(
     (comment) => !comment.parentCommentId,
-    );
-    
-    const params = useParams();
-    const studentCode = params.studentCode as string;
-    
-    const onLike =  async () => {
-      startTransition(() => {
-        Like(studentCode, id);
-      })
-      
-      router.refresh();
-    }
-    
-    const onSave = async () => 
-    {
-      startTransition(() => {
-        Save(studentCode,id);
-      })
-      router.refresh();
-    }
-    console.log(saves);
+  );
+
+  const params = useParams();
+  const studentCode = params.studentCode as string;
+
+  const onLike = async () => {
+    startTransition(() => {
+      Like(studentCode, id);
+    });
+
+    router.refresh();
+  };
+
   return (
     <Card>
       <CardHeader className="items-center justify-between pr-6">
@@ -164,8 +151,8 @@ export const ProfilePostItem = ({
           <Button startContent={<Share2 />} variant="light" color="primary">
             0 Share
           </Button>
-          <Button onClick={onSave} startContent={<Bookmark fill = {isSave? "yellow" : "undefined" } />} variant="light" color="primary">
-            {saves?.length || 0} Saved
+          <Button startContent={<Bookmark />} variant="light" color="primary">
+            0 Saved
           </Button>
         </div>
         <Divider />

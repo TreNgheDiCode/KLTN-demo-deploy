@@ -11,7 +11,7 @@ import { usePathname } from "next/navigation";
 import { ManagementItems } from "./management-items";
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { logout } from "@/actions/logout";
+import { logout } from "@/actions/auth/logout";
 
 const menuItems = [
   "Profile",

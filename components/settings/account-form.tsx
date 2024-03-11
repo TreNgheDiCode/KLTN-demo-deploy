@@ -25,7 +25,7 @@ import { Eye, EyeOff, Key, Mail } from "lucide-react";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { SettingsHeader } from "../../_components/settings-header";
+import { SettingsHeader } from "./settings-header";
 
 interface AccountFormProps {
   user: Pick<ExtendedUser, "email" | "name" | "status" | "isTwoFactorEnabled">;

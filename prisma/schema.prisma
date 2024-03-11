@@ -96,6 +96,7 @@ model School {
   logoUrl       String
   backgroundUrl String
   name          String  @unique
+  short         String?
   description   String?
   history       String?
   colorValue    String
@@ -473,8 +474,8 @@ model PostSave {
   Post      Post?   @relation(fields: [postId], references: [id])
   postId    String?
 
+  @@unique([profileId, postId])
   @@index([profileId])
-  @@unique([profileId,postId])
 }
 
 model Biography {

@@ -16,7 +16,7 @@ import { CardWrapper } from "./card-wrapper";
 import { AccountTab } from "./register/account-tab";
 import { EducationTab } from "./register/education-tab";
 import { ProfileTab } from "./register/profile-tab";
-import { register } from "@/actions/register";
+import { register } from "@/actions/auth/register";
 import { useRouter } from "next/navigation";
 import { removeAllListeners } from "process";
 

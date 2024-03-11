@@ -1,10 +1,7 @@
 import { GetProfileLib } from "@/lib/profile/profile";
 import { PostLib, ProfileLib } from "@/types";
-import { ProfileHeader } from "./_components/profile-header";
-import { ProfileInformation } from "./_components/profile-information";
-import { redirect } from "next/navigation";
-import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { GetPostsLib } from "@/lib/profile/post";
+import { ProfileHeader } from "@/components/profile/profile-header";
 
 const ProfileIdLayout = async ({
   children,

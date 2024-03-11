@@ -6,7 +6,7 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import { Divider } from "@nextui-org/react";
-import { SettingsSidebar } from "./_components/settings-sidebar";
+import { SettingsSidebar } from "../../../../../components/settings/settings-sidebar";
 
 const SettingsLayout = ({ children }: { children: React.ReactNode }) => {
   return (

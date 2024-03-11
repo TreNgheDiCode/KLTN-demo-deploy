@@ -1,6 +1,6 @@
 "use client";
 
-import { AppearanceForm } from "./_components/appearance-form";
+import { AppearanceForm } from "../../../../../../components/settings/appearance-form";
 
 const SettingsAppearancePage = () => {
   return <AppearanceForm />;

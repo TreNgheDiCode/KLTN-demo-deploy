@@ -1,6 +1,6 @@
 "use client";
 
-import { DisplayForm } from "./_components/display-form";
+import { DisplayForm } from "../../../../../../components/settings/display-form";
 
 const SettingsDisplayPage = () => {
   return <DisplayForm />;
