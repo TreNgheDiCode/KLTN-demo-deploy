@@ -14,25 +14,6 @@ import {
 import { LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-const status = {
-  AWAITING: {
-    label: "AWAITING FOR APPROVAL",
-    color: "warning",
-  },
-  STUDYING: {
-    label: "STUDYING",
-    color: "primary",
-  },
-  DROPPED: {
-    label: "DROPPED OUT OF SCHOOL",
-    color: "default",
-  },
-  APPROVED: {
-    label: "INFORMATION APPROVED",
-    color: "success",
-  },
-};
-
 export const AccountMenu = ({ account }: { account: AccountIdLib }) => {
   const router = useRouter();
   const onLogOut = async () => {
@@ -46,20 +27,7 @@ export const AccountMenu = ({ account }: { account: AccountIdLib }) => {
         <User
           as={"button"}
           name={account.name}
-          description={
-            <Chip
-              size="sm"
-              color={
-                status[account.student.status].color as
-                  | "warning"
-                  | "primary"
-                  | "default"
-                  | "success"
-              }
-            >
-              {status[account.student.status].label}
-            </Chip>
-          }
+          description={account.email}
           className="text-primary transition-transform"
           avatarProps={{
             src: account.image,

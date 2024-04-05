@@ -4,9 +4,9 @@ import { cn } from "@/lib/utils";
 import { SchoolLib } from "@/types";
 import { Button, Card, CardBody } from "@nextui-org/react";
 import Autoplay from "embla-carousel-autoplay";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   Carousel,
   CarouselApi,
@@ -20,10 +20,6 @@ interface HeroHeaderProps {
 
 export const HeroHeader = ({ schools }: HeroHeaderProps) => {
   const [api, setApi] = useState<CarouselApi>();
-  const [keyCarouselList, setKeyCarouselList] = useState(0);
-  const [keyTitle, setKeyTile] = useState(0);
-  const [keyShort, setKeyShort] = useState(0);
-  const [keyExplore, setKeyExplore] = useState(0);
 
   const [current, setCurrent] = useState(1);
 
@@ -48,25 +44,63 @@ export const HeroHeader = ({ schools }: HeroHeaderProps) => {
     });
   }, [api, current]);
 
-  const list = useRef(null);
-  const listInView = useInView(list);
+  const item = {
+    offScreen: {
+      x: "-100vw",
+      opacity: 0,
+    },
+    onScreen: {
+      x: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 20,
+      },
+    },
+  };
 
-  useEffect(() => {
-    if (listInView) {
-      setKeyCarouselList((prev) => prev + 1);
-      setKeyTile((prev) => prev + 1);
-      setKeyExplore((prev) => prev + 1);
-      setKeyShort((prev) => prev + 1);
-    }
-  }, [listInView]);
+  const title = {
+    offScreen: {
+      x: "-100vw",
+      opacity: 0,
+    },
+    onScreen: {
+      x: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 20,
+      },
+    },
+  };
+
+  const main = {
+    offScreen: {
+      y: "-100vh",
+      opacity: 0,
+    },
+    onScreen: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 20,
+      },
+    },
+  };
 
   return (
-    <div ref={list} className="relative">
+    <div className="relative">
       <motion.div
-        key={keyCarouselList}
-        initial={{ x: "-100vw" }}
-        animate={{ x: 0 }}
-        transition={{ type: "spring", stiffness: 20 }}
+        initial="offScreen"
+        whileInView="onScreen"
+        transition={{
+          staggerChildren: 0.2,
+          type: "spring",
+          stiffness: 60,
+          staggerDirection: -1,
+        }}
+        viewport={{ once: false }}
         className="absolute bottom-6 right-14 z-10 w-6/12 overflow-x-hidden text-primary"
       >
         <Carousel
@@ -90,29 +124,29 @@ export const HeroHeader = ({ schools }: HeroHeaderProps) => {
                     index === current && "opacity-100",
                   )}
                 >
-                  <Card className="h-[calc(50vh-86px)]" shadow="lg">
-                    <CardBody className="relative">
-                      <motion.h1
-                        initial={{ x: "-100vw" }}
-                        animate={{ x: 0 }}
-                        transition={{ type: "spring", stiffness: 20 }}
-                        className="absolute bottom-3 left-3 z-10 break-words text-2xl font-semibold uppercase text-white"
-                      >
-                        {school.name}
-                      </motion.h1>
-                      <Image
-                        fill
-                        quality={100}
-                        alt="school_image"
-                        src={school.background}
-                        className="object-cover"
-                      />
-                      <div
-                        style={{ background: rotatedColor }}
-                        className="absolute inset-0"
-                      />
-                    </CardBody>
-                  </Card>
+                  <motion.div variants={item} viewport={{ once: false }}>
+                    <Card className="h-[calc(50vh-86px)]" shadow="lg">
+                      <CardBody className="relative">
+                        <motion.h1
+                          variants={title}
+                          className="absolute bottom-3 left-3 z-10 break-words text-2xl font-semibold uppercase text-white"
+                        >
+                          {school.name}
+                        </motion.h1>
+                        <Image
+                          fill
+                          quality={100}
+                          alt="school_image"
+                          src={school.background}
+                          className="object-cover"
+                        />
+                        <div
+                          style={{ background: rotatedColor }}
+                          className="absolute inset-0"
+                        />
+                      </CardBody>
+                    </Card>
+                  </motion.div>
                 </CarouselItem>
               );
             })}
@@ -135,51 +169,65 @@ export const HeroHeader = ({ schools }: HeroHeaderProps) => {
             const color = school.color;
             return (
               <CarouselItem key={school.name} className="rounded-none pl-0 ">
-                <div>
-                  <Card className="h-screen rounded-none">
-                    <CardBody className="p-0">
-                      <motion.div
-                        key={keyTitle}
-                        initial={{ x: "-100vw" }}
-                        animate={{ x: 0 }}
-                        transition={{ type: "spring", stiffness: 20 }}
-                        className="relative z-10 flex h-full flex-col justify-center gap-8"
+                <Card className="h-screen rounded-none">
+                  <CardBody className="p-0">
+                    <motion.div
+                      initial="offScreen"
+                      whileInView="onScreen"
+                      viewport={{ once: false }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 60,
+                        staggerChildren: 0.1,
+                        staggerDirection: -1,
+                      }}
+                      className="relative z-10 flex h-full flex-col justify-center gap-8"
+                    >
+                      <motion.h1
+                        variants={main}
+                        className="z-10 line-clamp-3 w-6/12 break-words pl-32 text-6xl font-bold uppercase text-white"
                       >
-                        <h1 className="z-10 line-clamp-3 w-6/12 break-words pl-32 text-6xl font-bold uppercase text-white">
-                          {school.name}
-                        </h1>
-                        <p className="z-10 line-clamp-5 w-5/12 pl-32 font-semibold text-white">
-                          {school.short}
-                        </p>
-                        <div className="z-10 ml-32 flex items-center gap-x-6">
-                          <Button
-                            variant="shadow"
-                            color="primary"
-                            size="md"
-                            className="min-w-[230px] bg-white font-semibold text-[#7D1F1F] dark:bg-background dark:text-primary"
-                          >
-                            Explore
-                          </Button>
-                        </div>
+                        {school.name}
+                      </motion.h1>
+                      <motion.p
+                        variants={main}
+                        className="z-10 line-clamp-5 w-5/12 pl-32 font-semibold text-white"
+                      >
+                        {school.short}
+                      </motion.p>
+                      <motion.div
+                        whileHover={{ scaleY: 1.1 }}
+                        whileTap={{ scaleY: 0.95 }}
+                        variants={main}
+                        className="z-10 ml-32 flex items-center gap-x-6"
+                      >
+                        <Button
+                          variant="shadow"
+                          color="primary"
+                          size="md"
+                          className="min-w-[230px] bg-white font-semibold text-[#7D1F1F] dark:bg-background dark:text-primary"
+                        >
+                          Explore
+                        </Button>
                       </motion.div>
+                    </motion.div>
 
-                      <div className="absolute inset-0">
-                        <Image
-                          fill
-                          priority
-                          quality={100}
-                          alt="school_image"
-                          src={school.background}
-                          className="opacity-100"
-                        />
-                        <div
-                          className="absolute inset-0"
-                          style={{ background: color }}
-                        />
-                      </div>
-                    </CardBody>
-                  </Card>
-                </div>
+                    <div className="absolute inset-0">
+                      <Image
+                        fill
+                        priority
+                        quality={100}
+                        alt="school_image"
+                        src={school.background}
+                        className="opacity-100"
+                      />
+                      <div
+                        className="absolute inset-0"
+                        style={{ background: color }}
+                      />
+                    </div>
+                  </CardBody>
+                </Card>
               </CarouselItem>
             );
           })}
