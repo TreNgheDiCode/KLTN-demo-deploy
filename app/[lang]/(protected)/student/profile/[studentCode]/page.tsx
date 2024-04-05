@@ -1,5 +1,4 @@
 import { GetProfileLib } from "@/lib/profile/profile";
-import { PostLib, ProfileLib } from "@/types";
 import { CrispProvider } from "@/scripts/crisp-provider";
 import { GetPostsLib } from "@/lib/profile/post";
 import { ProfileInformation } from "@/components/profile/profile-information";
@@ -10,8 +9,8 @@ const ProfileIdPage = async ({
 }: {
   params: { studentCode: string };
 }) => {
-  const profile: ProfileLib = await GetProfileLib(studentCode);
-  const posts: PostLib[] = await GetPostsLib();
+  const profile = await GetProfileLib(studentCode);
+  const posts = await GetPostsLib();
 
   return (
     <div className="relative hidden gap-4 md:grid lg:grid-cols-12">

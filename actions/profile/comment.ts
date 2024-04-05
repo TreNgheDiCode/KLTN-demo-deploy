@@ -54,17 +54,9 @@ export const Comment = async (
         profileId: existingUser.profile.id,
         parentCommentId: parentCommentId,
         isArchived: false,
+        image: value.image,
       },
     });
-
-    if (value.image) {
-      await db.postCommentImage.create({
-        data: {
-          postCommentId: comment.id,
-          url: value.image,
-        },
-      });
-    }
 
     return { success: "Success" };
   } catch (error) {
@@ -85,7 +77,6 @@ export const GetCommentsByParentId = async (
       },
       include: {
         likes: true,
-        image: true,
         children: {
           select: {
             id: true,

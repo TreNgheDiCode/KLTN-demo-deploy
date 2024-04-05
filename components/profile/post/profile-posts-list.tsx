@@ -1,6 +1,5 @@
 "use client";
 
-import { PostLib } from "@/types";
 import {
   Button,
   Dropdown,
@@ -16,7 +15,7 @@ import { ProfilePostItem } from "./profile-post-item";
 interface ProfilePostsListProps {
   logo?: string;
   name: string;
-  posts: PostLib[];
+  posts: [];
   profileId: string;
 }
 
@@ -96,7 +95,7 @@ export const ProfilePostsList = ({
           </Dropdown>
         </div>
       </div>
-      {posts.map((post) => (
+      {/* {posts.map((post) => (
         <ProfilePostItem
           id={post.id}
           images={post.images}
@@ -111,7 +110,7 @@ export const ProfilePostsList = ({
           likes = {post.likes}
           profileId={profileId}
         />
-      ))}
+      ))} */}
     </>
   );
 };

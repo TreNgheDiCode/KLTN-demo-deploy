@@ -6,7 +6,7 @@ export const Like = async (studentCode: string, postId: string) => {
   try {
     const profile = await db.profile.findFirst({
       where: {
-        user: {
+        student: {
           studentCode,
         },
       },
