@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 
-export const currentUser = async () => {
+export const currentAccount = async () => {
   const session = await auth();
 
   if (!session?.user.email) {
@@ -10,10 +10,10 @@ export const currentUser = async () => {
   return session?.user;
 };
 
-export const GetUserEmailLib = async (email: string) => {
+export const GetAccountIdLib = async (id: string) => {
   try {
     const req = await fetch(
-      `${process.env.NEXT_PUBLIC_API}/api/users/${email}`,
+      `${process.env.NEXT_PUBLIC_API}/api/accounts/${id}`,
     );
 
     const res = await req.json();
@@ -24,7 +24,7 @@ export const GetUserEmailLib = async (email: string) => {
 
     return res;
   } catch (error) {
-    console.log("GET USER ERROR", error);
+    console.log("GET ACCOUNT ERROR", error);
     return null;
   }
 };

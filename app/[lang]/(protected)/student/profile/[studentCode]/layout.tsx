@@ -1,7 +1,6 @@
-import { GetProfileLib } from "@/lib/profile/profile";
-import { PostLib, ProfileLib } from "@/types";
-import { GetPostsLib } from "@/lib/profile/post";
 import { ProfileHeader } from "@/components/profile/profile-header";
+import { GetPostsLib } from "@/lib/profile/post";
+import { GetProfileLib } from "@/lib/profile/profile";
 
 const ProfileIdLayout = async ({
   children,
@@ -10,8 +9,8 @@ const ProfileIdLayout = async ({
   children: React.ReactNode;
   params: { studentCode: string };
 }) => {
-  const profile: ProfileLib = await GetProfileLib(studentCode);
-  const posts: PostLib[] = await GetPostsLib();
+  const profile = await GetProfileLib(studentCode);
+  const posts = await GetPostsLib();
 
   if (!profile.user?.studentCode.match(studentCode)) {
     return <div className="hidden px-24 py-6 md:block"></div>;

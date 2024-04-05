@@ -49,9 +49,7 @@ export const SchoolInput = ({
           startContent={
             <Image
               width={30}
-              src={
-                schools.filter((item) => item.name === school.name)[0].logoUrl
-              }
+              src={schools.filter((item) => item.name === school.name)[0].logo}
               alt="Logo"
             />
           }

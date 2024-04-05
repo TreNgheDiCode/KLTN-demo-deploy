@@ -1,7 +1,8 @@
-import { getDictionary } from "@/data/dictionaries";
-import { metadata } from "../layout";
 import { HeroHeader } from "@/components/home/hero-header";
+import { VideoSection } from "@/components/home/video-section";
+import { getDictionary } from "@/data/dictionaries";
 import { GetSchoolLib } from "@/lib/school";
+import { metadata } from "../layout";
 
 export default async function Home({
   params: { lang },
@@ -12,9 +13,10 @@ export default async function Home({
   metadata.title = dict.Home.Title;
   const schools = await GetSchoolLib();
   return (
-    <main>
+    <main className="flex flex-col">
       <HeroHeader schools={schools || []} />
-      <div className="flex h-screen items-center justify-center bg-rose-500 text-primary">
+      <VideoSection />
+      <div className="flex h-screen items-center justify-center bg-orange-500 text-primary">
         Meomeo
       </div>
     </main>
