@@ -1,4 +1,11 @@
-import { School, StudentStatus } from "@prisma/client";
+import {
+  Post,
+  Profile,
+  ProfileBiography,
+  School,
+  Student,
+  StudentStatus,
+} from "@prisma/client";
 
 export type SchoolLib = School & {
   programs: {
@@ -15,6 +22,23 @@ export type AccountIdLib = {
   student: {
     studentCode: string;
     status: StudentStatus;
+  };
+};
+
+export type StudentLib = Student & {
+  account: {
+    dob: Date;
+    address: string;
+    name: string;
+    image: string;
+  };
+  school: {
+    name: string;
+    logo: string;
+  };
+  profile: Profile & {
+    posts: Post[];
+    biography: ProfileBiography;
   };
 };
 

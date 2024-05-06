@@ -1,11 +1,8 @@
 "use client";
 
 import { ProfilePostModal } from "@/components/modals/profile-post-modal";
-import { ProfilePostEditor } from "./profile-post-editor";
-import { ProfilePostsList } from "./profile-posts-list";
-import { User } from "@prisma/client";
-import { ExtendedPost } from "@/types";
 import { useDisclosure } from "@nextui-org/react";
+import { ProfilePostEditor } from "./profile-post-editor";
 
 interface ProfilePostProps {
   name: string;
