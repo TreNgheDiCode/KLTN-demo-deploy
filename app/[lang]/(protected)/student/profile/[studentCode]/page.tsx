@@ -10,8 +10,7 @@ const ProfileIdPage = async ({
   params: { studentCode: string };
 }) => {
   const student: StudentLib = await GetStudentLibByStudentCode(studentCode);
-
-
+  console.log(student.profile.posts[0].comments);
   return (
     <div className="relative hidden gap-4 md:grid lg:grid-cols-12">
       <div className="lg:col-span-3">
@@ -28,6 +27,7 @@ const ProfileIdPage = async ({
           name={student.account.name}
           image={student.account.image || undefined}
         />
+
         <div className="flex flex-col gap-4 text-primary">
           {student.profile.posts.length > 0 && (
             <ProfilePostsList

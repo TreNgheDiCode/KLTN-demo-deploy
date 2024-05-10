@@ -556,6 +556,10 @@ model Post {
   isArchived Boolean    @default(false)
 
   profileId String
+
+
+
+  
   profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
   images   PostImage[]

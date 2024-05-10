@@ -1,7 +1,6 @@
 "use client";
 
 import { Like } from "@/actions/profile/like";
-import { PostCommentLib } from "@/types";
 import {
   Avatar,
   Button,
@@ -31,6 +30,7 @@ import { useParams, useRouter } from "next/navigation";
 import { startTransition } from "react";
 import { ProfileCommentForm } from "./comment/profile-comment-form";
 import { ProfileCommentsList } from "./comment/profile-comments-list";
+import { PostCommentLib } from "@/types";
 
 interface ProfilePostItemProps {
   name: string;
@@ -57,7 +57,6 @@ export const ProfilePostItem = ({
   logo,
   name,
   createdAt,
-  isModified,
   status,
   content,
   id,

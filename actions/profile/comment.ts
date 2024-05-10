@@ -4,6 +4,8 @@ import { db } from "@/lib/db";
 import { GetAccountIdLib, currentAccount } from "@/lib/account";
 import { CommentSchema } from "@/schemas";
 import { z } from "zod";
+import { auth } from "@/auth";
+import { AccountIdLib } from "@/types";
 
 export const Comment = async (
   values: z.infer<typeof CommentSchema>,
@@ -16,22 +18,17 @@ export const Comment = async (
     if (!validatedFields.success) {
       return { error: "Invalid comment values" };
     }
+    const session = await auth();
 
-    const user = await currentAccount();
-
-    if (!user) {
+    if (!session?.user) {
       return { error: "User not found" };
     }
-
-    const existingUser = await GetAccountIdLib(user.email!);
+    const existingUser: AccountIdLib = await GetAccountIdLib(session.user.id!);
 
     if (!existingUser) {
       return { error: "User not found" };
     }
-
-    console.log(existingUser);
-
-    if (!existingUser.profile) {
+    if (!existingUser.student.profile) {
       return { error: "Profile not found" };
     }
 
@@ -51,20 +48,11 @@ export const Comment = async (
       data: {
         postId: existingPost.id,
         content: value.content,
-        profileId: existingUser.profile.id,
+        profileId: existingUser.student.profile.id,
         parentCommentId: parentCommentId,
         isArchived: false,
       },
     });
-
-    if (value.image) {
-      await db.postCommentImage.create({
-        data: {
-          postCommentId: comment.id,
-          url: value.image,
-        },
-      });
-    }
 
     return { success: "Success" };
   } catch (error) {
@@ -85,12 +73,7 @@ export const GetCommentsByParentId = async (
       },
       include: {
         likes: true,
-        image: true,
-        children: {
-          select: {
-            id: true,
-          },
-        },
+        children: true,
       },
     });
 

@@ -1,6 +1,5 @@
 "use client";
 
-import { PostLib } from "@/types";
 import {
   Button,
   Dropdown,
@@ -12,6 +11,7 @@ import {
 import { Check, ChevronDown } from "lucide-react";
 import { useEffect, useState } from "react";
 import { ProfilePostItem } from "./profile-post-item";
+import { PostLib } from "@/types";
 
 interface ProfilePostsListProps {
   logo?: string;
@@ -108,7 +108,7 @@ export const ProfilePostsList = ({
           isModified={post.createdAt !== post.updatedAt}
           status={post.status}
           comments={post.comments}
-          likes = {post.likes}
+          likes={post.likes}
           profileId={profileId}
         />
       ))}

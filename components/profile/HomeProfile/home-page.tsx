@@ -1,11 +1,12 @@
 "use client";
-import { ExtendedUser } from "@/auth";
 import { Card, CardBody, CardHeader, Divider, User } from "@nextui-org/react";
 import { CameraIcon } from "lucide-react";
 import { useState } from "react";
 import { LuFlagTriangleRight } from "react-icons/lu";
 import { ProfilePosts } from "../post/profile-post";
 import { StudentLib } from "@/types";
+import { ProfilePostsList } from "../post/profile-posts-list";
+import { ListLike } from "@/components/list/like";
 interface Props {
   student: StudentLib;
 }
@@ -104,7 +105,7 @@ export const HomePage = ({ student }: Props) => {
                       : `text-primary hover:cursor-pointer hover:underline`
                   }
                 >
-                  List Saves
+                  List Like
                 </div>
               </div>
 
@@ -241,13 +242,24 @@ export const HomePage = ({ student }: Props) => {
             name={student.account.name}
             image={student.account.image || ""}
           />
+          {student.profile.posts.length > 0 && (
+            <div className="space-y-4">
+              <ProfilePostsList
+                posts={student.profile.posts}
+                logo={student.account.image}
+                profileId={student.profile.id}
+                name={student.account.name}
+              />
+            </div>
+          )}
         </div>
       )}
-      {/* List Saves */}
+      {/* List like */}
       {state2 && (
         <div className="h-full w-[70%] bg-black px-[5px] text-red-600">
           <div className="mx-auto mt-[10px] h-[400px] w-[90%] rounded-lg bg-white">
-            danh sách saves
+            danh sách like
+            <ListLike/>
           </div>
         </div>
       )}

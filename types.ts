@@ -1,5 +1,9 @@
 import {
   Post,
+  PostComment,
+  PostCommentLike,
+  PostImage,
+  PostLike,
   Profile,
   ProfileBiography,
   School,
@@ -12,6 +16,16 @@ export type SchoolLib = School & {
     name: string;
   }[];
 };
+export type PostCommentLib = PostComment & {
+  likes: PostCommentLike[];
+  children: PostComment[];
+};
+
+export type PostLib = Post & {
+  images: PostImage[];
+  likes: PostLike[];
+  comments: PostCommentLib[];
+};
 
 export type AccountIdLib = {
   id: string;
@@ -22,6 +36,7 @@ export type AccountIdLib = {
   student: {
     studentCode: string;
     status: StudentStatus;
+    profile: Profile;
   };
 };
 
@@ -37,7 +52,7 @@ export type StudentLib = Student & {
     logo: string;
   };
   profile: Profile & {
-    posts: Post[];
+    posts: PostLib[];
     biography: ProfileBiography;
   };
 };

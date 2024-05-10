@@ -6,12 +6,9 @@ import { z } from "zod";
 
 export const CreatePost = async (values: z.infer<typeof PostSchema>) => {
   try {
-    console.log("TEST");
-
     const user = await currentAccount();
-
     const req = await fetch(
-      `${process.env.NEXT_PUBLIC_API}/api/profiles/${user?.studentCode}/posts`,
+      `${process.env.NEXT_PUBLIC_API}/api/accounts/students/profiles/${user?.studentCode}/posts`,
       {
         method: "POST",
         cache: "no-store",
@@ -21,8 +18,8 @@ export const CreatePost = async (values: z.infer<typeof PostSchema>) => {
         body: JSON.stringify(values),
       },
     );
-
     const res = await req.json();
+    console.log(res);
 
     if (res.error) {
       console.log(res.error);
@@ -31,8 +28,7 @@ export const CreatePost = async (values: z.infer<typeof PostSchema>) => {
 
     return { success: "Create new post successfully" };
   } catch (error) {
-    console.log("ERROR CREATE NEW POST", error);
-
+    console.log(error);
     return { error: "Error creating new post" };
   }
 };
