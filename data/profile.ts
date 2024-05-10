@@ -4,10 +4,9 @@ import { currentAccount } from "@/lib/account";
 export const getProfileByStudentCode = async (code: string) => {
   try {
     const session = await currentAccount();
-    const user = await db.user.findUnique({
+    const user = await db.account.findUnique({
       where: {
         id: session?.id,
-        studentCode: code,
       },
     });
 
@@ -17,11 +16,10 @@ export const getProfileByStudentCode = async (code: string) => {
 
     const profile = await db.profile.findUnique({
       where: {
-        userId: user.id,
+        studentId: user.id,
       },
       select: {
         status: true,
-        coverImage: true,
         id: true,
         biography: true,
       },

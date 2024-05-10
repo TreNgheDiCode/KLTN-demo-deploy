@@ -10,7 +10,6 @@ import {
 } from "@nextui-org/react";
 import { Check, ChevronDown } from "lucide-react";
 import { useEffect, useState } from "react";
-import { ProfilePostItem } from "./profile-post-item";
 import { PostLib } from "@/types";
 
 interface ProfilePostsListProps {
@@ -96,7 +95,7 @@ export const ProfilePostsList = ({
           </Dropdown>
         </div>
       </div>
-      {posts.map((post) => (
+      {/* {posts.map((post) => (
         <ProfilePostItem
           id={post.id}
           images={post.images}
@@ -111,7 +110,7 @@ export const ProfilePostsList = ({
           likes={post.likes}
           profileId={profileId}
         />
-      ))}
+      ))} */}
     </>
   );
 };

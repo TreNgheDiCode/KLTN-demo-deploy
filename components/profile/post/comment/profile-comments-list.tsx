@@ -1,10 +1,9 @@
 "use client";
 
-import { PostCommentLib } from "@/types";
 import { ProfileCommentItem } from "./profile-comment-item";
 
 interface ProfileCommentsListProps {
-  comments?: PostCommentLib[];
+  comments?: [];
   name: string;
   image?: string;
 }
@@ -20,7 +19,7 @@ export const ProfileCommentsList = ({
       {comments?.map((comment) => {
         return (
           <>
-            <ProfileCommentItem
+            {/* <ProfileCommentItem
               postId={comment.postId}
               id={comment.id}
               name={name}
@@ -34,7 +33,7 @@ export const ProfileCommentsList = ({
               updatedAt={comment.updatedAt}
               isArchived={comment.isArchived}
               childLength={comment.children.length}
-            />
+            /> */}
           </>
         );
       })}

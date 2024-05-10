@@ -4,6 +4,7 @@ import { LikeCmt } from "@/actions/profile/likecmt";
 import { cn } from "@/lib/utils";
 import { Avatar, Image, Spinner } from "@nextui-org/react";
 import { PostCommentLike } from "@prisma/client";
+import { PostCommentLike } from "@prisma/client";
 import { formatDistanceToNowStrict } from "date-fns";
 import { vi } from "date-fns/locale/vi";
 import { CornerDownRight, CornerLeftUp } from "lucide-react";
@@ -19,6 +20,7 @@ interface ProfileCommentItemProps {
   id: string;
   content?: string;
   likes?: PostCommentLike[];
+  image?: string;
   image?: string;
   profileId: String;
   name: string;
@@ -46,7 +48,7 @@ export const ProfileCommentItem = ({
   const [isExpanded, setIsExpanded] = useState(false);
 
   const [isPending, startTransition] = useTransition();
-  const [items, setItems] = useState<PostCommentLib[]>([]);
+  const [items, setItems] = useState<[]>([]);
 
   const onLoad = async () => {
     startTransition(() => {
@@ -84,6 +86,7 @@ export const ProfileCommentItem = ({
           </div>
           {image && (
             <div className="aspect-auto w-full max-w-[200px]">
+              <Image src={image} alt="comment image" />
               <Image src={image} alt="comment image" />
             </div>
           )}

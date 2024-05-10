@@ -51,6 +51,7 @@ export const Comment = async (
         profileId: existingUser.student.profile.id,
         parentCommentId: parentCommentId,
         isArchived: false,
+        image: value.image,
       },
     });
 

@@ -14,12 +14,12 @@ export const uploadProfileCoverImage = async (
       return { error: "Profile not found" };
     }
 
-    await db.profile.update({
+    await db.student.update({
       where: {
         id: profile.id,
       },
       data: {
-        coverImage: url,
+        cover: url,
       },
     });
 
