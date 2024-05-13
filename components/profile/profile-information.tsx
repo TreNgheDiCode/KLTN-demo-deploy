@@ -11,11 +11,11 @@ import {
   Textarea,
 } from "@nextui-org/react";
 import { Area, ProfileBiography, ProfileBiographySocial } from "@prisma/client";
-import { format, set } from "date-fns";
+import { format } from "date-fns";
 import { vi } from "date-fns/locale/vi";
 import { Cake, MapPin } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
-import { ChangeEvent, startTransition, useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 interface ProfileInformationProps {
   biography: ProfileBiography;
@@ -37,6 +37,7 @@ export const ProfileInformation = ({
 }: ProfileInformationProps) => {
   const [button, setButton] = useState(true);
   const [textValue, setTextValue] = useState(biography?.content);
+  const [loading, setLoading] = useState(false);
 
   const onAddBio = () => {
     setButton((prveButton) => !prveButton);
@@ -50,10 +51,9 @@ export const ProfileInformation = ({
   const router = useRouter();
 
   const onBiography = async () => {
-    startTransition(() => {
-      BiographyAdd(studentCode, textValue);
-      onAddBio;
-    });
+    setLoading(true);
+    await BiographyAdd(studentCode, textValue).finally(() => setLoading(false));
+    setButton((prveButton) => !prveButton);
     router.refresh();
   };
 
@@ -94,6 +94,7 @@ export const ProfileInformation = ({
             )}
             {!button && (
               <Button
+                isLoading={loading}
                 onClick={onBiography}
                 color="success"
                 size="md"
