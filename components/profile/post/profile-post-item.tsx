@@ -35,7 +35,7 @@ import { PostCommentLib } from "@/types";
 interface ProfilePostItemProps {
   name: string;
   logo: string;
-  comments?: [];
+  comments?: PostCommentLib[];
   likes?: PostLike[];
   id: string;
   createdAt: Date;
@@ -68,9 +68,9 @@ export const ProfilePostItem = ({
   const isLike = likes?.some((like) => like.profileId == profileId);
   const router = useRouter();
 
-  // const parentComments = comments?.filter(
-  //   (comment) => !comment.parentCommentId,
-  // );
+  const parentComments = comments?.filter(
+    (comment) => !comment.parentCommentId,
+  );
 
   const params = useParams();
   const studentCode = params.studentCode as string;
@@ -157,7 +157,11 @@ export const ProfilePostItem = ({
         <Divider />
       </div>
       <CardFooter className="flex-col items-start justify-start gap-2">
-        <ProfileCommentsList comments={[]} name={name} image={logo} />
+        <ProfileCommentsList
+          comments={parentComments}
+          name={name}
+          image={logo}
+        />
         <ProfileCommentForm logo={logo} postId={id} />
       </CardFooter>
     </Card>

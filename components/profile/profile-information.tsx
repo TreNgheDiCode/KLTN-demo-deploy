@@ -44,12 +44,6 @@ export const ProfileInformation = ({
   const handleTextareaChange = (event: ChangeEvent<HTMLInputElement>) => {
     setTextValue(event.target.value);
   };
-  const onAddBio = () => {
-    setButton((prveButton) => !prveButton);
-  };
-  const handleTextareaChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setTextValue(event.target.value);
-  };
 
   const params = useParams();
   const studentCode = params.studentCode as string;
@@ -73,6 +67,7 @@ export const ProfileInformation = ({
               Add Biography
             </Button>
           )}
+          {button && <p className="mx-auto">{biography?.content || ""}</p>}
           {!button && (
             <Textarea
               onChange={(e) => handleTextareaChange(e)}
@@ -81,32 +76,14 @@ export const ProfileInformation = ({
               variant="faded"
             />
           )}
-          {button && <p className="mx-auto">{biography?.content || ""}</p>}
-          {button && biography?.content && (
-            <Button onClick={onAddBio} className="h-[40px] w-full">
-              Add Biography
-            </Button>
-          )}
-          {!button && (
-            <Textarea
-              onChange={(e) => handleTextareaChange(e)}
-              value={textValue}
-              size="sm"
-              variant="faded"
-            />
-          )}
-          {button && <p className="mx-auto">{biography?.content || ""}</p>}
           {button && biography?.content && (
             <Button onClick={onAddBio} className="h-[40px] w-full">
               Update Biography
             </Button>
           )}
-          )}
           <div className="flex">
             {!button && (
-            {!button && (
               <Button
-                onClick={onAddBio}
                 onClick={onAddBio}
                 size="md"
                 color="primary"
@@ -115,20 +92,13 @@ export const ProfileInformation = ({
                 Cancle
               </Button>
             )}
-            {!button && (
-              <Button
-            )}
+
             {!button && (
               <Button
                 onClick={onBiography}
                 color="success"
-                color="success"
                 size="md"
                 className="ml-2"
-              >
-                Save
-              </Button>
-            )}
               >
                 Save
               </Button>
