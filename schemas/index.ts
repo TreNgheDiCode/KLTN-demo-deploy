@@ -19,6 +19,11 @@ export const LoginSchema = z.object({
   password: z.string().min(1, {
     message: "Password is required",
   }),
+  studentCode: z.optional(
+    z.string().min(10, {
+      message: "Student code is required minimum of 10 characters",
+    }),
+  ),
 });
 
 export const RegisterSchema = z

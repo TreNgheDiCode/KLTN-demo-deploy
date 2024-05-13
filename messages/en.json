@@ -4,8 +4,10 @@
     "Login_Button": "Login",
     "Register_Button": "Register",
     "Email_Placeholder": "Enter your email",
+    "StudentCode_Placeholder": "Enter your student code",
     "Password_Placeholder": "Enter your password",
     "Email_Label": "Email",
+    "StudenCode_Label": "Student Code",
     "Password_Label": "Password",
     "No_Account": "Don't have account? Register",
     "Forgot_Password": "Forgot password?"

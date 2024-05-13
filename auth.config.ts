@@ -2,7 +2,6 @@ import type { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
 import { LoginSchema } from "@/schemas";
-import { toast } from "sonner";
 
 export default {
   providers: [
@@ -15,7 +14,7 @@ export default {
             `${process.env.NEXT_PUBLIC_API}/api/auth/login`,
             {
               method: "POST",
-              cache: "force-cache",
+              cache: "no-cache",
               headers: {
                 "Content-Type": "application/json",
               },
@@ -24,6 +23,8 @@ export default {
           );
 
           const user = await res.json();
+
+          console.log(user);
 
           if (!user.email) {
             return null;

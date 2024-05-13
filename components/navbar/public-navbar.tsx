@@ -4,7 +4,6 @@ import { AccountIdLib } from "@/types";
 import {
   Button,
   Divider,
-  Link,
   Navbar,
   NavbarBrand,
   NavbarContent,
@@ -19,6 +18,7 @@ import { AccountMenu } from "./account-menu";
 import { ThemeToggle } from "./theme-toggle";
 import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
+import Link from "next/link";
 
 interface PublicNavbarProps {
   account?: AccountIdLib;
@@ -54,31 +54,11 @@ export const PublicNavbar = ({ account }: PublicNavbarProps) => {
       }
     };
 
-    const handleWheel = (e: WheelEvent) => {
-      const viewportsScrolled = Math.round(window.scrollY / window.innerHeight);
-
-      if (e.deltaY > 0) {
-        // Scroll down
-        window.scrollTo({
-          top: (viewportsScrolled + 1) * window.innerHeight + 5,
-          behavior: "smooth",
-        });
-      } else {
-        // Scroll up
-        window.scrollTo({
-          top: (viewportsScrolled - 1) * window.innerHeight,
-          behavior: "smooth",
-        });
-      }
-    };
-
     window.addEventListener("scroll", handleScroll);
-    window.addEventListener("wheel", handleWheel);
     window.addEventListener("click", handleClick);
 
     // Clean up the event listener when the component unmounts
     return () => {
-      window.removeEventListener("wheel", handleWheel);
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("click", handleClick);
     };
@@ -203,13 +183,14 @@ export const PublicNavbar = ({ account }: PublicNavbarProps) => {
           {!account && (
             <>
               <Button
+                as={Link}
                 variant="bordered"
                 radius="full"
                 onClick={() => setLoading(true)}
                 isLoading={isLoading}
                 size="md"
                 className="border-[#7D1F1F] font-semibold text-[#7D1F1F] dark:border-primary dark:text-white"
-                href="/register"
+                href="/auth/register"
               >
                 Get Started
               </Button>
@@ -221,7 +202,7 @@ export const PublicNavbar = ({ account }: PublicNavbarProps) => {
                 radius="full"
                 size="md"
                 className="bg-[#7D1F1F] font-semibold text-white dark:text-primary"
-                href="/login"
+                href="/auth/login"
               >
                 Login
               </Button>

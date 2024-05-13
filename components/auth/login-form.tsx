@@ -4,7 +4,7 @@ import { login } from "@/actions/auth/login";
 import { DictionaryLanguage } from "@/data/dictionaries";
 import { LoginSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Input, Link } from "@nextui-org/react";
+import { Button, Input } from "@nextui-org/react";
 import { Eye, EyeOff, Key, Mail } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -12,12 +12,14 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { Form, FormControl, FormField, FormItem } from "../ui/form";
 import { CardWrapper } from "./card-wrapper";
+import Link from "next/link";
 
 type LoginForm = z.infer<typeof LoginSchema>;
 
 export const LoginForm = ({ dict }: { dict: DictionaryLanguage }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showStudentCode, setShowStudentCode] = useState(false);
 
   const toggleVisibility = () => setIsVisible(!isVisible);
 
@@ -37,8 +39,15 @@ export const LoginForm = ({ dict }: { dict: DictionaryLanguage }) => {
         if (data) {
           if (data.error) {
             toast.error(data.error);
-          } else {
+          }
+
+          if (data.success) {
             toast.success(data.success);
+          }
+
+          if (data.twoFactor) {
+            toast.error(data.twoFactor);
+            setShowStudentCode(true);
           }
         }
       })
@@ -57,31 +66,62 @@ export const LoginForm = ({ dict }: { dict: DictionaryLanguage }) => {
           className="flex flex-col items-start gap-4"
         >
           <div className="flex w-full flex-col gap-4">
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field, fieldState }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input
-                      autoFocus
-                      isDisabled={isLoading}
-                      label={dict.Authentication.Email_Label}
-                      labelPlacement="outside"
-                      variant="bordered"
-                      size="md"
-                      placeholder={dict.Authentication.Email_Placeholder}
-                      startContent={<Mail className="size-4" />}
-                      errorMessage={fieldState.error?.message}
-                      isInvalid={fieldState.invalid}
-                      isRequired
-                      onValueChange={field.onChange}
-                      {...field}
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
+            {showStudentCode && (
+              <FormField
+                control={form.control}
+                name="studentCode"
+                render={({ field, fieldState }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        autoFocus
+                        isDisabled={isLoading}
+                        label={dict.Authentication.StudenCode_Label}
+                        labelPlacement="outside"
+                        variant="bordered"
+                        size="md"
+                        placeholder={
+                          dict.Authentication.StudentCode_Placeholder
+                        }
+                        startContent={<Mail className="size-4" />}
+                        errorMessage={fieldState.error?.message}
+                        isInvalid={fieldState.invalid}
+                        isRequired
+                        onValueChange={field.onChange}
+                        {...field}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            )}
+            {!showStudentCode && (
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field, fieldState }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        autoFocus
+                        isDisabled={isLoading}
+                        label={dict.Authentication.Email_Label}
+                        labelPlacement="outside"
+                        variant="bordered"
+                        size="md"
+                        placeholder={dict.Authentication.Email_Placeholder}
+                        startContent={<Mail className="size-4" />}
+                        errorMessage={fieldState.error?.message}
+                        isInvalid={fieldState.invalid}
+                        isRequired
+                        onValueChange={field.onChange}
+                        {...field}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            )}
             <FormField
               name="password"
               control={form.control}
@@ -121,9 +161,7 @@ export const LoginForm = ({ dict }: { dict: DictionaryLanguage }) => {
               )}
             />
             <Link
-              size="sm"
-              underline="hover"
-              className="italic hover:cursor-pointer"
+              className="italic hover:cursor-pointer hover:underline"
               href="/auth/reset"
             >
               {dict.Authentication.Forgot_Password}
