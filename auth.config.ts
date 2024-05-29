@@ -15,7 +15,7 @@ export default {
             `${process.env.NEXT_PUBLIC_API}/api/auth/login`,
             {
               method: "POST",
-              cache: "force-cache",
+              cache: "no-store",
               headers: {
                 "Content-Type": "application/json",
               },

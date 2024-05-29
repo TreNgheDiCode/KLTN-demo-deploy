@@ -22,8 +22,6 @@ export const newVerification = async (token?: string) => {
 
     return { success: "Verified email successfully" };
   } catch (error) {
-    console.log("VERIFICATION EMAIL ERROR", error);
-
     return { error: "Failed to verify email" };
   }
 };

@@ -11,7 +11,6 @@ export const GetSchoolLib = async () => {
 
     return schools;
   } catch (error) {
-    console.log("GET SCHOOL LIB ERROR", error);
     return null;
   }
 };

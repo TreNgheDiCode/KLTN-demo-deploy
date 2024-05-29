@@ -19,16 +19,13 @@ export const CreatePost = async (values: z.infer<typeof PostSchema>) => {
       },
     );
     const res = await req.json();
-    console.log(res);
 
     if (res.error) {
-      console.log(res.error);
       return { error: res.error };
     }
 
     return { success: "Create new post successfully" };
   } catch (error) {
-    console.log(error);
     return { error: "Error creating new post" };
   }
 };

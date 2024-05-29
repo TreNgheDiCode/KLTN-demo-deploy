@@ -63,7 +63,6 @@ export const RegisterForm = ({ schools }: RegisterFormProps) => {
 
     await register(values)
       .then((res) => {
-        console.log(res);
         if (res.success) {
           toast.success(res.success);
           setTimeout(() => router.push("/auth/login"), 3000);

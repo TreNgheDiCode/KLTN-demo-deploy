@@ -1,7 +1,15 @@
-export const ListLike = () => {
+import { PostLib } from "@/types";
+import { ComponentListLike } from "./ListLike";
+
+interface PropPost {
+  posts: PostLib[];
+}
+
+export const ListLike = ({ posts }: PropPost) => {
   return (
     <>
-      <h1>danh sach like</h1>
+      <div className="text-[24px] font-bold">Danh sách like</div>
+      <ComponentListLike />
     </>
   );
 };

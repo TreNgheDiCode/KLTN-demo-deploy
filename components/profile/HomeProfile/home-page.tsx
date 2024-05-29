@@ -11,11 +11,21 @@ interface Props {
   student: StudentLib;
 }
 export const HomePage = ({ student }: Props) => {
+  console.log(student);
   const [state1, setState1] = useState(true);
   const [state2, setState2] = useState(false);
   const [state3, setState3] = useState(false);
   const [state4, setState4] = useState(false);
   const [state5, setState5] = useState(false);
+  if (
+    state1 == false &&
+    state2 == false &&
+    state3 == false &&
+    state4 == false &&
+    state5 == false
+  ) {
+    setState1(true);
+  }
 
   const handleTextareaChange1 = () => {
     setState1((prev) => !prev);
@@ -53,14 +63,14 @@ export const HomePage = ({ student }: Props) => {
     setState1(false);
   };
   const cssText =
-    "hover:cursor-pointer font-bold text-black/85 border-b-[2px] border-b-black ";
+    "hover:cursor-pointer font-bold text-black/85 border-b-[2px] border-b-black  dark:text-white";
 
   const handleAllert = () => {};
   return (
     <>
       <div className="w-[30%]">
         {/* My User */}
-        <div className="h-fit w-fit min-w-[200px] rounded-xl  bg-white shadow-xl ">
+        <div className="dark:border-#cccc h-fit w-fit min-w-[200px] rounded-xl  shadow-xl dark:border dark:bg-background">
           <div className="px-[20px] py-[20px]">
             <User
               name={student.account.name!}
@@ -154,8 +164,8 @@ export const HomePage = ({ student }: Props) => {
           </div>
         </div>
         {/* List Friend  */}
-        <Card className="mt-7 h-[300px] w-fit min-w-[200px] rounded-xl bg-white shadow-2xl">
-          <CardBody className="hidden:overflow-y-scroll w-[340px] scroll-m-2 px-[20px] py-[20px] hover:overflow-y-scroll">
+        <Card className="mt-7 h-[300px] w-fit min-w-[200px] rounded-xl border shadow-2xl dark:bg-background ">
+          <CardBody className="hidden:overflow-y-scroll w-[340px] scroll-m-2 px-[20px] py-[20px] hover:overflow-y-scroll ">
             <div className="pb-[15px]">
               <User
                 name={"hello"}
@@ -237,7 +247,7 @@ export const HomePage = ({ student }: Props) => {
       </div>
       {/* Post */}
       {state1 && (
-        <div className="h-full w-[70%] bg-black px-[5px] text-red-600">
+        <div className="h-full w-[70%] bg-white px-[5px] text-black dark:bg-background dark:text-white">
           <ProfilePosts
             name={student.account.name}
             image={student.account.image || ""}
@@ -255,11 +265,11 @@ export const HomePage = ({ student }: Props) => {
         </div>
       )}
       {/* List like */}
+
       {state2 && (
-        <div className="h-full w-[70%] bg-black px-[5px] text-red-600">
-          <div className="mx-auto mt-[10px] h-[400px] w-[90%] rounded-lg bg-white">
-            danh sách like
-            <ListLike/>
+        <div className="border-#cccc h-full w-[70%] border px-[5px] py-[5px] text-black dark:bg-background dark:text-white">
+          <div className="mx-auto mt-[10px] h-[400px] w-[90%] rounded-lg  dark:bg-background">
+            <ListLike posts={student.profile.posts} />
           </div>
         </div>
       )}

@@ -3,14 +3,14 @@
 import { db } from "@/lib/db";
 
 export const LikeCmt = async (studentCode: string, postCmtId: string) => {
-    try {
-        const profile = await db.profile.findFirst({
-            where: {
-                user: {
-                     studentCode
-                },
-            }
-        })
+  try {
+    const profile = await db.profile.findFirst({
+      where: {
+        id: {
+          studentCode,
+        },
+      },
+    });
 
     if (!profile) {
       return { error: "Khong tim thay profile" };
@@ -54,7 +54,6 @@ export const LikeCmt = async (studentCode: string, postCmtId: string) => {
 
     return { success: "Like cmt thanh cong" };
   } catch (error) {
-    console.log(error);
     return { error: "Like that bai" };
   }
 };

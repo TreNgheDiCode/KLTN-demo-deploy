@@ -19,7 +19,7 @@ export const ProfileCommentsList = ({
     <div className="flex w-full flex-col gap-2 overflow-y-scroll scrollbar-hide">
       {comments?.map((comment) => {
         return (
-          <>
+          <div key={comment.id}>
             <ProfileCommentItem
               postId={comment.postId}
               id={comment.id}
@@ -35,7 +35,7 @@ export const ProfileCommentsList = ({
               isArchived={comment.isArchived}
               childLength={comment.children.length}
             />
-          </>
+          </div>
         );
       })}
     </div>

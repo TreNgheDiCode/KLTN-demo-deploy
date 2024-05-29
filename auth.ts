@@ -49,6 +49,7 @@ export const {
     },
     async jwt({ token }) {
       if (!token.email || !token.sub) return token;
+      console.log(token);
 
       const existingUser: AccountIdLib = await GetAccountIdLib(token.sub);
 

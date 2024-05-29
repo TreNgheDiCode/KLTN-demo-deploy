@@ -52,7 +52,6 @@ export const Save = async (studentCode: string, postId: string) => {
     });
     return { success: "save thanh cong!!! " };
   } catch (error) {
-    console.log(error);
     return { error: "save that bai " };
   }
 };

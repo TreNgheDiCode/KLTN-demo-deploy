@@ -36,7 +36,6 @@ export const updateBiography = async (
       },
     });
   } catch (error) {
-    console.log(error);
     return { error: "update bio thất bại" };
   }
 };

@@ -25,7 +25,6 @@ export const reset = async (values: z.infer<typeof ResetSchema>) => {
 
     return { success: "Reset pasword email sent" };
   } catch (error) {
-    console.log("RESET PASSWORD ERROR", error);
     return { error: "Failed to reset password" };
   }
 };

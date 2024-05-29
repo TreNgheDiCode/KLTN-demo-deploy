@@ -57,7 +57,6 @@ export const Comment = async (
 
     return { success: "Success" };
   } catch (error) {
-    console.log(error);
     return { error: "Error while posting comment" };
   }
 };

@@ -17,7 +17,7 @@ const StudentProfilePage = async () => {
 
   return (
     <>
-      <div className="container flex bg-[#cccccccc] py-8 text-primary">
+      <div className="container flex bg-white py-8 text-primary dark:bg-background">
         <HomePage student={student} />
       </div>
     </>

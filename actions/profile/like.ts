@@ -1,8 +1,6 @@
 "use server";
 
 import { db } from "@/lib/db";
-import { error } from "console";
-import { Content } from "next/font/google";
 
 export const Like = async (studentCode: string, postId: string) => {
   try {
@@ -57,8 +55,6 @@ export const Like = async (studentCode: string, postId: string) => {
 
     return { success: "Like thanh cong" };
   } catch (error) {
-    console.log(error);
     return { error: "Like that bai" };
   }
 };
-
