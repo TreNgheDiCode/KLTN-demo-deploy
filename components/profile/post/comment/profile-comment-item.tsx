@@ -1,6 +1,4 @@
 "use client";
-
-import { LikeCmt } from "@/actions/profile/likecmt";
 import { cn } from "@/lib/utils";
 import { Avatar, Image, Spinner } from "@nextui-org/react";
 import { PostCommentLike } from "@prisma/client";
@@ -64,7 +62,7 @@ export const ProfileCommentItem = ({
   const studentCode = params.studentCode as string;
   const onLike = async () => {
     startTransition(() => {
-      LikeCmt(studentCode, id);
+      // LikeCmt(studentCode, id);
     });
 
     router.refresh();

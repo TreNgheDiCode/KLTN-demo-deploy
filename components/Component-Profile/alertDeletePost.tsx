@@ -28,13 +28,12 @@ export default function ResponsiveDialog({ id }: props) {
       if (res?.success) {
         toast.success(res.success);
         setOpen(false);
-        router.refresh();
       }
-
       if (res?.error) {
         toast.error(res.error);
       }
     });
+    router.refresh();
   };
 
   return (

@@ -22,7 +22,7 @@ export const ComponentListSave = () => {
         const responeJson = await respone.json();
         setPostSave(responeJson);
       } catch (error) {
-        toast.error("Loi lay save");
+        toast.error("Lỗi lấy danh sách lưu");
       }
     }
 

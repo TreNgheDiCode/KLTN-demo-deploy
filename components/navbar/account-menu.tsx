@@ -21,6 +21,9 @@ export const AccountMenu = ({ account }: { account: AccountIdLib }) => {
       router.refresh();
     });
   };
+  const handclick = () => {
+    router.push("http://localhost:3001/en/student/profile/24PT627665");
+  };
   return (
     <Dropdown placement="bottom-end" backdrop="blur">
       <DropdownTrigger>
@@ -48,7 +51,9 @@ export const AccountMenu = ({ account }: { account: AccountIdLib }) => {
             <p className="font-semibold">Signed in as</p>
             <p className="font-semibold">{account.email}</p>
           </DropdownItem>
-          <DropdownItem key={"profile"}>My Profile</DropdownItem>
+          <DropdownItem onClick={handclick} key={"profile"}>
+            My Profile
+          </DropdownItem>
         </DropdownSection>
         <DropdownSection title={"Actions"}>
           <DropdownItem

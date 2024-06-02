@@ -1,5 +1,6 @@
 "use server";
 
+import { auth } from "@/auth";
 import { currentAccount } from "@/lib/account";
 import { PostSchema } from "@/schemas";
 import { z } from "zod";
@@ -32,7 +33,9 @@ export const CreatePost = async (values: z.infer<typeof PostSchema>) => {
 
 export const deletePost = async (postId: string) => {
   try {
-    const reqUrl = `${process.env.NEXT_PUBLIC_API}/api/accounts/students/profiles/posts/${postId}`;
+    const session = await auth();
+    const studentCode = session?.user.studentCode;
+    const reqUrl = `${process.env.NEXT_PUBLIC_API}/api/accounts/students/profiles/${studentCode}/posts/${postId}`;
     const req = await fetch(reqUrl, {
       method: "DELETE",
       cache: "no-store",
@@ -44,6 +47,6 @@ export const deletePost = async (postId: string) => {
       return { success: "Xóa bài viết thành công" };
     }
   } catch (error) {
-    return { error: "xóa bài viết thất bại" };
+    return { error: "Xóa bài viết thất bại" };
   }
 };

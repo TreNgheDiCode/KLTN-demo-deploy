@@ -2,9 +2,7 @@
 import { auth } from "@/auth";
 export const Save = async (postId: string) => {
   try {
-    console.log("Meomeo");
     const session = await auth();
-
     const studentCode = session?.user.studentCode;
     const Url = `${process.env.NEXT_PUBLIC_API}/api/accounts/students/profiles/${studentCode}/posts/${postId}/save`;
     const reqUrl = await fetch(Url, {

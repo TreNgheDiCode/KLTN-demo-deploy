@@ -31,7 +31,6 @@ export default function ResponsiveDialog({ id }: props) {
         window.location.reload();
       } else {
         toast.error(res);
-        window.location.reload();
       }
     });
   };

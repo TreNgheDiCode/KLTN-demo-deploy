@@ -1,9 +1,6 @@
-"use client";
-
-import { onDeleteListLike } from "@/actions/profile/like";
 import { ListLike } from "@/types";
-import { Image, User } from "@nextui-org/react";
-import { CameraIcon, Trash2 } from "lucide-react";
+import { User } from "@nextui-org/react";
+import { CameraIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -18,12 +15,12 @@ export const ComponentListLike = () => {
   useEffect(() => {
     async function fetchListLike() {
       try {
-        const requestUrl = `${process.env.NEXT_PUBLIC_API}/api/accounts/students/profiles/${sesion.data?.user.studentCode}/likes`;
-        const respone = await fetch(requestUrl);
-        const responeJson = await respone.json();
-        setPostLikes(responeJson);
+        const Url = `${process.env.NEXT_PUBLIC_API}/api/accounts/students/profiles/${sesion.data?.user.studentCode}/like`;
+        const rqUrl = await fetch(Url);
+        const res = await rqUrl.json();
+        setPostLikes(res);
       } catch (error) {
-        toast.error("Loi lay likes");
+        toast.error("Lỗi lấy danh sách thích");
       }
     }
 

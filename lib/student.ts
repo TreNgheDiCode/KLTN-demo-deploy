@@ -6,8 +6,6 @@ export const GetStudentLibByStudentCode = async (studentCode: string) => {
       cache: "no-store",
     },
   );
-
   const data = await req.json();
-
   return data;
 };
