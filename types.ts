@@ -3,6 +3,7 @@ import {
   PostComment,
   PostCommentLike,
   PostImage,
+  PostLike,
   PostSave,
   Profile,
   ProfileBiography,
@@ -12,6 +13,20 @@ import {
 } from "@prisma/client";
 
 export type ListLike = {
+  id: string;
+  profile: {
+    id: string;
+    student: {
+      account: {
+        name: string;
+      };
+    };
+  };
+  post: Post & {
+    images: PostImage[];
+  };
+};
+export type ListSave = {
   id: string;
   profile: {
     id: string;
@@ -38,7 +53,7 @@ export type PostCommentLib = PostComment & {
 
 export type PostLib = Post & {
   images: PostImage[];
-  likes: ListLike[];
+  likes: PostLike[];
   comments: PostCommentLib[];
   saves: PostSave[];
 };

@@ -95,13 +95,13 @@ export const ProfilePostsList = ({
           </Dropdown>
         </div>
       </div>
-      {posts.map((post) => {
+      {posts?.map((post) => {
         return (
           <ProfilePostItem
+            key={post.id}
             id={post.id}
             images={post.images}
             content={post.content || undefined}
-            key={post.content}
             name={name}
             logo={logo!}
             createdAt={post.createdAt}

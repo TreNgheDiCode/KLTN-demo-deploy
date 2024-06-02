@@ -4,7 +4,6 @@ import { LikeCmt } from "@/actions/profile/likecmt";
 import { cn } from "@/lib/utils";
 import { Avatar, Image, Spinner } from "@nextui-org/react";
 import { PostCommentLike } from "@prisma/client";
-import { PostCommentLike } from "@prisma/client";
 import { formatDistanceToNowStrict } from "date-fns";
 import { vi } from "date-fns/locale/vi";
 import { CornerDownRight, CornerLeftUp } from "lucide-react";
@@ -20,7 +19,6 @@ interface ProfileCommentItemProps {
   id: string;
   content?: string;
   likes?: PostCommentLike[];
-  image?: string;
   image?: string;
   profileId: String;
   name: string;
@@ -54,7 +52,7 @@ export const ProfileCommentItem = ({
     startTransition(() => {
       GetCommentsByParentId(postId, id).then((res) => {
         if (res) {
-          setItems(res);
+          // setItems(res);
         }
       });
     });

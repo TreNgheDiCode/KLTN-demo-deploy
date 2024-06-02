@@ -1,60 +1,32 @@
 "use server";
 
-import { db } from "@/lib/db";
-
-export const Like = async (studentCode: string, postId: string) => {
+import { auth } from "@/auth";
+import { NextRequest, NextResponse } from "next/server";
+export const Like = async (postId: string) => {
   try {
-    const profile = await db.profile.findFirst({
-      where: {
-        student: {
-          studentCode,
-        },
-      },
+    const session = await auth();
+    const studentCode = session?.user.studentCode;
+    const Url = `${process.env.NEXT_PUBLIC_API}/api/accounts/students/profiles/${studentCode}/posts/${postId}/like`;
+    const reqUrl = await fetch(Url, {
+      method: "GET",
     });
-
-    if (!profile) {
-      return { error: "Khong tim thay profile" };
-    }
-
-    const post = await db.post.findUnique({
-      where: {
-        id: postId,
-        isArchived: false,
-      },
-    });
-
-    if (!post) {
-      return { error: "Khong tim thay post" };
-    }
-
-    const like = await db.postLike.findUnique({
-      where: {
-        profileId_postId: {
-          postId: post.id,
-          profileId: profile.id,
-        },
-      },
-    });
-
-    if (like) {
-      await db.postLike.delete({
-        where: {
-          id: like.id,
-        },
-      });
-
-      return { success: "Unlike thanh cong" };
-    }
-
-    await db.postLike.create({
-      data: {
-        postId: post.id,
-        profileId: profile.id,
-      },
-    });
-
-    return { success: "Like thanh cong" };
+    const res = await reqUrl.json();
+    return await res.json();
   } catch (error) {
-    return { error: "Like that bai" };
+    return { error: "Thích bài viết thất bại" };
+  }
+};
+
+export const onDeleteListLike = async (likeId: string) => {
+  try {
+    const session = await auth();
+    const requestUrl = `${process.env.NEXT_PUBLIC_API}/api/accounts/students/profiles/${session?.user.studentCode}/likes/${likeId}`;
+    const respone = await fetch(requestUrl, {
+      method: "DELETE",
+    });
+
+    return await respone.json();
+  } catch (error) {
+    console.log(error);
   }
 };

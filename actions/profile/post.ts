@@ -29,3 +29,21 @@ export const CreatePost = async (values: z.infer<typeof PostSchema>) => {
     return { error: "Error creating new post" };
   }
 };
+
+export const deletePost = async (postId: string) => {
+  try {
+    const reqUrl = `${process.env.NEXT_PUBLIC_API}/api/accounts/students/profiles/posts/${postId}`;
+    const req = await fetch(reqUrl, {
+      method: "DELETE",
+      cache: "no-store",
+    });
+
+    const res = await req.json();
+
+    if (res) {
+      return { success: "Xóa bài viết thành công" };
+    }
+  } catch (error) {
+    return { error: "xóa bài viết thất bại" };
+  }
+};

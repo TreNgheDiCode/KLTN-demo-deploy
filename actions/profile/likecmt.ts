@@ -6,8 +6,8 @@ export const LikeCmt = async (studentCode: string, postCmtId: string) => {
   try {
     const profile = await db.profile.findFirst({
       where: {
-        id: {
-          studentCode,
+        student: {
+          id: studentCode,
         },
       },
     });

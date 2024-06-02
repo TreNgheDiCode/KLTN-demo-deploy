@@ -2,7 +2,6 @@ import type { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
 import { LoginSchema } from "@/schemas";
-import { toast } from "sonner";
 
 export default {
   providers: [

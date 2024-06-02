@@ -6,12 +6,14 @@ import { LuFlagTriangleRight } from "react-icons/lu";
 import { ProfilePosts } from "../post/profile-post";
 import { StudentLib } from "@/types";
 import { ProfilePostsList } from "../post/profile-posts-list";
-import { ListLike } from "@/components/list/like";
+import { ComponentListSave } from "@/components/Component-Profile/listSave";
+import { ComponentEvent } from "@/components/Component-Profile/event";
+import { ComponentMessenger } from "@/components/Component-Profile/messeger";
+import { ComponentListLike } from "@/components/Component-Profile/listLike";
 interface Props {
   student: StudentLib;
 }
 export const HomePage = ({ student }: Props) => {
-  console.log(student);
   const [state1, setState1] = useState(true);
   const [state2, setState2] = useState(false);
   const [state3, setState3] = useState(false);
@@ -129,7 +131,7 @@ export const HomePage = ({ student }: Props) => {
                       : `text-primary hover:cursor-pointer hover:underline`
                   }
                 >
-                  Groups
+                  List Saved
                 </div>
               </div>
 
@@ -269,7 +271,32 @@ export const HomePage = ({ student }: Props) => {
       {state2 && (
         <div className="border-#cccc h-full w-[70%] border px-[5px] py-[5px] text-black dark:bg-background dark:text-white">
           <div className="mx-auto mt-[10px] h-[400px] w-[90%] rounded-lg  dark:bg-background">
-            <ListLike posts={student.profile.posts} />
+            <ComponentListLike />
+          </div>
+        </div>
+      )}
+
+      {/* List Save */}
+      {state3 && (
+        <div className="border-#cccc h-full w-[70%] border px-[5px] py-[5px] text-black dark:bg-background dark:text-white">
+          <div className="mx-auto mt-[10px] h-[400px] w-[90%] rounded-lg  dark:bg-background">
+            <ComponentListSave />
+          </div>
+        </div>
+      )}
+      {/* Event  */}
+      {state4 && (
+        <div className="border-#cccc h-full w-[70%] border px-[5px] py-[5px] text-black dark:bg-background dark:text-white">
+          <div className="mx-auto mt-[10px] h-[400px] w-[90%] rounded-lg  dark:bg-background">
+            <ComponentEvent />
+          </div>
+        </div>
+      )}
+      {/* Messeger  */}
+      {state5 && (
+        <div className="border-#cccc h-full w-[70%] border px-[5px] py-[5px] text-black dark:bg-background dark:text-white">
+          <div className="mx-auto mt-[10px] h-[400px] w-[90%] rounded-lg  dark:bg-background">
+            <ComponentMessenger />
           </div>
         </div>
       )}

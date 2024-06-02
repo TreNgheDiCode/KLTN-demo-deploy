@@ -1,7 +1,4 @@
 "use client";
-
-import { Like } from "@/actions/profile/like";
-import { Save } from "@/actions/profile/save";
 import {
   Avatar,
   Button,
@@ -28,23 +25,27 @@ import {
   Users,
 } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
-import { startTransition } from "react";
 import { ProfileCommentForm } from "./comment/profile-comment-form";
 import { ProfileCommentsList } from "./comment/profile-comments-list";
 import { PostCommentLib } from "@/types";
+import { useSession } from "next-auth/react";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import ResponsiveDialog from "@/components/Component-Profile/alertDeletePost";
+import { Like } from "@/actions/profile/like";
+import { Save } from "@/actions/profile/save";
 
 interface ProfilePostItemProps {
+  id: string;
+  images?: PostImage[];
+  content?: string;
   name: string;
   logo: string;
-  comments?: PostCommentLib[];
-  likes?: PostLike[];
-  saves?: PostSave[];
-  id: string;
   createdAt: Date;
   isModified: boolean;
   status: PostStatus;
-  content?: string;
-  images?: PostImage[];
+  comments?: PostCommentLib[];
+  likes?: PostLike[];
+  saves?: PostSave[];
   profileId: string;
 }
 
@@ -56,40 +57,41 @@ const statusType = {
 };
 
 export const ProfilePostItem = ({
+  id,
+  images,
+  content,
   logo,
   name,
   createdAt,
   status,
-  content,
-  id,
   comments,
   likes,
   saves,
-  images,
   profileId,
 }: ProfilePostItemProps) => {
   const router = useRouter();
+  const session = useSession();
+  const studentCode = session.data?.user.studentCode;
+
+  if (!studentCode) {
+    router.push(DEFAULT_LOGIN_REDIRECT);
+  }
 
   const parentComments = comments?.filter(
     (comment) => !comment.parentCommentId,
   );
 
-  const params = useParams();
-  const studentCode = params.studentCode as string;
-
   const isSave = saves?.some((save) => save.profileId == profileId);
+
   const onSave = async () => {
-    startTransition(() => {
-      Save(studentCode, id);
-    });
+    await Save(id);
     router.refresh();
   };
 
   const isLike = likes?.some((like) => like.profileId == profileId);
+
   const onLike = async () => {
-    startTransition(() => {
-      Like(studentCode, id);
-    });
+    await Like(id);
     router.refresh();
   };
 
@@ -117,7 +119,12 @@ export const ProfilePostItem = ({
             </div>
           </div>
         </div>
-        <MoreHorizontal className="h-6 w-6 text-zinc-600 dark:text-zinc-400 " />
+        {/* icon tùy chọn */}
+        {/* <MoreHorizontal
+          onClick={() => onDeletePost(id)}
+          className="h-6 w-6 text-zinc-600 hover:cursor-pointer hover:text-zinc-500 dark:text-zinc-400 "
+        /> */}
+        <ResponsiveDialog id={id} />
       </CardHeader>
       <CardBody className="pt-0">
         <p className="font-semibold text-primary">{content}</p>
@@ -141,20 +148,19 @@ export const ProfilePostItem = ({
         <Divider />
         <div className="grid grid-cols-4 gap-1 ">
           <Button
-            startContent={<MessageCircleMore />}
-            variant="light"
-            color="primary"
-          >
-            {comments?.length} Comments
-          </Button>
-
-          <Button
             onClick={onLike}
             startContent={<Heart fill={isLike ? "red" : "white"} />}
             variant="light"
             color="primary"
           >
             {likes?.length || 0} Likes
+          </Button>
+          <Button
+            startContent={<MessageCircleMore />}
+            variant="light"
+            color="primary"
+          >
+            {comments?.length} Comments
           </Button>
 
           <Button startContent={<Share2 />} variant="light" color="primary">
