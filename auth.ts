@@ -29,6 +29,7 @@ export const {
     signIn: "/auth/login",
     error: "/auth/error",
   },
+  adapter: PrismaAdapter(db),
   callbacks: {
     async session({ token, session }) {
       if (session.user) {
@@ -63,7 +64,6 @@ export const {
       return token;
     },
   },
-  adapter: PrismaAdapter(db),
   session: { strategy: "jwt", maxAge: 60 * 60 * 24 * 7 },
   ...authConfig,
 });

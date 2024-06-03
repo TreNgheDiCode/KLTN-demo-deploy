@@ -26,8 +26,6 @@ export default auth((req) => {
     return match(languages, locales, defaultLocale); // -> 'en'
   };
 
-  console.log(nextUrl.pathname)
-
   const isLocalePathname = locales.some(
     (locale) =>
       nextUrl.pathname.startsWith(`/${locale}`) ||

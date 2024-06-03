@@ -1,24 +1,9 @@
 "use client";
-import { PostSave } from '@prisma/client';
-import React from 'react';
-interface SaveProps{
-    saves? : PostSave[];
-}
 
-const ListSaved = ({
-    saves
-}:SaveProps
-) => {
-    return (
-        <>
-           {
-            saves?.map((save) =>(
-                <h1 key={save.id}>
-                       <h1>hello</h1>
-                </h1>
-            ))}
-        </>
-    );
+import React from "react";
+
+const ListSaved = () => {
+  return <>Hello</>;
 };
 
 export default ListSaved;
