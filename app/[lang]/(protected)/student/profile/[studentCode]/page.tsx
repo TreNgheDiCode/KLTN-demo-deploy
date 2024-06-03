@@ -1,40 +1,40 @@
-import { GetProfileLib } from "@/lib/profile/profile";
 import { CrispProvider } from "@/scripts/crisp-provider";
-import { GetPostsLib } from "@/lib/profile/post";
 import { ProfileInformation } from "@/components/profile/profile-information";
 import { ProfilePosts } from "@/components/profile/post/profile-post";
 import { ProfilePostsList } from "@/components/profile/post/profile-posts-list";
+import { GetStudentLibByStudentCode } from "@/lib/student";
+import { StudentLib } from "@/types";
 const ProfileIdPage = async ({
   params: { studentCode },
 }: {
   params: { studentCode: string };
 }) => {
-  const profile = await GetProfileLib(studentCode);
-  const posts = await GetPostsLib();
-
+  const student: StudentLib = await GetStudentLibByStudentCode(studentCode);
+  console.log(student.account.address);
   return (
     <div className="relative hidden gap-4 md:grid lg:grid-cols-12">
       <div className="lg:col-span-3">
         <ProfileInformation
-          address={profile.user?.address}
-          dob={profile.user?.dob}
-          schoolLogo={profile.user.school?.logoUrl}
-          schoolName={profile.user.school?.name}
-          biography={profile?.biography}
+          address={student.account.address}
+          dob={student.account.dob}
+          schoolLogo={student.school.logo}
+          schoolName={student.school.name}
+          biography={student.profile.biography}
         />
       </div>
       <div className="lg:col-span-9">
         <ProfilePosts
-          name={profile.user?.name}
-          image={profile.user?.image || undefined}
+          name={student.account.name}
+          image={student.account.image || undefined}
         />
+
         <div className="flex flex-col gap-4 text-primary">
-          {posts?.length > 0 && (
+          {student.profile.posts.length > 0 && (
             <ProfilePostsList
-              posts={posts}
-              name={profile.user?.name}
-              logo={profile.user?.image || ""}
-              profileId={profile.id}
+              posts={student.profile.posts}
+              name={student.account.name}
+              logo={student.account.image || ""}
+              profileId={student.profile.id}
             />
           )}
           <CrispProvider />

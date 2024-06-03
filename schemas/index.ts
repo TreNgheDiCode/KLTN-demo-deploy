@@ -1,6 +1,7 @@
 import * as z from "zod";
 import {
   CertificateType,
+  Country,
   DegreeType,
   Gender,
   GradeType,
@@ -19,6 +20,11 @@ export const LoginSchema = z.object({
   password: z.string().min(1, {
     message: "Password is required",
   }),
+  studentCode: z.optional(
+    z.string().min(10, {
+      message: "Student code is required minimum of 10 characters",
+    }),
+  ),
 });
 
 export const RegisterSchema = z
@@ -130,6 +136,9 @@ export const RegisterSchema = z
     }),
     addressLine: z.string().min(1, {
       message: "Address line is required",
+    }),
+    country: z.enum([Country.AUSTRALIA, Country.CANADA, Country.KOREA], {
+      message: "Nation is required",
     }),
     schoolName: z.string().min(1, {
       message: "School is required",

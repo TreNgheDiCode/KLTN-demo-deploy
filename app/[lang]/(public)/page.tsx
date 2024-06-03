@@ -12,6 +12,7 @@ export default async function Home({
   const dict = await getDictionary(lang);
   metadata.title = dict.Home.Title;
   const schools = await GetSchoolLib();
+  console.log(schools);
   return (
     <main className="flex flex-col">
       <HeroHeader schools={schools || []} />

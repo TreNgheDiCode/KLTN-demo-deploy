@@ -11,6 +11,7 @@ import { WardInput } from "./ward-input";
 import { AddressInput } from "./address-input";
 import { useCities, useDistricts, useWards } from "@/hooks/use-country";
 import { City, District, Ward } from "@/types";
+import { DegreeInput } from "./degree-input";
 
 interface ProfileTabProps {
   control: any;
@@ -29,7 +30,7 @@ export const ProfileTab = ({
   const districts: District[] = useDistricts(city) || [];
   const wards: Ward[] = useWards(city, district) || [];
   return (
-    <div className="space-y-4 ">
+    <div className="space-y-4">
       <div className="grid grid-cols-2 gap-x-4">
         {/* Date of birth */}
         <FormField
@@ -106,8 +107,28 @@ export const ProfileTab = ({
             </FormItem>
           )}
         />
+        {/* degreeName */}
+        <FormField
+          name="degreeType"
+          control={control}
+          render={({ field, fieldState }) => (
+            <FormItem className="col-span-1 lg:col-span-2">
+              <FormControl>
+                <DegreeInput
+                  field={field}
+                  isInvalid={fieldState.invalid}
+                  isLoading={isLoading}
+                  onSelectionChange={field.onChange}
+                  errorMessage={fieldState.error?.message}
+                  value={field.value}
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
       </div>
-      <h1 className=" text-xl">Address</h1>
+
+      <h1 className="text-xl">Address</h1>
       {/* Select city */}
       <FormField
         name="city"

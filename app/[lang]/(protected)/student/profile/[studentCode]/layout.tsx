@@ -1,6 +1,7 @@
 import { ProfileHeader } from "@/components/profile/profile-header";
-import { GetPostsLib } from "@/lib/profile/post";
-import { GetProfileLib } from "@/lib/profile/profile";
+import { GetStudentLibByStudentCode } from "@/lib/student";
+import { StudentLib } from "@/types";
+import { redirect } from "next/navigation";
 
 const ProfileIdLayout = async ({
   children,
@@ -9,21 +10,24 @@ const ProfileIdLayout = async ({
   children: React.ReactNode;
   params: { studentCode: string };
 }) => {
-  const profile = await GetProfileLib(studentCode);
-  const posts = await GetPostsLib();
+  const student: StudentLib = await GetStudentLibByStudentCode(studentCode);
 
-  if (!profile.user?.studentCode.match(studentCode)) {
+  if (!student || !student.studentCode) {
+    redirect("/");
+  }
+
+  if (!student.studentCode.match(studentCode)) {
     return <div className="hidden px-24 py-6 md:block"></div>;
   }
 
   return (
     <div className="hidden flex-col gap-3 px-24 py-6 md:flex">
       <ProfileHeader
-        name={profile.user?.name!}
-        schoolName={profile.user.school?.name!}
-        coverUrl={profile?.coverImage || ""}
-        logoUrl={profile.user?.image || undefined}
-        postCount={posts.length}
+        name={student.account.name}
+        schoolName={student.school.name}
+        coverUrl={student.cover || ""}
+        logoUrl={student.account.image || undefined}
+        postCount={student.profile.posts.length}
       />
       {children}
     </div>

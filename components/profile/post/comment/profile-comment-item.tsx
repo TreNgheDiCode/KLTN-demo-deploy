@@ -1,6 +1,4 @@
 "use client";
-
-import { LikeCmt } from "@/actions/profile/likecmt";
 import { cn } from "@/lib/utils";
 import { Avatar, Image, Spinner } from "@nextui-org/react";
 import { PostCommentLike } from "@prisma/client";
@@ -11,6 +9,8 @@ import { useParams, useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { ProfileCommentForm } from "./profile-comment-form";
 import { ProfileCommentsList } from "./profile-comments-list";
+import { PostCommentLib } from "@/types";
+import { GetCommentsByParentId } from "@/actions/profile/comment";
 
 interface ProfileCommentItemProps {
   postId: string;
@@ -47,13 +47,13 @@ export const ProfileCommentItem = ({
   const [items, setItems] = useState<[]>([]);
 
   const onLoad = async () => {
-    // startTransition(() => {
-    //   GetCommentsByParentId(postId, id).then((res) => {
-    //     if (res) {
-    //       setItems(res);
-    //     }
-    //   });
-    // });
+    startTransition(() => {
+      GetCommentsByParentId(postId, id).then((res) => {
+        if (res) {
+          // setItems(res);
+        }
+      });
+    });
 
     setIsExpanded(true);
   };
@@ -62,7 +62,7 @@ export const ProfileCommentItem = ({
   const studentCode = params.studentCode as string;
   const onLike = async () => {
     startTransition(() => {
-      LikeCmt(studentCode, id);
+      // LikeCmt(studentCode, id);
     });
 
     router.refresh();
@@ -82,6 +82,7 @@ export const ProfileCommentItem = ({
           </div>
           {image && (
             <div className="aspect-auto w-full max-w-[200px]">
+              <Image src={image} alt="comment image" />
               <Image src={image} alt="comment image" />
             </div>
           )}

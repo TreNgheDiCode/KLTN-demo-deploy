@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -8,9 +7,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import ReactCountryFlag from "react-country-flag";
-import { usePathname, useRouter } from "next/navigation";
 import { Link } from "@nextui-org/react";
+import { usePathname } from "next/navigation";
+import ReactCountryFlag from "react-country-flag";
 
 interface LanguageToggleProps {
   className?: string;

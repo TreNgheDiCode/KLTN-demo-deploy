@@ -1,6 +1,9 @@
 "use server";
 import { db } from "@/lib/db";
-export const BiographyUpdate = async (studentCode: string, content: string) => {
+export const updateBiography = async (
+  studentCode: string,
+  contentBio: string,
+) => {
   try {
     const profile = await db.profile.findFirst({
       where: {
@@ -9,21 +12,30 @@ export const BiographyUpdate = async (studentCode: string, content: string) => {
         },
       },
     });
+
     if (!profile) {
-      return { error: "Khong tim thay profile" };
+      return { error: "Không tìm thấy sinh viên" };
     }
-    await db.profileBiography.update({
+
+    const existingBio = await db.profileBiography.findUnique({
       where: {
         profileId: profile.id,
-        content: content,
-      },
-      data: {
-        content: content,
       },
     });
-    return { success: "update biography thanh cong" };
+
+    if (!existingBio) {
+      return { error: "Khong tim thay tieu su" };
+    }
+
+    await db.profileBiography.update({
+      where: {
+        id: existingBio.id,
+      },
+      data: {
+        content: contentBio,
+      },
+    });
   } catch (error) {
-    console.log(error);
-    return { error: "update biography that bai" };
+    return { error: "update bio thất bại" };
   }
 };

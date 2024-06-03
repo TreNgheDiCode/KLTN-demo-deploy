@@ -21,7 +21,6 @@ export const BiographyAdd = async (studentCode: string, content: string) => {
     });
     return { success: "tao biography thanh cong" };
   } catch (error) {
-    console.log(error);
     return { error: "tao biography that bai" };
   }
 };

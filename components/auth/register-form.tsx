@@ -49,6 +49,7 @@ export const RegisterForm = ({ schools }: RegisterFormProps) => {
       district: "",
       ward: "",
       addressLine: "",
+      country: schools[0].country,
       schoolName: schools[0].name,
       programName: schools[0].programs[0].name,
       degreeType: DegreeType.HIGHSCHOOL,
@@ -63,7 +64,6 @@ export const RegisterForm = ({ schools }: RegisterFormProps) => {
 
     await register(values)
       .then((res) => {
-        console.log(res);
         if (res.success) {
           toast.success(res.success);
           setTimeout(() => router.push("/auth/login"), 3000);
@@ -84,11 +84,16 @@ export const RegisterForm = ({ schools }: RegisterFormProps) => {
     }
   };
 
+  form.watch("country");
   form.watch("schoolName");
   form.watch("certificateImg");
   form.watch("gradeType");
   form.watch("certificateType");
   form.watch("degreeType");
+
+  const listSchools = schools.filter(
+    (school) => school.country === form.getValues("country"),
+  );
 
   const programs =
     schools.find((school) => school.name === form.getValues("schoolName"))
@@ -131,7 +136,7 @@ export const RegisterForm = ({ schools }: RegisterFormProps) => {
             onSubmit={form.handleSubmit(onSubmit)}
             className="max-h-[70vh] overflow-y-auto scrollbar-hide"
           >
-            <div className="flex flex-col items-center justify-center">
+            <div className="!flex flex-col items-center justify-center">
               <Tabs
                 size="md"
                 color="primary"
@@ -196,7 +201,7 @@ export const RegisterForm = ({ schools }: RegisterFormProps) => {
                     onFileChange={(e) => form.setValue("certificateImg", e)}
                     programs={programs}
                     schoolName={form.getValues("schoolName")}
-                    schools={schools}
+                    schools={listSchools}
                   />
                 </Tab>
               </Tabs>

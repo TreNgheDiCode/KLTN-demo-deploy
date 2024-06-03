@@ -1,9 +1,10 @@
 "use client";
 
+import { PostCommentLib } from "@/types";
 import { ProfileCommentItem } from "./profile-comment-item";
 
 interface ProfileCommentsListProps {
-  comments?: [];
+  comments?: PostCommentLib[];
   name: string;
   image?: string;
 }
@@ -18,8 +19,8 @@ export const ProfileCommentsList = ({
     <div className="flex w-full flex-col gap-2 overflow-y-scroll scrollbar-hide">
       {comments?.map((comment) => {
         return (
-          <>
-            {/* <ProfileCommentItem
+          <div key={comment.id}>
+            <ProfileCommentItem
               postId={comment.postId}
               id={comment.id}
               name={name}
@@ -33,8 +34,8 @@ export const ProfileCommentsList = ({
               updatedAt={comment.updatedAt}
               isArchived={comment.isArchived}
               childLength={comment.children.length}
-            /> */}
-          </>
+            />
+          </div>
         );
       })}
     </div>

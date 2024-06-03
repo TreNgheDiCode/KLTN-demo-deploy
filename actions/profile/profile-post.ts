@@ -64,7 +64,6 @@ export const CreateNewProfilePost = async (
       return { success: "Create new post successfully" };
     }
   } catch (error) {
-    console.log(error);
     return { error: "Error occurred while creating new post" };
   }
 };

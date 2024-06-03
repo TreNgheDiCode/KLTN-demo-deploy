@@ -4,7 +4,7 @@ import { login } from "@/actions/auth/login";
 import { DictionaryLanguage } from "@/data/dictionaries";
 import { LoginSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Input, Link } from "@nextui-org/react";
+import { Button, Input } from "@nextui-org/react";
 import { Eye, EyeOff, Key, Mail } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { Form, FormControl, FormField, FormItem } from "../ui/form";
 import { CardWrapper } from "./card-wrapper";
+import Link from "next/link";
 
 type LoginForm = z.infer<typeof LoginSchema>;
 
@@ -37,7 +38,9 @@ export const LoginForm = ({ dict }: { dict: DictionaryLanguage }) => {
         if (data) {
           if (data.error) {
             toast.error(data.error);
-          } else {
+          }
+
+          if (data.success) {
             toast.success(data.success);
           }
         }
@@ -121,9 +124,7 @@ export const LoginForm = ({ dict }: { dict: DictionaryLanguage }) => {
               )}
             />
             <Link
-              size="sm"
-              underline="hover"
-              className="italic hover:cursor-pointer"
+              className="italic hover:cursor-pointer hover:underline"
               href="/auth/reset"
             >
               {dict.Authentication.Forgot_Password}

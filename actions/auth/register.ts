@@ -29,7 +29,6 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
         "Register successfully, please check your email for verification",
     };
   } catch (error) {
-    console.log("REGISTER ERROR", error);
     return { error: "Register failed" };
   }
 };

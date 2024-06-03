@@ -4,8 +4,10 @@
     "Login_Button": "Đăng nhập",
     "Register_Button": "Đăng ký",
     "Email_Placeholder": "Nhập email của bạn",
+    "StudentCode_Placeholder": "Nhập mã sinh viên của bạn",
     "Password_Placeholder": "Nhập mật khẩu của bạn",
     "Email_Label": "Email",
+    "StudenCode_Label": "Mã sinh viên",
     "Password_Label": "Mật khẩu",
     "No_Account": "Không có tài khoản? Đăng ký ngay",
     "Forgot_Password": "Forgot password?"
