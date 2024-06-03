@@ -22,8 +22,6 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
           return { error: "Invalid creadentials or not yet verified email!" };
         case "AccessDenied":
           return { success: "Confirmation email sent!" };
-        case "CallbackRouteError":
-          return { twoFactor: "Please use student id for login" };
         default:
           return { error: "Something went wrong" };
       }

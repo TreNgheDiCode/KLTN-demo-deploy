@@ -19,7 +19,6 @@ type LoginForm = z.infer<typeof LoginSchema>;
 export const LoginForm = ({ dict }: { dict: DictionaryLanguage }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [showStudentCode, setShowStudentCode] = useState(false);
 
   const toggleVisibility = () => setIsVisible(!isVisible);
 
@@ -44,11 +43,6 @@ export const LoginForm = ({ dict }: { dict: DictionaryLanguage }) => {
           if (data.success) {
             toast.success(data.success);
           }
-
-          if (data.twoFactor) {
-            toast.error(data.twoFactor);
-            setShowStudentCode(true);
-          }
         }
       })
       .finally(() => setIsLoading(false));
@@ -66,62 +60,31 @@ export const LoginForm = ({ dict }: { dict: DictionaryLanguage }) => {
           className="flex flex-col items-start gap-4"
         >
           <div className="flex w-full flex-col gap-4">
-            {showStudentCode && (
-              <FormField
-                control={form.control}
-                name="studentCode"
-                render={({ field, fieldState }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input
-                        autoFocus
-                        isDisabled={isLoading}
-                        label={dict.Authentication.StudenCode_Label}
-                        labelPlacement="outside"
-                        variant="bordered"
-                        size="md"
-                        placeholder={
-                          dict.Authentication.StudentCode_Placeholder
-                        }
-                        startContent={<Mail className="size-4" />}
-                        errorMessage={fieldState.error?.message}
-                        isInvalid={fieldState.invalid}
-                        isRequired
-                        onValueChange={field.onChange}
-                        {...field}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-            )}
-            {!showStudentCode && (
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field, fieldState }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input
-                        autoFocus
-                        isDisabled={isLoading}
-                        label={dict.Authentication.Email_Label}
-                        labelPlacement="outside"
-                        variant="bordered"
-                        size="md"
-                        placeholder={dict.Authentication.Email_Placeholder}
-                        startContent={<Mail className="size-4" />}
-                        errorMessage={fieldState.error?.message}
-                        isInvalid={fieldState.invalid}
-                        isRequired
-                        onValueChange={field.onChange}
-                        {...field}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-            )}
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field, fieldState }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      autoFocus
+                      isDisabled={isLoading}
+                      label={dict.Authentication.Email_Label}
+                      labelPlacement="outside"
+                      variant="bordered"
+                      size="md"
+                      placeholder={dict.Authentication.Email_Placeholder}
+                      startContent={<Mail className="size-4" />}
+                      errorMessage={fieldState.error?.message}
+                      isInvalid={fieldState.invalid}
+                      isRequired
+                      onValueChange={field.onChange}
+                      {...field}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
             <FormField
               name="password"
               control={form.control}
