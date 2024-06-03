@@ -1,9 +1,9 @@
 "use client";
 
 import { Select, SelectItem } from "@nextui-org/react";
-import { DegreeType } from "@prisma/client";
+import { Country, DegreeType } from "@prisma/client";
 
-interface ProgramInputProps {
+interface NationInputProps {
   field: any;
   onSelectionChange: () => void;
   isLoading: boolean;
@@ -12,36 +12,37 @@ interface ProgramInputProps {
   isInvalid: boolean;
 }
 
-export const DegreeInput = ({
+export const NationInput = ({
   field,
   onSelectionChange,
   isLoading,
   value,
   errorMessage,
   isInvalid,
-}: ProgramInputProps) => {
+}: NationInputProps) => {
   return (
     <Select
       disallowEmptySelection
-      items={[DegreeType.HIGHSCHOOL, DegreeType.UNIVERSITY]}
+      items={[Country.AUSTRALIA, Country.CANADA, Country.KOREA]}
       isDisabled={isLoading}
-      label="Academic level"
+      label="Nation"
       labelPlacement="outside"
       variant="bordered"
       size="md"
-      aria-label="Choose a academic level"
-      placeholder="Choose a academic level"
+      aria-label="Choose a nation"
+      placeholder="Choose a nation"
       errorMessage={errorMessage}
       isInvalid={isInvalid}
       onSelectionChange={onSelectionChange}
-      defaultSelectedKeys={[DegreeType.HIGHSCHOOL]}
+      defaultSelectedKeys={[Country.CANADA]}
       classNames={{
         listbox: "text-primary",
       }}
       {...field}
     >
-      <SelectItem key={DegreeType.HIGHSCHOOL}>Highschool</SelectItem>
-      <SelectItem key={DegreeType.UNIVERSITY}>University</SelectItem>
+      <SelectItem key={Country.AUSTRALIA}>Australia</SelectItem>
+      <SelectItem key={Country.CANADA}>Canada</SelectItem>
+      <SelectItem key={Country.KOREA}>Korea</SelectItem>
     </Select>
   );
 };

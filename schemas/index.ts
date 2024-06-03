@@ -1,6 +1,7 @@
 import * as z from "zod";
 import {
   CertificateType,
+  Country,
   DegreeType,
   Gender,
   GradeType,
@@ -135,6 +136,9 @@ export const RegisterSchema = z
     }),
     addressLine: z.string().min(1, {
       message: "Address line is required",
+    }),
+    country: z.enum([Country.AUSTRALIA, Country.CANADA, Country.KOREA], {
+      message: "Nation is required",
     }),
     schoolName: z.string().min(1, {
       message: "School is required",

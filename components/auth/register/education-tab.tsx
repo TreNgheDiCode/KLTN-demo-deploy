@@ -1,16 +1,16 @@
 "use client";
 
 import { FormControl, FormField, FormItem } from "@/components/ui/form";
-import { SchoolInput } from "./school-input";
-import { ProgramInput } from "./program-input";
-import { DegreeInput } from "./degree-input";
-import { LanguageInput } from "./language-input";
-import { ImageInput } from "./image-input";
-import { ImageDropInput } from "./image-drop-input";
-import { ScoreInput } from "./score-input";
-import { NumberInput } from "./number-input";
 import { SchoolLib } from "@/types";
 import { CertificateType, GradeType } from "@prisma/client";
+import { ImageDropInput } from "./image-drop-input";
+import { ImageInput } from "./image-input";
+import { LanguageInput } from "./language-input";
+import { NationInput } from "./nation-input";
+import { NumberInput } from "./number-input";
+import { ProgramInput } from "./program-input";
+import { SchoolInput } from "./school-input";
+import { ScoreInput } from "./score-input";
 
 interface EducationTabProps {
   control: any;
@@ -37,6 +37,25 @@ export const EducationTab = ({
 }: EducationTabProps) => {
   return (
     <div className="flex flex-col gap-y-6">
+      {/* Nation */}
+      <FormField
+        name="country"
+        control={control}
+        render={({ field, fieldState }) => (
+          <FormItem>
+            <FormControl>
+              <NationInput
+                field={field}
+                isInvalid={fieldState.invalid}
+                isLoading={isLoading}
+                onSelectionChange={field.onChange}
+                value={field.value}
+                errorMessage={fieldState.error?.message}
+              />
+            </FormControl>
+          </FormItem>
+        )}
+      />
       {/* School Name */}
       <FormField
         name="schoolName"
@@ -75,25 +94,6 @@ export const EducationTab = ({
                     programs={programs}
                     value={field.value}
                     errorMessage={fieldState.error?.message}
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-          {/* degreeName */}
-          <FormField
-            name="degreeType"
-            control={control}
-            render={({ field, fieldState }) => (
-              <FormItem>
-                <FormControl>
-                  <DegreeInput
-                    field={field}
-                    isInvalid={fieldState.invalid}
-                    isLoading={isLoading}
-                    onSelectionChange={field.onChange}
-                    errorMessage={fieldState.error?.message}
-                    value={field.value}
                   />
                 </FormControl>
               </FormItem>
