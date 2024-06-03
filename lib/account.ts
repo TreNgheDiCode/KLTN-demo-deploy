@@ -24,7 +24,6 @@ export const GetAccountIdLib = async (id: string) => {
 
     return res;
   } catch (error) {
-    console.log("GET ACCOUNT ERROR", error);
     return null;
   }
 };

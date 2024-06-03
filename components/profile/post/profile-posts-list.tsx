@@ -10,12 +10,13 @@ import {
 } from "@nextui-org/react";
 import { Check, ChevronDown } from "lucide-react";
 import { useEffect, useState } from "react";
+import { PostLib } from "@/types";
 import { ProfilePostItem } from "./profile-post-item";
 
 interface ProfilePostsListProps {
   logo?: string;
   name: string;
-  posts: [];
+  posts: PostLib[];
   profileId: string;
 }
 
@@ -46,7 +47,6 @@ export const ProfilePostsList = ({
         No posts found. Please create a new one.
       </div>
     );
-
   return (
     <>
       <div className="flex items-center justify-between">
@@ -95,23 +95,25 @@ export const ProfilePostsList = ({
           </Dropdown>
         </div>
       </div>
-      {/* {posts.map((post) => (
-        <ProfilePostItem
-          id={post.id}
-          images={post.images}
-          content={post.content || undefined}
-          key={post.content}
-          name={name}
-          logo={logo!}
-          createdAt={post.createdAt}
-          isModified={post.createdAt !== post.updatedAt}
-          status={post.status}
-          comments={post.comments}
-          likes = {post.likes}
-          saves={post.saves}
-          profileId={profileId}
-        />
-      ))} */}
+      {posts?.map((post) => {
+        return (
+          <ProfilePostItem
+            key={post.id}
+            id={post.id}
+            images={post.images}
+            content={post.content || undefined}
+            name={name}
+            logo={logo!}
+            createdAt={post.createdAt}
+            isModified={post.createdAt !== post.updatedAt}
+            status={post.status}
+            comments={post.comments}
+            likes={post.likes}
+            saves={post.saves}
+            profileId={profileId}
+          />
+        );
+      })}
     </>
   );
 };

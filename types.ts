@@ -1,9 +1,61 @@
-import { School, StudentStatus } from "@prisma/client";
+import {
+  Post,
+  PostComment,
+  PostCommentLike,
+  PostImage,
+  PostLike,
+  PostSave,
+  Profile,
+  ProfileBiography,
+  School,
+  Student,
+  StudentStatus,
+} from "@prisma/client";
+
+export type ListLike = {
+  id: string;
+  profile: {
+    id: string;
+    student: {
+      account: {
+        name: string;
+      };
+    };
+  };
+  post: Post & {
+    images: PostImage[];
+  };
+};
+export type ListSave = {
+  id: string;
+  profile: {
+    id: string;
+    student: {
+      account: {
+        name: string;
+      };
+    };
+  };
+  post: Post & {
+    images: PostImage[];
+  };
+};
 
 export type SchoolLib = School & {
   programs: {
     name: string;
   }[];
+};
+export type PostCommentLib = PostComment & {
+  likes: PostCommentLike[];
+  children: PostComment[];
+};
+
+export type PostLib = Post & {
+  images: PostImage[];
+  likes: PostLike[];
+  comments: PostCommentLib[];
+  saves: PostSave[];
 };
 
 export type AccountIdLib = {
@@ -15,6 +67,24 @@ export type AccountIdLib = {
   student: {
     studentCode: string;
     status: StudentStatus;
+    profile: Profile;
+  };
+};
+
+export type StudentLib = Student & {
+  account: {
+    dob: Date;
+    address: string;
+    name: string;
+    image: string;
+  };
+  school: {
+    name: string;
+    logo: string;
+  };
+  profile: Profile & {
+    posts: PostLib[];
+    biography: ProfileBiography;
   };
 };
 

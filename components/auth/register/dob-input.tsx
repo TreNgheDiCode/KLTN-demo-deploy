@@ -51,7 +51,6 @@ export const DobInput = ({
 
       const input = el?.closest?.<HTMLInputElement>('input[type="button"]');
 
-      console.log(input);
       if (input) {
         setOpen((value) => !value);
       }
@@ -68,8 +67,6 @@ export const DobInput = ({
           return value;
         });
       }
-
-      console.log(month);
     };
 
     const handleYear = (e: Event) => {
@@ -83,8 +80,6 @@ export const DobInput = ({
           return value;
         });
       }
-
-      console.log(month);
     };
 
     document.addEventListener("click", handleMouseClick);

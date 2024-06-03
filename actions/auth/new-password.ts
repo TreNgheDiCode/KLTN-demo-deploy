@@ -23,13 +23,11 @@ export const newPassword = async (
     const res = await req.json();
 
     if (res.error) {
-      console.log(res.error);
       return { error: res.error };
     }
 
     return { success: "Change password successfully" };
   } catch (error) {
-    console.log("CHANGE PASSWORD ERROR", error);
     return { error: "Failed to create new password" };
   }
 };
