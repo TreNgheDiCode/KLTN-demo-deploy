@@ -11,6 +11,7 @@ import { ProfileCommentForm } from "./profile-comment-form";
 import { ProfileCommentsList } from "./profile-comments-list";
 import { PostCommentLib } from "@/types";
 import { GetCommentsByParentId } from "@/actions/profile/comment";
+import { useSession } from "next-auth/react";
 
 interface ProfileCommentItemProps {
   postId: string;
@@ -26,6 +27,7 @@ interface ProfileCommentItemProps {
   isArchived: boolean;
   childLength?: number;
 }
+
 export const ProfileCommentItem = ({
   content,
   image,
@@ -40,31 +42,26 @@ export const ProfileCommentItem = ({
   profileId,
   childLength,
 }: ProfileCommentItemProps) => {
+  const router = useRouter();
   const [isCommenting, setIsCommenting] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
   const [isPending, startTransition] = useTransition();
-  const [items, setItems] = useState<[]>([]);
+  const [items, setItems] = useState<PostCommentLib[]>([]);
 
   const onLoad = async () => {
     startTransition(() => {
-      GetCommentsByParentId(postId, id).then((res) => {
-        if (res) {
-          // setItems(res);
-        }
+      GetCommentsByParentId(postId, id).then((comments) => {
+        setItems(comments);
       });
+      setIsExpanded(true);
     });
-
-    setIsExpanded(true);
   };
-  const router = useRouter();
-  const params = useParams();
-  const studentCode = params.studentCode as string;
+  const studentCode = useSession().data?.user.studentCode;
   const onLike = async () => {
     startTransition(() => {
       // LikeCmt(studentCode, id);
     });
-
     router.refresh();
   };
   const isLike = likes?.some((LikeCmt) => LikeCmt.profileId == profileId);

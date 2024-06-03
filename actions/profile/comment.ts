@@ -6,6 +6,8 @@ import { CommentSchema } from "@/schemas";
 import { z } from "zod";
 import { auth } from "@/auth";
 import { AccountIdLib } from "@/types";
+import { NextResponse } from "next/server";
+import { comment } from "postcss";
 
 export const Comment = async (
   values: z.infer<typeof CommentSchema>,
@@ -14,7 +16,6 @@ export const Comment = async (
 ) => {
   try {
     const validatedFields = CommentSchema.safeParse(values);
-
     if (!validatedFields.success) {
       return { error: "Invalid comment values" };
     }
@@ -25,6 +26,7 @@ export const Comment = async (
     }
     const existingUser: AccountIdLib = await GetAccountIdLib(session.user.id!);
 
+    console.log(existingUser.student.profile);
     if (!existingUser) {
       return { error: "User not found" };
     }
@@ -76,9 +78,8 @@ export const GetCommentsByParentId = async (
         children: true,
       },
     });
-
     return comments;
-  } catch {
-    return null;
+  } catch (error) {
+    throw new Error("Không bình luận được");
   }
 };
