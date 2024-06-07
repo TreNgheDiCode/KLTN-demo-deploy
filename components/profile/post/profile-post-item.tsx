@@ -119,11 +119,6 @@ export const ProfilePostItem = ({
             </div>
           </div>
         </div>
-        {/* icon tùy chọn */}
-        {/* <MoreHorizontal
-          onClick={() => onDeletePost(id)}
-          className="h-6 w-6 text-zinc-600 hover:cursor-pointer hover:text-zinc-500 dark:text-zinc-400 "
-        /> */}
         <ResponsiveDialog id={id} />
       </CardHeader>
       <CardBody className="pt-0">

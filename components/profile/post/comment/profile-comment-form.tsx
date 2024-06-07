@@ -75,7 +75,6 @@ export const ProfileCommentForm = ({
             }
           },
         });
-
         values.image = res.url;
       } catch (error) {
         toast.error("Error while uploading comment image");

@@ -92,7 +92,7 @@ export const ModalPostContent = ({
     form.setValue("content", newString);
     onEmojiOpen();
   };
-
+  //
   const uploadImageProgress = (
     key: string,
     progress: FileState["progress"],
@@ -106,11 +106,10 @@ export const ModalPostContent = ({
       if (fileState) {
         fileState.progress = progress;
       }
-
       return newFileStates;
     });
   };
-
+  //
   const onSubmit = async (values: z.infer<typeof PostSchema>) => {
     if (currentStatus.label === "Public") {
       values.status = PostStatus.PUBLIC;
@@ -138,7 +137,7 @@ export const ModalPostContent = ({
                 }
               },
             });
-
+            console.log(res);
             values.images?.push(res.url);
           } catch (error) {
             uploadImageProgress(fileState.key, "ERROR");

@@ -41,6 +41,8 @@ export const ProfileHeader = ({
     setMounted(true);
   }, [mounted]);
 
+  const onEdit = () => {};
+
   return (
     <>
       <ProfileCoverImageModal
@@ -93,6 +95,7 @@ export const ProfileHeader = ({
             size="md"
             color="primary"
             variant="shadow"
+            onClick={onEdit}
           >
             Edit profile
           </Button>

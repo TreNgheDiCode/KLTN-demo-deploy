@@ -85,6 +85,9 @@ export const ProfileCommentItem = ({
               {name}
             </span>
             <p className="text-sm text-primary">{content}</p>
+            {image && (
+              <Image src={image} alt="cmt" className="h-[220px] w-full  " />
+            )}
           </div>
         </div>
         {isMount && <ResponsiveDialog id={id} />}
