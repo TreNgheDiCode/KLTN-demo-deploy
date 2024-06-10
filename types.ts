@@ -105,4 +105,17 @@ export type City = {
   Name: string;
   Districts: District[];
 };
-
+export type ProfileEdit = {
+  id: string;
+  biography: {
+    id: string;
+    content: string;
+  };
+  student: {
+    account: {
+      image: string;
+      address: string;
+      phoneNumber: string;
+    };
+  };
+};

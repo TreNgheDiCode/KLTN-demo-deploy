@@ -16,6 +16,7 @@ import { useParams, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ProfileCoverImage } from "./profile-cover-image";
 import { ProfileHeaderNavigation } from "./profile-header-navigation";
+import Editprofile from "./post/comment/edit-profile";
 
 interface ProfileHeaderProps {
   coverUrl?: string;
@@ -23,6 +24,7 @@ interface ProfileHeaderProps {
   logoUrl?: string;
   schoolName: string;
   postCount?: number;
+  profileId: string;
 }
 
 export const ProfileHeader = ({
@@ -31,17 +33,27 @@ export const ProfileHeader = ({
   logoUrl,
   schoolName,
   postCount,
+  profileId,
 }: ProfileHeaderProps) => {
   const params = useParams();
   const pathname = usePathname();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [mounted, setMounted] = useState(false);
-
+  const [model, setModel] = useState(false);
+  const {
+    isOpen: isEditProfileOpen,
+    onOpen: onEditProfileOpen,
+    onOpenChange: onEditProfileChange,
+  } = useDisclosure();
   useEffect(() => {
     setMounted(true);
   }, [mounted]);
 
-  const onEdit = () => {};
+  const onEdit = () => {
+    setModel((prev) => !prev);
+  };
+
+  // Model
 
   return (
     <>
@@ -89,17 +101,23 @@ export const ProfileHeader = ({
             <h2 className="text-xs font-semibold text-primary">{schoolName}</h2>
           </div>
         </div>
+        <Editprofile
+          isOpen={isEditProfileOpen}
+          onOpenChange={onEditProfileChange}
+          profileId= {profileId}
+        />
         <CardBody className="flex h-[calc(90px+12px)] flex-row items-center justify-end">
           <Button
             startContent={<SquarePen className="size-4" />}
             size="md"
             color="primary"
             variant="shadow"
-            onClick={onEdit}
+            onClick={onEditProfileOpen}
           >
             Edit profile
           </Button>
         </CardBody>
+
         <Divider />
         <CardFooter className="justify-center">
           <ProfileHeaderNavigation

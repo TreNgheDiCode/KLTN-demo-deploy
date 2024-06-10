@@ -28,6 +28,7 @@ const ProfileIdLayout = async ({
         coverUrl={student.cover || ""}
         logoUrl={student.account.image || undefined}
         postCount={student.profile.posts.length}
+        profileId={student.profile.id}
       />
       {children}
     </div>

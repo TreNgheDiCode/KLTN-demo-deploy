@@ -16,10 +16,8 @@ import { Area, ProfileBiography, ProfileBiographySocial } from "@prisma/client";
 import { format, set } from "date-fns";
 import { vi } from "date-fns/locale/vi";
 import { Cake, MapPin } from "lucide-react";
-import { Niconne } from "next/font/google";
 import { useParams, useRouter } from "next/navigation";
 import { ChangeEvent, startTransition, useState } from "react";
-import { text } from "stream/consumers";
 
 interface ProfileInformationProps {
   biography?: ProfileBiography;
