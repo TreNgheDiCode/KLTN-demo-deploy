@@ -15,7 +15,6 @@ export const getProfileByStudentCode = async (
     if (!profile) {
       return { error: "Không tìm thấy profile" };
     }
-    console.log(profile);
 
     const updateProfile = await db.student.update({
       where: {
@@ -31,5 +30,23 @@ export const getProfileByStudentCode = async (
     return { success: "Update ảnh bìa thành công" };
   } catch {
     return { error: "Lỗi api" };
+  }
+};
+export const uploadAvatar = async (accountId: string, avatar: string) => {
+  try {
+    const updateProfile = await db.account.update({
+      where: {
+        id: accountId,
+      },
+      data: {
+        image: avatar,
+      },
+    });
+    if (!updateProfile) {
+      return { error: "Lỗi khi update ảnh avatar" };
+    }
+    return { success: "Update ảnh avatar thành công" };
+  } catch (error) {
+    return { error: "Lỗi " };
   }
 };

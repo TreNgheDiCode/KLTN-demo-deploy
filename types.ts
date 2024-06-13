@@ -113,6 +113,7 @@ export type ProfileEdit = {
   };
   student: {
     account: {
+      id: string;
       image: string;
       address: string;
       phoneNumber: string;

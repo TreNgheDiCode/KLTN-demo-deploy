@@ -15,18 +15,38 @@ import { Pencil } from "lucide-react";
 import { toast } from "sonner";
 import { ProfileEdit } from "@/types";
 import { CardContent } from "@mui/material";
-import { updateBiography } from "@/actions/Biography/biographu";
-import { BiSolidUpsideDown } from "react-icons/bi";
+import { useRouter } from "next/navigation";
+import { updateAddress } from "@/actions/account/updateAddress";
+import { updateBiography } from "@/actions/Biography/biography";
+import { updatePhoneNumber } from "@/actions/account/phoneNumber";
+import { ProfileAvatarImageModal } from "@/components/modals/profile-avatar-model";
+
 interface EditProfileProps {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
   profileId: string;
 }
-export default function Editprofile({
+
+export default function EditProfile({
   isOpen,
   onOpenChange,
   profileId,
 }: EditProfileProps) {
+  const [profile, setProfile] = useState<ProfileEdit | null>(null);
+  const [contentBio, setContentBio] = useState("");
+  const [textvalueAddress, setTextvalueAddress] = useState("");
+  const [textvaluePhoneNumber, setTextvaluePhoneNumber] = useState("");
+  const [statusBio, setStatusBio] = useState(true);
+  const [statusAddress, setStatusAddress] = useState(true);
+  const [statusPhone, setStatusPhone] = useState(true);
+  // avatar
+  const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
+  const handleToggleAvatarModal = () => {
+    setIsAvatarModalOpen((prev) => !prev);
+  };
+
+  const router = useRouter();
+
   useEffect(() => {
     async function fetchProfile() {
       try {
@@ -36,48 +56,78 @@ export default function Editprofile({
         });
         const res = await req.json();
         setProfile(res);
+        setContentBio(res.biography.content);
+        setTextvalueAddress(res.student.account.address);
+        setTextvaluePhoneNumber(res.student.account.phoneNumber);
       } catch (error) {
         toast.error("Không lấy được thông tin profile");
       }
     }
-    fetchProfile();
+    if (profileId) {
+      fetchProfile();
+    }
   }, [profileId]);
-
-  const [profile, setProfile] = useState<ProfileEdit>();
-  const [contentBio, setContentBio] = useState(profile?.biography.content);
-  const [textvalueAddress, setTextvalueAddress] = useState(
-    profile?.student.account.address,
-  );
-  const [statusBio, setStatusBio] = useState(true);
-  const [statusAddress, setStatusAddress] = useState(true);
-  const [statusPhone, setStatusPhone] = useState(true);
-  const onhandClickPenPhone = () => {
-    setStatusPhone((prev) => !prev);
-  };
+  // Biography
   const onhandClickPenBio = () => {
     setStatusBio((prev) => !prev);
   };
-  const onhandClickPenAddress = () => {
-    setStatusAddress((prev) => !prev);
-  };
 
   const handleTextBioChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setContentBio(event.target.value);
-  };
-  const handleTextAddressChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setTextvalueAddress(event.target.value);
+    setContentBio(event.currentTarget.value);
   };
 
   const handleUpdateBio = async (bioId: string, content: string) => {
     const res = await updateBiography(bioId, content);
     if (res.success) {
       toast.success(res.success);
-      setStatusBio(true);
     }
     if (res.error) {
       toast.error(res.error);
     }
+    setStatusBio((prev) => !prev);
   };
+  // Address
+
+  const onhandClickPenAddress = () => {
+    setStatusAddress((prev) => !prev);
+  };
+
+  const handleUpdateAddress = async (accountId: string, address: string) => {
+    const res = await updateAddress(accountId, address);
+    if (res.success) {
+      toast.success(res.success);
+    }
+    if (res.error) {
+      toast.error(res.error);
+    }
+    setStatusAddress((prev) => !prev);
+  };
+
+  const handleTextAddressChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setTextvalueAddress(event.target.value);
+  };
+  // PhoneNumber
+  const onhandClickPenPhone = () => {
+    setStatusPhone((prev) => !prev);
+  };
+  const handleUpdatePhone = async (accountId: string, phoneNumber: string) => {
+    const res = await updatePhoneNumber(accountId, phoneNumber);
+    if (res.success) {
+      toast.success(res.success);
+    }
+    if (res.error) {
+      toast.error(res.error);
+    }
+    setStatusPhone((prev) => !prev);
+  };
+  const handleTextPhoneNumber = (event: ChangeEvent<HTMLInputElement>) => {
+    setTextvaluePhoneNumber(event.target.value);
+  };
+  // click xác nhận
+  const onXacNhan = () => {
+    router.refresh();
+  };
+
   return (
     <>
       <Modal
@@ -108,20 +158,28 @@ export default function Editprofile({
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">
+              <ModalHeader className="flex flex-col gap-1 text-black  dark:text-white">
                 Edit Profile
               </ModalHeader>
               <ModalBody>
-                {/* Avarta */}
-                <div className="flex items-center justify-between p-4">
+                {/* Avatar */}
+                <div className="flex items-center justify-between p-4 text-black  dark:text-white">
                   <div className="font-bold">
                     <p>Ảnh đại diện</p>
                   </div>
                   <div className="cursor-pointer">
-                    <Pencil />
+                    <Pencil id="editavatar" onClick={handleToggleAvatarModal} />
                   </div>
+                  {isAvatarModalOpen && (
+                    <ProfileAvatarImageModal
+                      accountId={profile?.student.account.id!}
+                      isOpen={true}
+                      onClose={onClose}
+                      image={profile?.student.account.image}
+                    />
+                  )}
                 </div>
-                <div className="flex items-center justify-center">
+                <div className="flex items-center justify-center text-black  dark:text-white">
                   <Avatar
                     src={profile?.student.account.image || ""}
                     alt=""
@@ -129,7 +187,7 @@ export default function Editprofile({
                   />
                 </div>
                 {/* Bio */}
-                <div className="flex items-center justify-between p-4">
+                <div className="flex items-center justify-between p-4 text-black  dark:text-white">
                   <div className="font-bold">
                     <p>Bio</p>
                   </div>
@@ -138,17 +196,19 @@ export default function Editprofile({
                   </div>
                 </div>
                 {statusBio ? (
-                  <div className="flex items-center justify-center">
-                    {profile?.biography.content || "Không có bio"}
+                  <div className="flex items-center justify-center text-black  dark:text-white">
+                    {contentBio || "Không có bio"}
                   </div>
                 ) : (
                   <Card>
                     <CardContent>
                       <Textarea
                         onChange={(e) => handleTextBioChange(e)}
-                        className="mb-2"
+                        className="mb-2 text-black  dark:text-white"
+                        variant="faded"
+                        value={contentBio}
                       />
-                      <div className="relative w-full">
+                      <div className="relative w-full  dark:text-white">
                         <div className="justify-content-end absolute right-0">
                           <Button
                             color="success"
@@ -167,9 +227,8 @@ export default function Editprofile({
                     <CardBody></CardBody>
                   </Card>
                 )}
-
-                {/* Địa chỉ  */}
-                <div className="flex items-center justify-between p-4">
+                {/* Address */}
+                <div className="flex items-center justify-between p-4 text-black  dark:text-white">
                   <div className="font-bold">
                     <p>Địa chỉ</p>
                   </div>
@@ -178,29 +237,40 @@ export default function Editprofile({
                   </div>
                 </div>
                 {statusAddress ? (
-                  <div className="flex items-center justify-center">
-                    {profile?.student.account.address}
+                  <div className="flex items-center justify-center  text-black  dark:text-white">
+                    {textvalueAddress || "Không có địa chỉ"}
                   </div>
                 ) : (
                   <Card>
                     <CardContent>
                       <Textarea
+                        id="textaddress"
                         onChange={(e) => handleTextAddressChange(e)}
                         value={textvalueAddress}
                         className="mb-2"
+                        variant="faded"
                       />
-                      <div className="relative w-full">
+                      <div className="relative w-full  text-black  dark:text-white">
                         <div className="justify-content-end absolute right-0">
-                          <Button color="success">Lưu</Button>
+                          <Button
+                            color="success"
+                            onClick={() =>
+                              handleUpdateAddress(
+                                profile?.student.account.id || "",
+                                textvalueAddress || "",
+                              )
+                            }
+                          >
+                            Lưu
+                          </Button>
                         </div>
                       </div>
                     </CardContent>
                     <CardBody></CardBody>
                   </Card>
                 )}
-
-                {/* sdt */}
-                <div className="flex items-center justify-between p-4">
+                {/* Phone Number */}
+                <div className="flex items-center justify-between p-4  text-black  dark:text-white">
                   <div className="font-bold">
                     <p>Số điện thoại</p>
                   </div>
@@ -209,20 +279,32 @@ export default function Editprofile({
                   </div>
                 </div>
                 {statusPhone ? (
-                  <div className="flex items-center justify-center">
-                    {profile?.student.account.phoneNumber}
+                  <div className="flex items-center justify-center text-black  dark:text-white">
+                    {textvaluePhoneNumber || "Chưa cài số điện thoại"}
                   </div>
                 ) : (
                   <Card>
                     <CardContent>
                       <Textarea
-                        onChange={(e) => handleTextAddressChange(e)}
-                        value={textvalueAddress}
-                        className="mb-2"
+                        value={textvaluePhoneNumber}
+                        onChange={(e) => handleTextPhoneNumber(e)}
+                        className="mb-2 "
+                        variant="faded"
+                        type="Number"
                       />
                       <div className="relative w-full">
-                        <div className="justify-content-end absolute right-0">
-                          <Button color="success">Lưu</Button>
+                        <div className="justify-content-end absolute right-0  text-black  dark:text-white">
+                          <Button
+                            color="success"
+                            onClick={() =>
+                              handleUpdatePhone(
+                                profile?.student.account.id || "",
+                                textvaluePhoneNumber || "",
+                              )
+                            }
+                          >
+                            Lưu
+                          </Button>
                         </div>
                       </div>
                     </CardContent>
@@ -231,8 +313,13 @@ export default function Editprofile({
                 )}
               </ModalBody>
               <ModalFooter>
-                <Button color="default" variant="faded" onPress={onClose}>
-                  Close
+                <Button
+                  color="default"
+                  variant="faded"
+                  onPress={onClose}
+                  onClick={onXacNhan}
+                >
+                  Xác nhận
                 </Button>
               </ModalFooter>
             </>
