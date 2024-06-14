@@ -20,14 +20,14 @@ import { uploadProfileAvatar } from "@/actions/profile/profile-avatar";
 
 interface ProfileAvatarImageModal {
   isOpen: boolean;
-  onClose: () => void;
+  onOpenChange: () => void;
   accountId: string;
   image?: string | undefined;
 }
 
 export const ProfileAvatarImageModal = ({
   isOpen,
-  onClose,
+  onOpenChange,
   accountId,
   image,
 }: ProfileAvatarImageModal) => {
@@ -68,15 +68,15 @@ export const ProfileAvatarImageModal = ({
 
       setFile(undefined);
       setIsLoading(false);
-      onClose();
+      onOpenChange();
     }
   };
 
   return (
     <Modal
       isOpen={isOpen}
-      onClose={() => {
-        onClose();
+      onOpenChange={() => {
+        onOpenChange();
         setAvatar(image);
       }}
       isDismissable={false}
@@ -120,7 +120,7 @@ export const ProfileAvatarImageModal = ({
             isDisabled={isLoading}
             color="danger"
             variant="light"
-            onPress={onClose}
+            onPress={onOpenChange}
           >
             Close
           </Button>

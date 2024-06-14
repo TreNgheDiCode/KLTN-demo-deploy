@@ -37,14 +37,10 @@ export const ProfileHeader = ({
 }: ProfileHeaderProps) => {
   const params = useParams();
   const pathname = usePathname();
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const [mounted, setMounted] = useState(false);
   const [model, setModel] = useState(false);
-  const {
-    isOpen: isEditProfileOpen,
-    onOpen: onEditProfileOpen,
-    onOpenChange: onEditProfileChange,
-  } = useDisclosure();
+  const [isEditOpen, setIsEditOpen] =  useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure(); // profile image
   useEffect(() => {
     setMounted(true);
   }, [mounted]);
@@ -54,6 +50,9 @@ export const ProfileHeader = ({
   };
 
   // Model
+  const handleEditOpenChange = () => {
+    setIsEditOpen((value) => !value)
+  }
 
   return (
     <>
@@ -102,8 +101,8 @@ export const ProfileHeader = ({
           </div>
         </div>
         <Editprofile
-          isOpen={isEditProfileOpen}
-          onOpenChange={onEditProfileChange}
+          isOpen={isEditOpen}
+          onOpenChange={handleEditOpenChange}
           profileId= {profileId}
         />
         <CardBody className="flex h-[calc(90px+12px)] flex-row items-center justify-end">
@@ -112,7 +111,7 @@ export const ProfileHeader = ({
             size="md"
             color="primary"
             variant="shadow"
-            onClick={onEditProfileOpen}
+            onClick={() => setIsEditOpen(true)}
           >
             Edit profile
           </Button>

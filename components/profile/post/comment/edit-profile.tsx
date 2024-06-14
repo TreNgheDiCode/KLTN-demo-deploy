@@ -41,7 +41,8 @@ export default function EditProfile({
   const [statusPhone, setStatusPhone] = useState(true);
   // avatar
   const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
-  const handleToggleAvatarModal = () => {
+
+  const handleAvatarOpenChange = () => {
     setIsAvatarModalOpen((prev) => !prev);
   };
 
@@ -168,16 +169,14 @@ export default function EditProfile({
                     <p>Ảnh đại diện</p>
                   </div>
                   <div className="cursor-pointer">
-                    <Pencil id="editavatar" onClick={handleToggleAvatarModal} />
+                    <Pencil id="editavatar" onClick={() => setIsAvatarModalOpen(true)} />
                   </div>
-                  {isAvatarModalOpen && (
-                    <ProfileAvatarImageModal
-                      accountId={profile?.student.account.id!}
-                      isOpen={true}
-                      onClose={onClose}
-                      image={profile?.student.account.image}
-                    />
-                  )}
+                  <ProfileAvatarImageModal
+                    accountId={profile?.student.account.id!}
+                    isOpen={isAvatarModalOpen}
+                    onOpenChange={handleAvatarOpenChange}
+                    image={profile?.student.account.image}
+                  />
                 </div>
                 <div className="flex items-center justify-center text-black  dark:text-white">
                   <Avatar
