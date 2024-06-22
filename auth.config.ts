@@ -24,8 +24,6 @@ export default {
 
           const user = await res.json();
 
-          console.log(user);
-
           if (!user.email) {
             return null;
           }

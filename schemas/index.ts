@@ -1,30 +1,32 @@
-import * as z from "zod";
 import {
   CertificateType,
+  ContactTitle,
   Country,
   DegreeType,
   Gender,
   GradeType,
+  NewsType,
   PostStatus,
+  StudentStatus,
 } from "@prisma/client";
+import { z } from "zod";
+
+export const nameSchema = z.object({
+  firstName: z.optional(z.string()),
+});
 
 export const LoginSchema = z.object({
-  email: z
-    .string()
-    .min(1, {
-      message: "Email is required",
-    })
-    .email({
-      message: "Invalid type of email",
-    }),
+  email: z.optional(
+    z
+      .string()
+      .min(1, {
+        message: "Email is required",
+      })
+      .email(),
+  ),
   password: z.string().min(1, {
     message: "Password is required",
   }),
-  studentCode: z.optional(
-    z.string().min(10, {
-      message: "Student code is required minimum of 10 characters",
-    }),
-  ),
 });
 
 export const RegisterSchema = z
@@ -37,51 +39,19 @@ export const RegisterSchema = z
       .email({
         message: "Invalid type of email",
       }),
-    password: z
-      .string()
-      .min(1, {
-        message: "Password is required",
-      })
-      // Minimum length of 8 characters
-      .min(8, { message: "Password must be at least 8 characters long" })
-      // Maximum length of 25 characters
-      .max(25, { message: "Password cannot exceed 25 characters" })
-      // Check for at least one digit
-      .refine((value) => /\d/.test(value), {
-        message: "Password must contain at least one digit",
-      })
-      // Check for at least one lowercase letter
-      .refine((value) => /[a-z]/.test(value), {
-        message: "Password must contain at least one lowercase letter",
-      })
-      // Check for at least one uppercase letter
-      .refine((value) => /[A-Z]/.test(value), {
-        message: "Password must contain at least one uppercase letter",
-      })
-      // Check for at least one special character
-      .refine((value) => /[^\w\s]/.test(value), {
-        message: "Password must contain at least one special character",
-      }),
+    password: z.string().min(1, {
+      message: "Password is required",
+    }),
     confirmPassword: z.string().min(1, {
       message: "Confirm password is required",
     }),
-    name: z
-      .string()
-      .min(1, {
-        message: "Fullname is required",
-      })
-      .max(50, "Name must not exceed 50 characters")
-      .refine(
-        (value) =>
-          !/[^a-zA-ZáàảãạâấầẩẫậăắằẳẵặđéèẻẽẹêếềểễệíìỉĩịóòỏõọôốồổỗộơớờởỡợúùủũụưứừửữựýỳỷỹỵÁÀẢÃẠÂẤẦẨẪẬĂẮẰẲẴẶĐÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỴ\s]/g.test(
-            value,
-          ),
-        {
-          message: "Name must only contain letters, spaces",
-        },
-      ),
+    name: z.string().min(1, {
+      message: "Fullname is required",
+    }),
     dob: z
-      .date()
+      .date({
+        required_error: "Date of birth is required",
+      })
       .min(new Date("1970-01-01"), {
         message: "Your age is too old",
       })
@@ -92,39 +62,26 @@ export const RegisterSchema = z
       invalid_type_error: "Invalid type, please reselect",
     }),
     phoneNumber: z
-      .string()
-      .min(1, {
-        message: "Phone number is required",
+      .string({
+        invalid_type_error: "Invalid phone number",
+        required_error: "Phone number is required",
       })
       .min(10, {
         message: "Minimum 10 numbers is required",
       })
       .max(13, {
         message: "Maximum 13 numbers is required",
-      })
-      .refine((value) => /^\d+$/.test(value), {
-        message: "Please enter a valid id phone number",
       }),
     idCardNumber: z
-      .string()
+      .string({
+        required_error: "Id card number is required",
+      })
       .min(1, {
         message: "Id card number is required",
-      })
-      .refine(
-        (value) => {
-          if (value.length !== 9 && value.length !== 12) {
-            return false;
-          }
-
-          return true;
-        },
-        {
-          message: "Id card number must be 9 or 12 characters",
-        },
-      )
-      .refine((value) => /^\d+$/.test(value), {
-        message: "Please enter a valid id card number",
       }),
+    country: z.enum([Country.AUSTRALIA, Country.CANADA, Country.KOREA], {
+      message: "Nation is required",
+    }),
     city: z.string().min(1, {
       message: "City is required",
     }),
@@ -137,15 +94,20 @@ export const RegisterSchema = z
     addressLine: z.string().min(1, {
       message: "Address line is required",
     }),
-    country: z.enum([Country.AUSTRALIA, Country.CANADA, Country.KOREA], {
-      message: "Nation is required",
-    }),
-    schoolName: z.string().min(1, {
-      message: "School is required",
-    }),
-    programName: z.string().min(1, {
-      message: "Program is required",
-    }),
+    schoolName: z
+      .string({
+        required_error: "School is required",
+      })
+      .min(1, {
+        message: "School is required",
+      }),
+    programName: z
+      .string({
+        required_error: "Program is required",
+      })
+      .min(1, {
+        message: "Program is required",
+      }),
     degreeType: z.enum([DegreeType.HIGHSCHOOL, DegreeType.UNIVERSITY], {
       required_error: "Degree type is required",
       invalid_type_error: "Invalid type, please reselect",
@@ -174,7 +136,7 @@ export const RegisterSchema = z
       }),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords mismatch",
+    message: "Mật khẩu không trùng khớp",
     path: ["confirmPassword"],
   })
   .refine(
@@ -209,17 +171,6 @@ export const RegisterSchema = z
     },
   );
 
-export const ResetSchema = z.object({
-  email: z
-    .string()
-    .min(1, {
-      message: "Email is required",
-    })
-    .email({
-      message: "Invalid type of email",
-    }),
-});
-
 export const NewPasswordSchema = z
   .object({
     password: z
@@ -253,44 +204,16 @@ export const NewPasswordSchema = z
     path: ["confirmPassword"],
   });
 
-export const AccountFormSchema = z
-  .object({
-    email: z.optional(
-      z
-        .string({
-          invalid_type_error: "Invalid email",
-        })
-        .email(),
-    ),
-    password: z.optional(z.string()),
-    confirmPassword: z.optional(z.string()),
-    isTwoFactorEnabled: z.optional(z.boolean()),
-  })
-  .refine(
-    (data) => {
-      if (data.password !== undefined && data.confirmPassword === undefined) {
-        return false;
-      }
-
-      if (data.password === undefined && data.confirmPassword !== undefined) {
-        return false;
-      }
-
-      if (
-        data.password !== undefined &&
-        data.confirmPassword !== undefined &&
-        data.password !== data.confirmPassword
-      ) {
-        return false;
-      }
-
-      return true;
-    },
-    {
-      message: "Passwords mismatch",
-      path: ["confirmPassword"],
-    },
-  );
+export const ResetSchema = z.object({
+  email: z
+    .string()
+    .min(1, {
+      message: "Email is required",
+    })
+    .email({
+      message: "Invalid type of email",
+    }),
+});
 
 export const PostSchema = z.object({
   status: z.optional(
@@ -305,7 +228,170 @@ export const PostSchema = z.object({
   images: z.optional(z.array(z.string())),
 });
 
-export const CommentSchema = z.object({
-  content: z.optional(z.string()),
-  image: z.optional(z.string()),
+export const NewSchoolSchema = z.object({
+  name: z.string().min(1, {
+    message: "Vui lòng nhập tên trường",
+  }),
+  logo: z.string().min(1, {
+    message: "Vui lòng chọn ảnh đại diện cho trường",
+  }),
+  short: z.string().min(1, {
+    message: "Vui lòng nhập giới thiệu ngắn cho trường",
+  }),
+  background: z.string().min(1, {
+    message: "Vui lòng chọn hình nền cho trường",
+  }),
+  color: z.string().min(1, {
+    message: "Vui lòng nhập mã màu đại diện cho trường",
+  }),
+  country: z.enum([Country.AUSTRALIA, Country.CANADA, Country.KOREA]),
 });
+
+export const UpdateStudent = z.object({
+  isLocked: z.optional(z.boolean()),
+  status: z.optional(
+    z.enum([
+      StudentStatus.APPROVED,
+      StudentStatus.DROPPED,
+      StudentStatus.STUDYING,
+      StudentStatus.AWAITING,
+    ]),
+  ),
+  email: z.optional(
+    z
+      .string()
+      .min(1, {
+        message: "Email is required",
+      })
+      .email({
+        message: "Invalid type of email",
+      }),
+  ),
+  name: z.optional(
+    z.string().min(1, {
+      message: "Fullname is required",
+    }),
+  ),
+  dob: z.optional(
+    z
+      .date({
+        required_error: "Date of birth is required",
+      })
+      .min(new Date("1970-01-01"), {
+        message: "Your age is too old",
+      })
+      .max(new Date("2006-31-12"), {
+        message: "Your age is too young",
+      }),
+  ),
+  gender: z.optional(
+    z.enum([Gender.MALE, Gender.FEMALE], {
+      invalid_type_error: "Invalid type, please reselect",
+    }),
+  ),
+  phoneNumber: z.optional(
+    z
+      .string({
+        invalid_type_error: "Invalid phone number",
+        required_error: "Phone number is required",
+      })
+      .min(10, {
+        message: "Minimum 10 numbers is required",
+      })
+      .max(13, {
+        message: "Maximum 13 numbers is required",
+      }),
+  ),
+  idCardNumber: z.optional(
+    z
+      .string({
+        required_error: "Id card number is required",
+      })
+      .min(1, {
+        message: "Id card number is required",
+      }),
+  ),
+  city: z.optional(
+    z.string().min(1, {
+      message: "City is required",
+    }),
+  ),
+  district: z.optional(
+    z.string().min(1, {
+      message: "District is required",
+    }),
+  ),
+  ward: z.optional(
+    z.string().min(1, {
+      message: "Ward is required",
+    }),
+  ),
+  addressLine: z.optional(
+    z.string().min(1, {
+      message: "Address line is required",
+    }),
+  ),
+  additional: z.optional(z.string()),
+});
+
+export const NewsSchema = z.object({
+  id: z.optional(z.string()),
+  title: z.string().min(1, {
+    message: "Vui lòng nhập tiêu đề",
+  }),
+  content: z.string().min(1, {
+    message: "Vui lòng nhập nội dung",
+  }),
+  type: z.enum([NewsType.ANNOUNCEMENT, NewsType.EVENT, NewsType.BLOG]),
+  cover: z.string().min(1, {
+    message: "Vui lòng chọn ảnh đại diện",
+  }),
+  isPublished: z.boolean(),
+  schoolId: z.optional(z.string()),
+});
+
+export const CreateScholarshipSchema = z.object({
+  name: z.string().min(1, {
+    message: "Vui lòng nhập tiêu đề",
+  }),
+  description: z.string().min(1, {
+    message: "Vui lòng nhập mô tả",
+  }),
+  cover: z.string().min(1, {
+    message: "Vui lòng chọn ảnh đại diện",
+  }),
+  isPublished: z.boolean(),
+  images: z.optional(z.array(z.string())),
+  owners: z.optional(z.array(z.string())),
+});
+
+export const ContactSchema = z.object({
+  name: z.string().min(1, {
+    message: "Vui lòng nhập tên",
+  }),
+  email: z.string().email({
+    message: "Vui lòng nhập email",
+  }),
+  title: z.enum(
+    [
+      ContactTitle.BILLING,
+      ContactTitle.FEEDBACK,
+      ContactTitle.PROCEDURE,
+      ContactTitle.REFUND,
+      ContactTitle.SCHOLARSHIP,
+      ContactTitle.SYSTEM,
+    ],
+    {
+      message: "Vui lòng chọn tiêu đề",
+    },
+  ),
+  phone: z.string().min(1, {
+    message: "Vui lòng nhập số điện thoại",
+  }),
+  message: z.string().min(1, {
+    message: "Vui lòng nhập nội dung",
+  }),
+  schoolId: z.optional(z.string()),
+});
+
+export type ContactFormValues = z.infer<typeof ContactSchema>;
