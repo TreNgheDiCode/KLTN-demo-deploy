@@ -2,10 +2,10 @@
 
 import { db } from "@/lib/db";
 import { GetAccountIdLib, currentAccount } from "@/lib/account";
-import { CommentSchema } from "@/schemas";
 import { z } from "zod";
 import { auth } from "@/auth";
 import { AccountIdLib } from "@/types";
+import { CommentSchema } from "@/schemas";
 
 export const Comment = async (
   values: z.infer<typeof CommentSchema>,
