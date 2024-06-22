@@ -1,32 +1,52 @@
 import { db } from "@/lib/db";
-import { currentAccount } from "@/lib/account";
 
-export const getProfileByStudentCode = async (code: string) => {
+export const getProfileByStudentCode = async (
+  studentCode: string,
+  url: string,
+) => {
   try {
-    const session = await currentAccount();
-    const user = await db.account.findUnique({
+    const profile = await db.profile.findFirst({
       where: {
-        id: session?.id,
+        student: {
+          studentCode: studentCode,
+        },
       },
     });
-
-    if (!user) {
-      return null;
+    if (!profile) {
+      return { error: "Không tìm thấy profile" };
     }
 
-    const profile = await db.profile.findUnique({
+    const updateProfile = await db.student.update({
       where: {
-        studentId: user.id,
+        id: profile?.studentId,
       },
-      select: {
-        status: true,
-        id: true,
-        biography: true,
+      data: {
+        cover: url,
       },
     });
-
-    return profile;
+    if (!updateProfile) {
+      return { error: "Lỗi khi update ảnh bìa" };
+    }
+    return { success: "Update ảnh bìa thành công" };
   } catch {
-    return null;
+    return { error: "Lỗi api" };
+  }
+};
+export const uploadAvatar = async (accountId: string, avatar: string) => {
+  try {
+    const updateProfile = await db.account.update({
+      where: {
+        id: accountId,
+      },
+      data: {
+        image: avatar,
+      },
+    });
+    if (!updateProfile) {
+      return { error: "Lỗi khi update ảnh avatar" };
+    }
+    return { success: "Update ảnh avatar thành công" };
+  } catch (error) {
+    return { error: "Lỗi " };
   }
 };

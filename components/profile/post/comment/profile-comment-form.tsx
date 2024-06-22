@@ -27,8 +27,7 @@ export const ProfileCommentForm = ({
   postId,
   parentId,
   onLoad,
-}: ProfileCommentFormProps) => 
-{
+}: ProfileCommentFormProps) => {
   const router = useRouter();
 
   const [isEmojiOpen, setIsEmojiOpen] = useState(false);
@@ -76,7 +75,6 @@ export const ProfileCommentForm = ({
             }
           },
         });
-
         values.image = res.url;
       } catch (error) {
         toast.error("Error while uploading comment image");
@@ -85,6 +83,7 @@ export const ProfileCommentForm = ({
 
     await Comment(values, postId, parentId).then((res) => {
       if (res.success) {
+        toast.success(res.success);
       }
       if (res.error) {
         toast.error(res.error);
@@ -173,7 +172,6 @@ export const ProfileCommentForm = ({
                       if (e === "" && !file) {
                         setIsValue(false);
                       }
-
                       field.onChange;
                     }}
                     variant="faded"
