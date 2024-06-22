@@ -4,13 +4,14 @@ import { Avatar, Image, Spinner } from "@nextui-org/react";
 import { PostCommentLike } from "@prisma/client";
 import { formatDistanceToNowStrict } from "date-fns";
 import { vi } from "date-fns/locale/vi";
-import { CornerDownRight, CornerLeftUp } from "lucide-react";
+import { CornerDownRight, CornerLeftUp, MoreHorizontal } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { ProfileCommentForm } from "./profile-comment-form";
 import { ProfileCommentsList } from "./profile-comments-list";
 import { PostCommentLib } from "@/types";
-import { GetCommentsByParentId } from "@/actions/profile/comment";
+import { GetCommentsByParentId, LikeCmt } from "@/actions/profile/comment";
+import ResponsiveDialog from "@/components/Component-Profile/alertDeleteComment";
 
 interface ProfileCommentItemProps {
   postId: string;
@@ -26,6 +27,7 @@ interface ProfileCommentItemProps {
   isArchived: boolean;
   childLength?: number;
 }
+
 export const ProfileCommentItem = ({
   content,
   image,
@@ -40,38 +42,42 @@ export const ProfileCommentItem = ({
   profileId,
   childLength,
 }: ProfileCommentItemProps) => {
+  const router = useRouter();
   const [isCommenting, setIsCommenting] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
   const [isPending, startTransition] = useTransition();
-  const [items, setItems] = useState<[]>([]);
+  const [items, setItems] = useState<PostCommentLib[]>([]);
 
   const onLoad = async () => {
     startTransition(() => {
-      GetCommentsByParentId(postId, id).then((res) => {
-        if (res) {
-          // setItems(res);
-        }
+      GetCommentsByParentId(postId, id).then((comments) => {
+        setItems(comments);
       });
+      setIsExpanded(true);
     });
-
-    setIsExpanded(true);
   };
-  const router = useRouter();
-  const params = useParams();
-  const studentCode = params.studentCode as string;
-  const onLike = async () => {
-    startTransition(() => {
-      // LikeCmt(studentCode, id);
+  const onLike = () => {
+    startTransition(async () => {
+      await LikeCmt(id);
     });
-
     router.refresh();
   };
   const isLike = likes?.some((LikeCmt) => LikeCmt.profileId == profileId);
-
+  const [isMount, setMount] = useState(false);
+  const handleMouseEnter = () => {
+    setMount(true);
+  };
+  const handleMouseLeave = () => {
+    setMount(false);
+  };
   return (
     <div className="flex w-full flex-col gap-1">
-      <div className="flex gap-2">
+      <div
+        className="flex gap-2"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
         <Avatar src={logo} alt="logo" />
         <div className="flex flex-col">
           <div className="w-fit rounded-2xl bg-default-100 px-3 py-1 hover:bg-default-200">
@@ -79,14 +85,12 @@ export const ProfileCommentItem = ({
               {name}
             </span>
             <p className="text-sm text-primary">{content}</p>
+            {image && (
+              <Image src={image} alt="cmt" className="h-[220px] w-full  " />
+            )}
           </div>
-          {image && (
-            <div className="aspect-auto w-full max-w-[200px]">
-              <Image src={image} alt="comment image" />
-              <Image src={image} alt="comment image" />
-            </div>
-          )}
         </div>
+        {isMount && <ResponsiveDialog id={id} />}
       </div>
       <div className="ml-[48px] flex  items-center gap-3 text-sm text-primary">
         <span className="text-zinc-600 dark:text-zinc-400">
@@ -95,7 +99,7 @@ export const ProfileCommentItem = ({
           })}
         </span>
         <span
-          onClick={() => onLike()}
+          onClick={onLike}
           className={cn(
             "cursor-pointer hover:underline",
             isLike && "font-bold text-rose-500",

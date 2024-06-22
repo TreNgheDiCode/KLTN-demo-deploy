@@ -16,6 +16,7 @@ import { useParams, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ProfileCoverImage } from "./profile-cover-image";
 import { ProfileHeaderNavigation } from "./profile-header-navigation";
+import Editprofile from "./post/comment/edit-profile";
 
 interface ProfileHeaderProps {
   coverUrl?: string;
@@ -23,6 +24,7 @@ interface ProfileHeaderProps {
   logoUrl?: string;
   schoolName: string;
   postCount?: number;
+  profileId: string;
 }
 
 export const ProfileHeader = ({
@@ -31,15 +33,26 @@ export const ProfileHeader = ({
   logoUrl,
   schoolName,
   postCount,
+  profileId,
 }: ProfileHeaderProps) => {
   const params = useParams();
   const pathname = usePathname();
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const [mounted, setMounted] = useState(false);
-
+  const [model, setModel] = useState(false);
+  const [isEditOpen, setIsEditOpen] =  useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure(); // profile image
   useEffect(() => {
     setMounted(true);
   }, [mounted]);
+
+  const onEdit = () => {
+    setModel((prev) => !prev);
+  };
+
+  // Model
+  const handleEditOpenChange = () => {
+    setIsEditOpen((value) => !value)
+  }
 
   return (
     <>
@@ -87,16 +100,23 @@ export const ProfileHeader = ({
             <h2 className="text-xs font-semibold text-primary">{schoolName}</h2>
           </div>
         </div>
+        <Editprofile
+          isOpen={isEditOpen}
+          onOpenChange={handleEditOpenChange}
+          profileId= {profileId}
+        />
         <CardBody className="flex h-[calc(90px+12px)] flex-row items-center justify-end">
           <Button
             startContent={<SquarePen className="size-4" />}
             size="md"
             color="primary"
             variant="shadow"
+            onClick={() => setIsEditOpen(true)}
           >
             Edit profile
           </Button>
         </CardBody>
+
         <Divider />
         <CardFooter className="justify-center">
           <ProfileHeaderNavigation

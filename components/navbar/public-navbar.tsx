@@ -50,7 +50,6 @@ export const PublicNavbar = ({ account }: PublicNavbarProps) => {
         navbarElement.style.backgroundColor =
           theme === "dark" ? "black" : "white";
       } else {
-        navbarElement.style.backgroundColor = "transparent";
       }
     };
 
@@ -74,7 +73,7 @@ export const PublicNavbar = ({ account }: PublicNavbarProps) => {
       style={{
         position: "sticky",
         top: 0,
-        zIndex: 50,
+        zIndex: 100,
       }}
     >
       <Navbar
@@ -85,11 +84,10 @@ export const PublicNavbar = ({ account }: PublicNavbarProps) => {
         style={{
           position: "absolute",
           width: "100%",
-          backgroundColor: "transparent",
         }}
         classNames={{
           wrapper: "max-w-full flex h-[85px] p-0 pl-3 pr-6",
-          menu: "top-[85px] bg-white dark:bg-background",
+          menu: "bg-white dark:bg-background",
           toggleIcon: "text-[#7D1f1F] dark:text-primary",
           item: [
             "flex",
@@ -172,6 +170,15 @@ export const PublicNavbar = ({ account }: PublicNavbarProps) => {
               className="text-[#7D1F1F] dark:text-primary"
             >
               About Us
+            </Link>
+          </NavbarItem>
+          <NavbarItem isActive={pathname.includes("/about")}>
+            <Link
+              color="primary"
+              href="/contact"
+              className="text-[#7D1F1F] dark:text-primary"
+            >
+              Contact Us
             </Link>
           </NavbarItem>
           <NavbarItem>
