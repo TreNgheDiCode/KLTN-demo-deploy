@@ -4,6 +4,7 @@ import { Providers } from "@/components/providers/providers";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { EdgeStoreProvider } from "@/hooks/use-edgestore";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
@@ -32,6 +33,7 @@ export default async function RootLayout({
   return (
     <SessionProvider session={session}>
       <html lang={params.lang} suppressHydrationWarning>
+        <GoogleAnalytics gaId="G-0V5PG7FTX1" />
         <body className={montserrat.className}>
           <EdgeStoreProvider>
             <ThemeProvider
