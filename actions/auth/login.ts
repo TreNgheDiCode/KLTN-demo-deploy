@@ -9,6 +9,7 @@ import { z } from "zod";
 export const login = async (values: z.infer<typeof LoginSchema>) => {
   try {
     const { email, password } = values;
+
     await signIn("credentials", {
       email,
       password,

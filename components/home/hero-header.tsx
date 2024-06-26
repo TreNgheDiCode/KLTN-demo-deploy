@@ -108,7 +108,7 @@ export const HeroHeader = ({ schools }: HeroHeaderProps) => {
           opts={{ align: "center", loop: true }}
           setApi={setApi}
         >
-          <CarouselContent className="] h-full w-full rounded-lg ease-in-out ">
+          <CarouselContent className="] h-full w-full rounded-lg ease-in-out">
             {schools.map((school, index) => {
               const colors = school.color.split("rgba("); // Split to isolate color definitions
               const color1 = colors[1].replace(/,\s+/g, "").split(")"); // Remove spaces and store first color
@@ -120,7 +120,7 @@ export const HeroHeader = ({ schools }: HeroHeaderProps) => {
                   onClick={() => onClick(index)}
                   key={school.name}
                   className={cn(
-                    "basis-1/3 pl-4 opacity-40 ",
+                    "basis-1/3 pl-4 opacity-40",
                     index === current && "opacity-100",
                   )}
                 >
@@ -142,7 +142,7 @@ export const HeroHeader = ({ schools }: HeroHeaderProps) => {
                         />
                         <div
                           style={{ background: rotatedColor }}
-                          className="absolute inset-0"
+                          className="absolute inset-0 opacity-20"
                         />
                       </CardBody>
                     </Card>
@@ -168,7 +168,7 @@ export const HeroHeader = ({ schools }: HeroHeaderProps) => {
           {schools.map((school) => {
             const color = school.color;
             return (
-              <CarouselItem key={school.name} className="rounded-none pl-0 ">
+              <CarouselItem key={school.name} className="rounded-none pl-0">
                 <Card className="h-screen rounded-none">
                   <CardBody className="p-0">
                     <motion.div
@@ -181,7 +181,7 @@ export const HeroHeader = ({ schools }: HeroHeaderProps) => {
                         staggerChildren: 0.1,
                         staggerDirection: -1,
                       }}
-                      className="relative z-10 flex h-full flex-col justify-center gap-8"
+                      className="relative z-10 !flex h-full flex-col justify-center gap-8"
                     >
                       <motion.h1
                         variants={main}
@@ -222,7 +222,7 @@ export const HeroHeader = ({ schools }: HeroHeaderProps) => {
                         className="opacity-100"
                       />
                       <div
-                        className="absolute inset-0"
+                        className="absolute inset-0 opacity-20"
                         style={{ background: color }}
                       />
                     </div>

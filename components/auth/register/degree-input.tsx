@@ -25,12 +25,12 @@ export const DegreeInput = ({
       disallowEmptySelection
       items={[DegreeType.HIGHSCHOOL, DegreeType.UNIVERSITY]}
       isDisabled={isLoading}
-      label="Degree"
+      label="Academic level"
       labelPlacement="outside"
       variant="bordered"
       size="md"
-      aria-label="Choose a degree"
-      placeholder="Choose a degree"
+      aria-label="Choose a academic level"
+      placeholder="Choose a academic level"
       errorMessage={errorMessage}
       isInvalid={isInvalid}
       onSelectionChange={onSelectionChange}

@@ -6,7 +6,6 @@ import { CommentSchema } from "@/schemas";
 import { z } from "zod";
 import { auth } from "@/auth";
 import { AccountIdLib } from "@/types";
-import { useSession } from "next-auth/react";
 
 export const Comment = async (
   values: z.infer<typeof CommentSchema>,

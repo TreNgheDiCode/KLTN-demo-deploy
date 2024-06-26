@@ -13,7 +13,7 @@ import {
   Textarea,
 } from "@nextui-org/react";
 import { Area, ProfileBiography, ProfileBiographySocial } from "@prisma/client";
-import { format, set } from "date-fns";
+import { format } from "date-fns";
 import { vi } from "date-fns/locale/vi";
 import { Cake, MapPin } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
@@ -42,6 +42,7 @@ export const ProfileInformation = ({
   const [buttonInputValue, setButtonInputValue] = useState(false);
   const [buttonAction, setButtonAction] = useState(false);
   const [textValue, setTextValue] = useState(biography?.content);
+  const [loading, setLoading] = useState(false);
 
   const handleTextareaChange = (event: ChangeEvent<HTMLInputElement>) => {
     setTextValue(event.target.value);

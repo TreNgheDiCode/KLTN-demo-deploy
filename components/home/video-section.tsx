@@ -7,7 +7,7 @@ import { useRef } from "react";
 export const VideoSection = () => {
   const itemVariants = {
     hidden: {
-      y: -200,
+      y: -100,
       opacity: 0,
     },
     visible: {
@@ -27,7 +27,7 @@ export const VideoSection = () => {
         type: "spring",
         stiffness: 10,
       }}
-      viewport={{ once: false, amount: "all", root: view, margin: "32px" }}
+      viewport={{ once: false, amount: "all", margin: "85px" }}
       className="container flex h-screen flex-col items-center justify-center gap-6 bg-white dark:bg-background"
     >
       <motion.h1
@@ -37,14 +37,7 @@ export const VideoSection = () => {
         CONTINUE YOUR DREAM
       </motion.h1>
       <motion.div variants={itemVariants} className="aspect-video">
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/wdQZD8PpD4A?si=dc8cvGnccSZZpoHK"
-          title="YouTube video player"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen={true}
-        ></iframe>
+        <video src=""></video>
       </motion.div>
       <motion.p
         variants={itemVariants}

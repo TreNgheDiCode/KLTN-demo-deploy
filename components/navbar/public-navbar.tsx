@@ -4,7 +4,6 @@ import { AccountIdLib } from "@/types";
 import {
   Button,
   Divider,
-  Link,
   Navbar,
   NavbarBrand,
   NavbarContent,
@@ -19,6 +18,7 @@ import { AccountMenu } from "./account-menu";
 import { ThemeToggle } from "./theme-toggle";
 import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
+import Link from "next/link";
 
 interface PublicNavbarProps {
   account?: AccountIdLib;
@@ -50,35 +50,14 @@ export const PublicNavbar = ({ account }: PublicNavbarProps) => {
         navbarElement.style.backgroundColor =
           theme === "dark" ? "black" : "white";
       } else {
-        navbarElement.style.backgroundColor = "transparent";
-      }
-    };
-
-    const handleWheel = (e: WheelEvent) => {
-      const viewportsScrolled = Math.round(window.scrollY / window.innerHeight);
-
-      if (e.deltaY > 0) {
-        // Scroll down
-        window.scrollTo({
-          top: (viewportsScrolled + 1) * window.innerHeight + 5,
-          behavior: "smooth",
-        });
-      } else {
-        // Scroll up
-        window.scrollTo({
-          top: (viewportsScrolled - 1) * window.innerHeight,
-          behavior: "smooth",
-        });
       }
     };
 
     window.addEventListener("scroll", handleScroll);
-    window.addEventListener("wheel", handleWheel);
     window.addEventListener("click", handleClick);
 
     // Clean up the event listener when the component unmounts
     return () => {
-      window.removeEventListener("wheel", handleWheel);
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("click", handleClick);
     };
@@ -94,7 +73,7 @@ export const PublicNavbar = ({ account }: PublicNavbarProps) => {
       style={{
         position: "sticky",
         top: 0,
-        zIndex: 50,
+        zIndex: 100,
       }}
     >
       <Navbar
@@ -105,11 +84,10 @@ export const PublicNavbar = ({ account }: PublicNavbarProps) => {
         style={{
           position: "absolute",
           width: "100%",
-          backgroundColor: "transparent",
         }}
         classNames={{
           wrapper: "max-w-full flex h-[85px] p-0 pl-3 pr-6",
-          menu: "top-[85px] bg-white dark:bg-background",
+          menu: "bg-white dark:bg-background",
           toggleIcon: "text-[#7D1f1F] dark:text-primary",
           item: [
             "flex",
@@ -194,6 +172,15 @@ export const PublicNavbar = ({ account }: PublicNavbarProps) => {
               About Us
             </Link>
           </NavbarItem>
+          <NavbarItem isActive={pathname.includes("/about")}>
+            <Link
+              color="primary"
+              href="/contact"
+              className="text-[#7D1F1F] dark:text-primary"
+            >
+              Contact Us
+            </Link>
+          </NavbarItem>
           <NavbarItem>
             <ThemeToggle />
           </NavbarItem>
@@ -203,13 +190,14 @@ export const PublicNavbar = ({ account }: PublicNavbarProps) => {
           {!account && (
             <>
               <Button
+                as={Link}
                 variant="bordered"
                 radius="full"
                 onClick={() => setLoading(true)}
                 isLoading={isLoading}
                 size="md"
                 className="border-[#7D1F1F] font-semibold text-[#7D1F1F] dark:border-primary dark:text-white"
-                href="/register"
+                href="/auth/register"
               >
                 Get Started
               </Button>
@@ -221,7 +209,7 @@ export const PublicNavbar = ({ account }: PublicNavbarProps) => {
                 radius="full"
                 size="md"
                 className="bg-[#7D1F1F] font-semibold text-white dark:text-primary"
-                href="/login"
+                href="/auth/login"
               >
                 Login
               </Button>

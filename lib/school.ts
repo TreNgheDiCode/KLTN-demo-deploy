@@ -4,7 +4,7 @@ export const GetSchoolLib = async () => {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API}/api/schools`, {
       method: "GET",
-      cache: "no-store",
+      cache: "no-cache",
     });
 
     const schools: SchoolLib[] = await res.json();
