@@ -120,3 +120,25 @@ export type ProfileEdit = {
     };
   };
 };
+
+export type User = {
+  studentCode: string;
+  account: {
+    name: string;
+    image: string;
+  };
+  school: {
+    name: string;
+  };
+};
+
+export type Friend = {
+  studentCode: string;
+  profile: {
+    status: string;
+  };
+  account: {
+    name: string;
+    image: string;
+  };
+};
