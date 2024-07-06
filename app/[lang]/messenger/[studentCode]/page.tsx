@@ -4,14 +4,16 @@ import { Friend, User } from "@/types";
 import { Avatar } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { Socket, io } from "socket.io-client";
-import { toast } from "sonner";
 
 // Định nghĩa kiểu dữ liệu cho tin nhắn
 interface Message {
   text: string;
   sender: string;
+  senderName?: string;
   avatar: string;
-  room: string;
+  receiver?: string;
+  room?: string;
+  timestamp?: number; // Thêm trường timestamp
 }
 
 const Messenger = ({
@@ -28,113 +30,190 @@ const Messenger = ({
   const [inputMessage, setInputMessage] = useState("");
   const [currentChat, setCurrentChat] = useState<string | null>(null);
   const [friend, setFriend] = useState<Friend[]>();
+  //
 
   useEffect(() => {
     const newSocket = io("http://localhost:3002");
     setSocket(newSocket);
 
     newSocket.on("chatGroup", (msg: Message) => {
-      setGroupMessages((prevMessages) => [...prevMessages, msg]);
+      setGroupMessages((prevMessages) => {
+        // Kiểm tra xem tin nhắn đã tồn tại chưa dựa trên timestamp và nội dung
+        if (
+          !prevMessages.some(
+            (m) => m.timestamp === msg.timestamp && m.text === msg.text,
+          )
+        ) {
+          return [...prevMessages, msg];
+        }
+        return prevMessages;
+      });
     });
 
     newSocket.on("privateMessage", (msg: Message) => {
-      setPrivateMessages((prev) => ({
-        ...prev,
-        [msg.room]: [...(prev[msg.room] || []), msg],
-      }));
+      const chatKey = [msg.sender, msg.receiver].sort().join("_");
+      setPrivateMessages((prev) => {
+        const existingMessages = prev[chatKey] || [];
+        // Kiểm tra xem tin nhắn đã tồn tại chưa dựa trên timestamp và nội dung
+        if (
+          !existingMessages.some(
+            (m) => m.timestamp === msg.timestamp && m.text === msg.text,
+          )
+        ) {
+          return {
+            ...prev,
+            [chatKey]: [...existingMessages, msg],
+          };
+        }
+        return prev;
+      });
     });
 
     return () => {
       newSocket.disconnect();
     };
-  }, []);
+  }, [studentCode]);
 
+  // khi mounted sẽ lấy dữ liệu chat từ database
+  useEffect(() => {
+    if (user && currentChat) {
+      const chatId = [user.studentCode, currentChat].sort().join("_");
+      fetchMessages(chatId).then((messages) => {
+        setPrivateMessages((prev) => ({
+          ...prev,
+          [chatId]: messages,
+        }));
+      });
+    } else if (user && user.school.name) {
+      fetchMessages(user.school.name).then((messages) => {
+        setGroupMessages(messages);
+      });
+    }
+  }, [user, currentChat]);
+
+  //  fetch thông tin du học sinh
   useEffect(() => {
     async function fetchUser() {
       try {
-        const url = `${process.env.NEXT_PUBLIC_API}/api/messeger/student/${studentCode}`;
+        const url = `${process.env.NEXT_PUBLIC_API}/api/message/student/${studentCode}`;
         const response = await fetch(url);
         const resJson = await response.json();
         setUser(resJson);
       } catch (e) {
-        toast.error("Không lấy được dữ liệu");
-        console.error(e);
+        return;
       }
     }
     fetchUser();
   }, [studentCode]);
 
+  // fetch danh sách du học sinh có trong trường đang học
   useEffect(() => {
     async function fetchListFriend() {
       if (user?.school.name) {
         try {
-          const url = `${process.env.NEXT_PUBLIC_API}/api/messeger/school/${user.school.name}`;
+          const url = `${process.env.NEXT_PUBLIC_API}/api/message/school/${user.school.name}`;
           const response = await fetch(url);
           const resJson = await response.json();
           setFriend(resJson);
         } catch (e) {
-          toast.error("Không lấy được dữ liệu");
-          console.error(e);
+          return;
         }
       }
     }
     fetchListFriend();
   }, [user?.school.name]);
-
+  // gửi mess
   const sendMessage = (e: React.FormEvent) => {
     e.preventDefault();
     if (inputMessage && socket && user) {
-      const newMessage: Message = {
-        text: inputMessage,
-        sender: user.account.name,
-        avatar: user.account.image,
-        room: currentChat || user.school.name,
-      };
+      const timestamp = Date.now(); // Tạo timestamp
       if (currentChat) {
+        // Tin nhắn riêng tư
+        const newMessage: Message = {
+          text: inputMessage,
+          sender: user.studentCode,
+          receiver: currentChat,
+          avatar: user.account.image,
+          senderName: user.account.name,
+          timestamp: timestamp,
+        };
         socket.emit("privateMessage", newMessage);
-        setPrivateMessages((prev) => ({
-          ...prev,
-          [currentChat]: [...(prev[currentChat] || []), newMessage],
-        }));
       } else {
+        // Tin nhắn nhóm
+        const newMessage: Message = {
+          text: inputMessage,
+          sender: user.studentCode,
+          avatar: user.account.image,
+          room: user.school.name,
+          senderName: user.account.name,
+          timestamp: timestamp,
+        };
         socket.emit("chatGroup", newMessage);
-        setGroupMessages((prevMessages) => [...prevMessages, newMessage]);
       }
       setInputMessage("");
     }
   };
-
+  //  Click vào avatar chuyển sang đoạn chát của người đó
   const handleAvatar = (friendStudentCode: string) => {
     if (friendStudentCode === currentChat) {
-      setCurrentChat(null); // Switch back to group chat if clicking the same avatar
+      setCurrentChat(null);
     } else {
       setCurrentChat(friendStudentCode);
-      if (!privateMessages[friendStudentCode]) {
-        setPrivateMessages((prev) => ({ ...prev, [friendStudentCode]: [] }));
+      const chatKey = [user?.studentCode, friendStudentCode].sort().join("_");
+      if (!privateMessages[chatKey]) {
+        setPrivateMessages((prev) => ({ ...prev, [chatKey]: [] }));
       }
       socket?.emit("joinRoom", friendStudentCode);
     }
   };
-
+  //  render tin nhắn từ database
   const renderMessages = () => {
+    let messages: Message[] = [];
     if (currentChat) {
-      return (privateMessages[currentChat] || []).map((msg, index) => (
-        <div key={index} className="mb-2 mt-6 flex items-center">
-          <Avatar size="md" src={msg.avatar} className="mr-2" />
-          <div className="flex items-center rounded-md border border-gray-200 bg-gray-300/90 px-3 py-[8px]">
-            <div>{msg.text}</div>
-          </div>
-        </div>
-      ));
+      const chatKey = [user?.studentCode, currentChat].sort().join("_");
+      messages = privateMessages[chatKey] || [];
     } else {
-      return groupMessages.map((msg, index) => (
-        <div key={index} className="mb-2 mt-6 flex items-center">
-          <Avatar size="md" src={msg.avatar} className="mr-2" />
-          <div className="flex items-center rounded-md border border-gray-200 bg-gray-300/90 px-3 py-[8px]">
+      messages = groupMessages;
+    }
+    return messages.map((msg, index) => {
+      const isSelf = msg.sender === user?.studentCode;
+      return (
+        <div
+          key={index}
+          className={`mb-4 flex items-end ${isSelf ? "justify-end" : "justify-start"}`}
+        >
+          {!isSelf && (
+            <Avatar size="sm" src={msg.avatar} className="mb-2 mr-2" />
+          )}
+          <div
+            className={`max-w-[70%] rounded-lg px-4 py-2 ${
+              isSelf
+                ? "rounded-br-none bg-blue-500 text-white"
+                : "rounded-bl-none bg-gray-200 text-gray-800"
+            }`}
+          >
             <div>{msg.text}</div>
           </div>
+          {isSelf && (
+            <Avatar size="sm" src={user.account.image} className="mb-2 ml-2" />
+          )}
         </div>
-      ));
+      );
+    });
+  };
+  // lấy chát từ database khi kết nối vào room
+  const fetchMessages = async (chatID: string) => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API}/api/message/chat/${chatID}`,
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch messages");
+      }
+      const messages = await response.json();
+      return messages;
+    } catch (error) {
+      return [];
     }
   };
 
@@ -155,9 +234,8 @@ const Messenger = ({
         <div className="text-black">
           <Avatar
             src={"/logomess.png"}
-            className="hover:cursor-pointer"
             size="lg"
-            onClick={() => setCurrentChat(null)} // Switch to group chat
+            onClick={() => setCurrentChat(null)}
           />
           {friend?.map((friendItem, index) => {
             if (friendItem.studentCode === studentCode) return null;
@@ -168,10 +246,9 @@ const Messenger = ({
                     src={friendItem.account.image}
                     size="lg"
                     onClick={() => handleAvatar(friendItem.studentCode)}
-                    className="hover:cursor-pointer"
                   />
                   {friendItem.profile?.status === "ONLINE" && (
-                    <div className="absolute right-0 top-10 h-4 w-4 rounded-full border-slate-500 bg-green-400"></div>
+                    <div className="absolute right-0 top-10 h-4 w-4 rounded-full border-2 border-black bg-green-400"></div>
                   )}
                 </div>
               </div>
@@ -185,10 +262,10 @@ const Messenger = ({
         {/* view chat */}
         <div className="mb-4 h-[88%] overflow-y-auto border border-gray-300 p-2 text-black">
           <div className="flex items-center justify-center">
-            Room:{" "}
+            Room:
             <b>
               {currentChat
-                ? `Private chat with ${currentChat}`
+                ? `Chat with ${user.account.name}`
                 : user.school.name}
             </b>
           </div>

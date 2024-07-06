@@ -30,8 +30,6 @@ export const createContact = async (values: z.infer<typeof ContactSchema>) => {
 
     return { success: "Gửi phản hồi thành công" };
   } catch (error) {
-    console.log("ERROR CREATE CONTACT ACTION", error);
-
     return { error: "Gửi phản hồi thất bại" };
   }
 };

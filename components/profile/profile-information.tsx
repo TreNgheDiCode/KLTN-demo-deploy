@@ -109,8 +109,8 @@ export const ProfileInformation = ({
     <Card>
       <CardBody className="flex flex-col gap-2">
         {/* dasdasdas */}
-        <Label className=" font-semibold">Biography</Label>
-        <div className="flex flex-col items-start justify-center gap-2 text-sm">
+        <Label className="font-semibold">Biography</Label>
+        <div className="!flex flex-col items-start justify-center gap-2 text-sm">
           {<p className="mx-auto">{biography?.content || "chua co bio"}</p>}
           {buttonAdBio && (textValue == undefined || textValue == "") && (
             <Button onClick={onAddBio} className="h-[40px] w-full">
@@ -173,7 +173,7 @@ export const ProfileInformation = ({
           </div>
         </div>
         <Divider />
-        <Label className=" font-semibold">Your areas</Label>
+        <Label className="font-semibold">Your areas</Label>
         {areas?.length! > 0 ? (
           <div>Your areas</div>
         ) : (
@@ -182,7 +182,7 @@ export const ProfileInformation = ({
           </p>
         )}
         <Divider />
-        <Label className=" font-semibold">Socials</Label>
+        <Label className="font-semibold">Socials</Label>
         {socials?.length! > 0 ? (
           <div>Socials</div>
         ) : (

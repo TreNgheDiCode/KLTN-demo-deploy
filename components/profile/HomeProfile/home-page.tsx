@@ -72,7 +72,7 @@ export const HomePage = ({ student }: Props) => {
     <>
       <div className="w-[30%]">
         {/* My User */}
-        <div className="dark:border-#cccc h-fit w-fit min-w-[200px] rounded-xl  shadow-xl dark:border dark:bg-background">
+        <div className="dark:border-#cccc h-fit w-fit min-w-[200px] rounded-xl shadow-xl dark:border dark:bg-background">
           <div className="px-[20px] py-[20px]">
             <User
               name={student.account.name!}
@@ -82,7 +82,7 @@ export const HomePage = ({ student }: Props) => {
                 fallback: (
                   <CameraIcon className="size-6 animate-pulse text-default-500" />
                 ),
-                src: `student.cover`,
+                src: `${student.account.image}`,
               }}
               classNames={{
                 name: "text-primary font-semibold",
@@ -92,7 +92,7 @@ export const HomePage = ({ student }: Props) => {
               onClick={handleAllert}
               className="mt-3 h-[3px] w-[300px] rounded-sm"
             />
-            <div className="py-[20px] ">
+            <div className="py-[20px]">
               <div className="flex items-center pb-[5px]">
                 {state1 && <LuFlagTriangleRight />}
                 <div
@@ -166,8 +166,8 @@ export const HomePage = ({ student }: Props) => {
           </div>
         </div>
         {/* List Friend  */}
-        <Card className="mt-7 h-[300px] w-fit min-w-[200px] rounded-xl border shadow-2xl dark:bg-background ">
-          <CardBody className="hidden:overflow-y-scroll w-[340px] scroll-m-2 px-[20px] py-[20px] hover:overflow-y-scroll ">
+        <Card className="mt-7 h-[300px] w-fit min-w-[200px] rounded-xl border shadow-2xl dark:bg-background">
+          <CardBody className="hidden:overflow-y-scroll w-[340px] scroll-m-2 px-[20px] py-[20px] hover:overflow-y-scroll">
             <div className="pb-[15px]">
               <User
                 name={"hello"}
@@ -270,7 +270,7 @@ export const HomePage = ({ student }: Props) => {
 
       {state2 && (
         <div className="border-#cccc h-full w-[70%] border px-[5px] py-[5px] text-black dark:bg-background dark:text-white">
-          <div className="mx-auto mt-[10px] h-[400px] w-[90%] rounded-lg  dark:bg-background">
+          <div className="mx-auto mt-[10px] h-[400px] w-[90%] rounded-lg dark:bg-background">
             <ComponentListLike />
           </div>
         </div>
@@ -279,7 +279,7 @@ export const HomePage = ({ student }: Props) => {
       {/* List Save */}
       {state3 && (
         <div className="border-#cccc h-full w-[70%] border px-[5px] py-[5px] text-black dark:bg-background dark:text-white">
-          <div className="mx-auto mt-[10px] h-[400px] w-[90%] rounded-lg  dark:bg-background">
+          <div className="mx-auto mt-[10px] h-[400px] w-[90%] rounded-lg dark:bg-background">
             <ComponentListSave />
           </div>
         </div>
@@ -287,7 +287,7 @@ export const HomePage = ({ student }: Props) => {
       {/* Event  */}
       {state4 && (
         <div className="border-#cccc h-full w-[70%] border px-[5px] py-[5px] text-black dark:bg-background dark:text-white">
-          <div className="mx-auto mt-[10px] h-[400px] w-[90%] rounded-lg  dark:bg-background">
+          <div className="mx-auto mt-[10px] h-[400px] w-[90%] rounded-lg dark:bg-background">
             <ComponentEvent />
           </div>
         </div>
@@ -295,7 +295,7 @@ export const HomePage = ({ student }: Props) => {
       {/* Messeger  */}
       {state5 && (
         <div className="border-#cccc h-full w-[70%] border px-[5px] py-[5px] text-black dark:bg-background dark:text-white">
-          <div className="mx-auto mt-[10px] h-[400px] w-[90%] rounded-lg  dark:bg-background">
+          <div className="mx-auto mt-[10px] h-[400px] w-[90%] rounded-lg dark:bg-background">
             <ComponentMessenger />
           </div>
         </div>

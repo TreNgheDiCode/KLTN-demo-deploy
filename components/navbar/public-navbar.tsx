@@ -157,7 +157,7 @@ export const PublicNavbar = ({ account }: PublicNavbarProps) => {
           <NavbarItem isActive={pathname.includes("/social")}>
             <Link
               color="primary"
-              href="/social"
+              href="en/student/profile"
               className="text-[#7D1F1F] dark:text-primary"
             >
               Social
