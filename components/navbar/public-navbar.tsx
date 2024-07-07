@@ -112,26 +112,30 @@ export const PublicNavbar = ({ account }: PublicNavbarProps) => {
             className="md:hidden"
           />
           <NavbarBrand>
-            <Image
-              height={68}
-              width={200}
-              priority={true}
-              style={{ width: "auto", height: "auto" }}
-              quality={100}
-              alt="logo"
-              src="/logo_light.png"
-              className="h-fit dark:hidden"
-            />
-            <Image
-              height={68}
-              width={200}
-              priority={true}
-              style={{ width: "auto", height: "auto" }}
-              quality={100}
-              alt="logo"
-              src="/logo_dark.png"
-              className="hidden h-fit dark:block"
-            />
+            <Link href="/">
+              <Image
+                height={68}
+                width={200}
+                priority={true}
+                style={{ width: "auto", height: "auto" }}
+                quality={100}
+                alt="logo"
+                src="/logo_light.png" 
+                className="h-fit dark:hidden"
+              />
+            </Link>a
+            <Link href="/">
+              <Image
+                height={68}
+                width={200}
+                priority={true}
+                style={{ width: "auto", height: "auto" }}
+                quality={100}
+                alt="logo"
+                src="/logo_dark.png"
+                className="hidden h-fit dark:block"
+              />
+            </Link>
           </NavbarBrand>
         </NavbarContent>
         {/* Navigation */}
@@ -154,7 +158,7 @@ export const PublicNavbar = ({ account }: PublicNavbarProps) => {
               Schools
             </Link>
           </NavbarItem>
-          <NavbarItem isActive={pathname.includes("/social")}>
+          <NavbarItem isActive={pathname.includes("/student/profile")}>
             <Link
               color="primary"
               href="en/student/profile"

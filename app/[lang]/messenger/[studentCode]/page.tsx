@@ -33,7 +33,7 @@ const Messenger = ({
   //
 
   useEffect(() => {
-    const newSocket = io("http://localhost:3002");
+    const newSocket = io("http://localhost:3002"); // sử dụng server port 3002 
     setSocket(newSocket);
 
     newSocket.on("chatGroup", (msg: Message) => {
@@ -68,12 +68,17 @@ const Messenger = ({
         return prev;
       });
     });
-
+    // rồi xong r đó tự nghiên cứu đi :> 
     return () => {
       newSocket.disconnect();
     };
   }, [studentCode]);
-
+  // join chat group
+  useEffect(() => {
+    if (socket && user && user.school.name) {
+      socket.emit("joinRoom", user.school.name, user.studentCode); // gọi đến phòng chát của trường 
+    }
+  }, [socket, user]);
   // khi mounted sẽ lấy dữ liệu chat từ database
   useEffect(() => {
     if (user && currentChat) {
@@ -159,11 +164,14 @@ const Messenger = ({
       setCurrentChat(null);
     } else {
       setCurrentChat(friendStudentCode);
-      const chatKey = [user?.studentCode, friendStudentCode].sort().join("_");
+      const chatKey = [user?.studentCode, friendStudentCode].sort().join("_"); // đây 21DH1_21DH2
       if (!privateMessages[chatKey]) {
         setPrivateMessages((prev) => ({ ...prev, [chatKey]: [] }));
       }
-      socket?.emit("joinRoom", friendStudentCode);
+      if (socket && user) {
+        socket.emit("joinRoom", chatKey, user.studentCode); // gọi đến chát của user 
+        // chat key ở đây là tên phòng của 2 sinh viên vd : sv 1: 21DH1, sv2: 21DH2 sẽ nối 2 sv với nhau "21DH1_21DH2: = tên group
+      }
     }
   };
   //  render tin nhắn từ database

@@ -1,19 +1,22 @@
 "use client";
 import { Card, CardBody, CardHeader, Divider, User } from "@nextui-org/react";
 import { CameraIcon } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LuFlagTriangleRight } from "react-icons/lu";
 import { ProfilePosts } from "../post/profile-post";
-import { StudentLib } from "@/types";
+import { Friend, StudentLib } from "@/types";
 import { ProfilePostsList } from "../post/profile-posts-list";
 import { ComponentListSave } from "@/components/Component-Profile/listSave";
 import { ComponentEvent } from "@/components/Component-Profile/event";
 import { ComponentMessenger } from "@/components/Component-Profile/messeger";
 import { ComponentListLike } from "@/components/Component-Profile/listLike";
+import { useRouter } from "next/router";
+import Link from "next/link";
 interface Props {
   student: StudentLib;
 }
 export const HomePage = ({ student }: Props) => {
+  const [friend, setFriend] = useState<Friend[]>();
   const [state1, setState1] = useState(true);
   const [state2, setState2] = useState(false);
   const [state3, setState3] = useState(false);
@@ -57,17 +60,28 @@ export const HomePage = ({ student }: Props) => {
     setState1(false);
     setState5(false);
   };
-  const handleTextareaChange5 = () => {
-    setState5((prev) => !prev);
-    setState2(false);
-    setState3(false);
-    setState4(false);
-    setState1(false);
-  };
+
+  // fetch danh sách học sinh đang học tại trường
+  useEffect(() => {
+    async function fetchListFriend() {
+      if (student.school.name) {
+        try {
+          const url = `${process.env.NEXT_PUBLIC_API}/api/message/school/${student.school.name}`;
+          const response = await fetch(url);
+          const resJson = await response.json();
+          setFriend(resJson);
+        } catch (e) {
+          return;
+        }
+      }
+    }
+    fetchListFriend();
+  }, [student.school.name]);
+
   const cssText =
     "hover:cursor-pointer font-bold text-black/85 border-b-[2px] border-b-black  dark:text-white";
-
   const handleAllert = () => {};
+
   return (
     <>
       <div className="w-[30%]">
@@ -150,17 +164,18 @@ export const HomePage = ({ student }: Props) => {
               </div>
 
               <div className="flex items-center pb-[5px]">
-                {state5 && <LuFlagTriangleRight />}
-                <div
-                  onClick={handleTextareaChange5}
-                  className={
-                    state5
-                      ? cssText
-                      : `text-primary hover:cursor-pointer hover:underline`
-                  }
-                >
-                  Messages
-                </div>
+                <Link href={`/messenger/${student.studentCode}`}>
+                  {state5 && <LuFlagTriangleRight />}
+                  <div
+                    className={
+                      state5
+                        ? cssText
+                        : `text-primary hover:cursor-pointer hover:underline`
+                    }
+                  >
+                    Messages
+                  </div>
+                </Link>
               </div>
             </div>
           </div>
@@ -168,82 +183,29 @@ export const HomePage = ({ student }: Props) => {
         {/* List Friend  */}
         <Card className="mt-7 h-[300px] w-fit min-w-[200px] rounded-xl border shadow-2xl dark:bg-background">
           <CardBody className="hidden:overflow-y-scroll w-[340px] scroll-m-2 px-[20px] py-[20px] hover:overflow-y-scroll">
-            <div className="pb-[15px]">
-              <User
-                name={"hello"}
-                avatarProps={{
-                  isBordered: true,
-                  fallback: (
-                    <CameraIcon className="size-6 animate-pulse text-default-500" />
-                  ),
-                  src: undefined,
-                }}
-                classNames={{
-                  name: "text-primary font-semibold",
-                }}
-              />
-            </div>
-            <div className="pb-[15px]">
-              <User
-                name={"hello"}
-                avatarProps={{
-                  isBordered: true,
-                  fallback: (
-                    <CameraIcon className="size-6 animate-pulse text-default-500" />
-                  ),
-                  src: undefined,
-                }}
-                classNames={{
-                  name: "text-primary font-semibold",
-                }}
-              />
-            </div>
-            <div className="pb-[15px]">
-              <User
-                name={"hello"}
-                avatarProps={{
-                  isBordered: true,
-                  fallback: (
-                    <CameraIcon className="size-6 animate-pulse text-default-500" />
-                  ),
-                  src: undefined,
-                }}
-                classNames={{
-                  name: "text-primary font-semibold",
-                }}
-              />
-            </div>
-            <div className="pb-[15px]">
-              <User
-                name={"hello"}
-                avatarProps={{
-                  isBordered: true,
-                  fallback: (
-                    <CameraIcon className="size-6 animate-pulse text-default-500" />
-                  ),
-                  src: undefined,
-                }}
-                classNames={{
-                  name: "text-primary font-semibold",
-                }}
-              />
-            </div>
-            <div className="pb-[15px]">
-              <User
-                name={"hello"}
-                avatarProps={{
-                  isBordered: true,
-                  fallback: (
-                    <CameraIcon className="size-6 animate-pulse text-default-500" />
-                  ),
-                  src: undefined,
-                }}
-                classNames={{
-                  name: "text-primary font-semibold",
-                }}
-              />
-            </div>
-            <div className="h-[3px] w-[285px] rounded-sm" />
+            {friend?.map((fen, index) => {
+              if (fen.studentCode == student.studentCode) return null;
+              return (
+                <>
+                  <div key={index} className="pb-[15px]">
+                    <User
+                      name={fen.account.name}
+                      avatarProps={{
+                        isBordered: true,
+                        fallback: (
+                          <CameraIcon className="size-6 animate-pulse text-default-500" />
+                        ),
+                        src: fen.account.image,
+                      }}
+                      classNames={{
+                        name: "text-primary font-semibold",
+                      }}
+                    />
+                  </div>
+                  <div className="h-[3px] w-[285px] rounded-sm" />
+                </>
+              );
+            })}
           </CardBody>
         </Card>
       </div>
