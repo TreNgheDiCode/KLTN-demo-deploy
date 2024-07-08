@@ -12,6 +12,7 @@ import {
   User,
 } from "@nextui-org/react";
 import { LogOut } from "lucide-react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export const AccountMenu = ({ account }: { account: AccountIdLib }) => {
@@ -22,7 +23,9 @@ export const AccountMenu = ({ account }: { account: AccountIdLib }) => {
     });
   };
   const handclick = () => {
-    router.push("http://localhost:3001/en/student/profile/24PT627665");
+    router.push(
+      `http://localhost:3001/en/student/profile/${account.student.studentCode}`,
+    );
   };
   return (
     <Dropdown placement="bottom-end" backdrop="blur">

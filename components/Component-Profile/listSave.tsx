@@ -5,7 +5,6 @@ import { ListSave } from "@/types";
 import { Image, User } from "@nextui-org/react";
 import { CameraIcon, Trash2 } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import ResponsiveDialog from "./alertDeleteSave";
@@ -13,6 +12,7 @@ import ResponsiveDialog from "./alertDeleteSave";
 export const ComponentListSave = () => {
   const sesion = useSession();
   const [postSaves, setPostSave] = useState<ListSave[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchListSave() {
@@ -23,6 +23,8 @@ export const ComponentListSave = () => {
         setPostSave(responeJson);
       } catch (error) {
         toast.error("Lỗi lấy danh sách lưu");
+      } finally {
+        setLoading(false);
       }
     }
 
@@ -32,11 +34,16 @@ export const ComponentListSave = () => {
   return (
     <>
       <div>
-        <div className="font-bold ">Danh Sách Lưu</div>
-        {postSaves.length > 0 &&
+        <div className="font-bold">Danh Sách Lưu</div>
+        {loading ? (
+          <div className="container flex items-center justify-center text-xl font-bold">
+            Đang tải dữ liệu...
+          </div>
+        ) : (
+          postSaves.length > 0 &&
           postSaves.map((save) => (
             <div key={save.id} className="px-[10px] py-[10px]">
-              <div className="flex ">
+              <div className="flex">
                 <div className="">
                   <User
                     className="size-14"
@@ -45,7 +52,7 @@ export const ComponentListSave = () => {
                     avatarProps={{
                       isBordered: true,
                       fallback: <CameraIcon className="size-14" />,
-                      src: `${save.post.images[0]}`,
+                      src: `${save.post.images}`,
                     }}
                     classNames={{
                       name: "text-primary font-semibold",
@@ -69,11 +76,7 @@ export const ComponentListSave = () => {
                 <ResponsiveDialog id={save.id} />
               </div>
             </div>
-          ))}
-        {postSaves.length == 0 && (
-          <div className="container flex items-center justify-center text-xl font-bold">
-            Danh sách trống
-          </div>
+          ))
         )}
       </div>
     </>

@@ -137,7 +137,6 @@ export const ModalPostContent = ({
                 }
               },
             });
-            console.log(res);
             values.images?.push(res.url);
           } catch (error) {
             uploadImageProgress(fileState.key, "ERROR");

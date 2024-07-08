@@ -11,16 +11,20 @@ export const ComponentListLike = () => {
   const sesion = useSession();
   const router = useRouter();
   const [postLikes, setPostLikes] = useState<ListLike[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchListLike() {
       try {
+        setLoading(true);
         const Url = `${process.env.NEXT_PUBLIC_API}/api/accounts/students/profiles/${sesion.data?.user.studentCode}/like`;
         const rqUrl = await fetch(Url);
         const res = await rqUrl.json();
         setPostLikes(res);
       } catch (error) {
         toast.error("Lỗi lấy danh sách thích");
+      } finally {
+        setLoading(false);
       }
     }
 
@@ -30,11 +34,16 @@ export const ComponentListLike = () => {
   return (
     <>
       <div>
-        <div className="font-bold ">Danh Sách Thích</div>
-        {postLikes.length > 0 &&
+        <div className="font-bold">Danh Sách Thích</div>
+        {loading ? (
+          <div className="container flex items-center justify-center text-xl font-bold">
+            Đang tải dữ liệu...
+          </div>
+        ) : (
+          postLikes.length > 0 &&
           postLikes.map((like) => (
             <div key={like.id} className="px-[10px] py-[10px]">
-              <div className="flex ">
+              <div className="flex">
                 <div className="">
                   <User
                     className="size-14"
@@ -67,11 +76,7 @@ export const ComponentListLike = () => {
                 <ResponsiveDialog id={like.id} />
               </div>
             </div>
-          ))}
-        {postLikes.length == 0 && (
-          <div className="container flex items-center justify-center text-xl font-bold">
-            Danh sách trống
-          </div>
+          ))
         )}
       </div>
     </>

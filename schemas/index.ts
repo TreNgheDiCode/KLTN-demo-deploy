@@ -215,6 +215,15 @@ export const ResetSchema = z.object({
     }),
 });
 
+export const DeleteSchema = z.object({
+  email: z.string().min(1, {
+    message: "Email is required",
+  }),
+  password: z.optional(z.string().min(1, { message: "Password is required" })),
+});
+
+export type DeleteFormValues = z.infer<typeof DeleteSchema>;
+
 export const PostSchema = z.object({
   status: z.optional(
     z.enum([

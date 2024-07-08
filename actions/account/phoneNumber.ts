@@ -4,7 +4,6 @@ export const updatePhoneNumber = async (
   phoneNumber: string,
 ) => {
   try {
-    console.log("meomeo");
     const Url = `${process.env.NEXT_PUBLIC_API}/api/accounts/${accountId}/phoneNumber`;
     const fetchUrl = fetch(Url, {
       method: "PUT",

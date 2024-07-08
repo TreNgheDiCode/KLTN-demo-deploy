@@ -11,6 +11,7 @@ const ProfileIdPage = async ({
 }) => {
   const student: StudentLib = await GetStudentLibByStudentCode(studentCode);
   return (
+    
     <div className="relative hidden gap-4 md:grid lg:grid-cols-12">
       <div className="lg:col-span-3">
         <ProfileInformation
