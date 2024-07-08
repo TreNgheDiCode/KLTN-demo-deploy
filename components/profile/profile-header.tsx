@@ -39,7 +39,7 @@ export const ProfileHeader = ({
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
   const [model, setModel] = useState(false);
-  const [isEditOpen, setIsEditOpen] =  useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure(); // profile image
   useEffect(() => {
     setMounted(true);
@@ -51,8 +51,8 @@ export const ProfileHeader = ({
 
   // Model
   const handleEditOpenChange = () => {
-    setIsEditOpen((value) => !value)
-  }
+    setIsEditOpen((value) => !value);
+  };
 
   return (
     <>
@@ -94,7 +94,7 @@ export const ProfileHeader = ({
           </div>
         </CardHeader>
         <div className="absolute left-16 top-[calc(12px+20vh-12px)] z-10 flex items-center justify-between gap-3">
-          <Avatar src={logoUrl} className=" h-28 w-28" />
+          <Avatar src={logoUrl} className="h-28 w-28" />
           <div className="flex flex-col items-start justify-start">
             <h1 className="text-lg font-bold text-primary">{name}</h1>
             <h2 className="text-xs font-semibold text-primary">{schoolName}</h2>
@@ -103,7 +103,7 @@ export const ProfileHeader = ({
         <Editprofile
           isOpen={isEditOpen}
           onOpenChange={handleEditOpenChange}
-          profileId= {profileId}
+          profileId={profileId}
         />
         <CardBody className="flex h-[calc(90px+12px)] flex-row items-center justify-end">
           <Button
@@ -112,6 +112,7 @@ export const ProfileHeader = ({
             color="primary"
             variant="shadow"
             onClick={() => setIsEditOpen(true)}
+            className="!flex"
           >
             Edit profile
           </Button>
