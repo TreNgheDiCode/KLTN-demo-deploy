@@ -102,6 +102,7 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
 .overflow-y-auto > *:nth-child(n + 5) {
   display: none;
 }

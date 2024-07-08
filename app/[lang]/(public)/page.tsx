@@ -3,6 +3,7 @@ import { VideoSection } from "@/components/home/video-section";
 import { getDictionary } from "@/data/dictionaries";
 import { GetSchoolLib } from "@/lib/school";
 import { metadata } from "../layout";
+import { GAButton } from "../../../components/ga-button";
 
 export default async function Home({
   params: { lang },
@@ -17,7 +18,7 @@ export default async function Home({
       <HeroHeader schools={schools || []} />
       <VideoSection />
       <div className="flex h-screen items-center justify-center bg-orange-500 text-primary">
-        Meomeo
+        <GAButton />
       </div>
     </main>
   );
