@@ -19,7 +19,7 @@ const ProtectedLayout = async ({
   const dict = await getDictionary(params.lang);
 
   return (
-    <div className="h-full w-full bg-[#cccccccc]">
+    <div className="h-full w-full bg-[#fff] dark:bg-background">
       <ProtectedNavbar user={user} dict={dict} />
       {children}
     </div>

@@ -66,26 +66,28 @@ export const ProtectedNavbar = ({ user, dict }: ProtectedNavbarProps) => {
           className="md:hidden"
         />
         <NavbarBrand>
-          <Image
-            height={68}
-            width={200}
-            priority={true}
-            style={{ width: "auto", height: "auto" }}
-            quality={100}
-            alt="logo"
-            src="/logo_light.png"
-            className="h-fit dark:hidden"
-          />
-          <Image
-           height={68}
-           width={200}
-            priority={true}
-            style={{ width: "auto", height: "auto" }}
-            quality={100}
-            alt="logo"
-            src="/logo_dark.png"
-            className="hidden h-fit dark:block"
-          />
+          <Link href="/">
+            <Image
+              height={68}
+              width={200}
+              priority={true}
+              style={{ width: "auto", height: "auto" }}
+              quality={100}
+              alt="logo"
+              src="/logo_light.png"
+              className="h-fit dark:hidden"
+            />
+            <Image
+              height={68}
+              width={200}
+              priority={true}
+              style={{ width: "auto", height: "auto" }}
+              quality={100}
+              alt="logo"
+              src="/logo_dark.png"
+              className="hidden h-fit dark:block"
+            />
+          </Link>
         </NavbarBrand>
       </NavbarContent>
       {/* Navigation */}

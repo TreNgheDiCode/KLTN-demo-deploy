@@ -120,11 +120,9 @@ export const PublicNavbar = ({ account }: PublicNavbarProps) => {
                 style={{ width: "auto", height: "auto" }}
                 quality={100}
                 alt="logo"
-                src="/logo_light.png" 
+                src="/logo_light.png"
                 className="h-fit dark:hidden"
               />
-            </Link>a
-            <Link href="/">
               <Image
                 height={68}
                 width={200}
@@ -140,7 +138,7 @@ export const PublicNavbar = ({ account }: PublicNavbarProps) => {
         </NavbarContent>
         {/* Navigation */}
         <NavbarContent className="hidden gap-16 md:flex" justify="center">
-          <NavbarItem isActive={pathname.includes("/")}>
+          <NavbarItem isActive={pathname === "/"}>
             <Link
               color="primary"
               href="/"
@@ -161,7 +159,7 @@ export const PublicNavbar = ({ account }: PublicNavbarProps) => {
           <NavbarItem isActive={pathname.includes("/student/profile")}>
             <Link
               color="primary"
-              href="en/student/profile"
+              href="/social"
               className="text-[#7D1F1F] dark:text-primary"
             >
               Social
@@ -183,6 +181,15 @@ export const PublicNavbar = ({ account }: PublicNavbarProps) => {
               className="text-[#7D1F1F] dark:text-primary"
             >
               Contact Us
+            </Link>
+          </NavbarItem>
+          <NavbarItem isActive={pathname.includes("/statusProfile")}>
+            <Link
+              color="primary"
+              href="/statusProfile"
+              className="text-[#7D1F1F] dark:text-primary"
+            >
+              Status Profile
             </Link>
           </NavbarItem>
           <NavbarItem>

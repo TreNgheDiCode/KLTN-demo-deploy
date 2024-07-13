@@ -4,8 +4,6 @@ import { cn } from "@/lib/utils";
 import {
   Button,
   Dropdown,
-  DropdownItem,
-  DropdownMenu,
   DropdownTrigger,
   NavbarItem,
 } from "@nextui-org/react";
