@@ -57,7 +57,7 @@ export const LoginForm = ({ dict }: { dict: DictionaryLanguage }) => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col items-start gap-4"
+          className="!flex flex-col items-start gap-4"
         >
           <div className="flex w-full flex-col gap-4">
             <FormField
