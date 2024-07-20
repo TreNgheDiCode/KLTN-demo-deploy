@@ -74,9 +74,9 @@ export default auth((req) => {
     return NextResponse.next();
   }
 
-  if (!isLoggedIn && !isPublicRoute) {
-    return Response.redirect(new URL(`/${locale}/auth/login`, nextUrl));
-  }
+  // if (!isLoggedIn && !isPublicRoute) {
+  //   return Response.redirect(new URL(`/${locale}/auth/login`, nextUrl));
+  // }
 
   return NextResponse.next();
 });

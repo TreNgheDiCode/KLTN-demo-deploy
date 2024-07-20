@@ -3,8 +3,6 @@ import { VideoSection } from "@/components/home/video-section";
 import { getDictionary } from "@/data/dictionaries";
 import { GetSchoolLib } from "@/lib/school";
 import { metadata } from "../layout";
-import Image from "next/image";
-import { Textarea } from "@nextui-org/react";
 
 export default async function Home({
   params: { lang },
@@ -18,6 +16,7 @@ export default async function Home({
     <main className="flex flex-col">
       <HeroHeader schools={schools || []} />
       <VideoSection />
+      {/* trang chủ đây */}
     </main>
   );
 }

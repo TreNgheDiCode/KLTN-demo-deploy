@@ -1,74 +1,148 @@
 "use client";
-
-import { AccountIdLib } from "@/types";
+import { useState, useEffect, useRef } from "react";
 import {
   Button,
-  Divider,
   Navbar,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
   NavbarMenu,
   NavbarMenuToggle,
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
 } from "@nextui-org/react";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
-import { AccountMenu } from "./account-menu";
-import { ThemeToggle } from "./theme-toggle";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
-import Link from "next/link";
+import { AccountMenu } from "./account-menu";
+import { ThemeToggle } from "./theme-toggle";
+import { AccountIdLib, SchoolLib } from "@/types";
+import { usePathname } from "next/navigation";
 
 interface PublicNavbarProps {
   account?: AccountIdLib;
+  schools?: SchoolLib[];
 }
+type NavItem = {
+  key: string;
+  label: string;
+  href?: string;
+  component?: React.ReactNode;
+};
 
-export const PublicNavbar = ({ account }: PublicNavbarProps) => {
+export const PublicNavbar = ({ account, schools = [] }: PublicNavbarProps) => {
   const pathname = usePathname();
   const [isLoading, setLoading] = useState(false);
   const { theme } = useTheme();
-
   const [isOpen, setIsOpen] = useState(false);
+  const navbarRef = useRef<HTMLDivElement>(null);
 
-  const navbarRef = useRef(null);
+  // State to handle the active nav item
+  const [activeNavItem, setActiveNavItem] = useState<string | null>(null);
 
+  // Change navbar background color based on scroll position
   useEffect(() => {
     if (!navbarRef.current) return;
 
-    const navbarElement = navbarRef.current as HTMLElement;
-
-    const handleClick = (e: MouseEvent) => {
-      if (window.scrollY > window.innerHeight) {
-        navbarElement.style.backgroundColor =
-          theme === "dark" ? "black" : "white";
-      }
-    };
+    const navbarElement = navbarRef.current;
 
     const handleScroll = () => {
-      if (window.scrollY > window.innerHeight) {
+      if (window.scrollY > 0) {
         navbarElement.style.backgroundColor =
-          theme === "dark" ? "black" : "white";
+          theme === "dark" ? "rgba(0, 0, 0, 0.8)" : "rgba(255, 255, 255, 0.8)";
+        navbarElement.style.backdropFilter = "blur(10px)";
       } else {
+        navbarElement.style.backgroundColor = "transparent";
+        navbarElement.style.backdropFilter = "none";
       }
     };
 
     window.addEventListener("scroll", handleScroll);
-    window.addEventListener("click", handleClick);
 
-    // Clean up the event listener when the component unmounts
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("click", handleClick);
     };
   }, [theme]);
+
+  // Set active nav item on click
+  const handleNavItemClick = (item: string) => {
+    setActiveNavItem(item);
+  };
+
+  const renderSchoolList = () => (
+    <Dropdown>
+      <DropdownTrigger>
+        <Button className="text-[#7D1F1F] dark:text-primary" variant="light">
+          Trường học
+        </Button>
+      </DropdownTrigger>
+
+      <DropdownMenu
+        aria-label="School List"
+        className="rounded-xl border-2 border-[#cccccc]"
+      >
+        {schools.length > 0 ? (
+          schools.map((school) => (
+            <DropdownItem key={school.id} className="text-primary">
+              <Link href={`/schools/${school.id}`}>{school.name}</Link>
+            </DropdownItem>
+          ))
+        ) : (
+          <DropdownItem className="text-black dark:text-primary">
+            Không tìm thấy trường
+          </DropdownItem>
+        )}
+      </DropdownMenu>
+    </Dropdown>
+  );
+
+  const renderNavItems = () => {
+    const commonItems: NavItem[] = [
+      { key: "school", label: "Trường học", component: renderSchoolList() },
+      { key: "about", label: "Thông tin về chúng tôi", href: "/about" },
+      { key: "contact", label: "Liên hệ", href: "/contact" },
+    ];
+
+    const loggedInItems: NavItem[] = [
+      { key: "social", label: "Mạng xã hội", href: "/social" },
+      {
+        key: "statusProfile",
+        label: "Trạng thái thông tin",
+        href: "/statusProfile",
+      },
+    ];
+
+    const items = account ? [...commonItems, ...loggedInItems] : commonItems;
+
+    return items.map((item) => (
+      <NavbarItem
+        key={item.key}
+        isActive={
+          item.href ? pathname.includes(item.href) : activeNavItem === item.key
+        }
+        onClick={() => handleNavItemClick(item.key)}
+      >
+        {item.component || (
+          <Link
+            href={item.href || "#"}
+            className="text-[#7D1F1F] dark:text-primary"
+          >
+            {item.label}
+          </Link>
+        )}
+      </NavbarItem>
+    ));
+  };
 
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{
         opacity: 1,
-        transition: { duration: 2 },
+        transition: { duration: 0.5 },
       }}
       style={{
         position: "sticky",
@@ -136,62 +210,9 @@ export const PublicNavbar = ({ account }: PublicNavbarProps) => {
             </Link>
           </NavbarBrand>
         </NavbarContent>
-        {/* Navigation */}
+        {/* Desktop Navigation */}
         <NavbarContent className="hidden gap-16 md:flex" justify="center">
-          <NavbarItem isActive={pathname === "/"}>
-            <Link
-              color="primary"
-              href="/"
-              className="text-[#7D1F1F] dark:text-primary"
-            >
-              Home
-            </Link>
-          </NavbarItem>
-          <NavbarItem isActive={pathname.includes("/schools")}>
-            <Link
-              color="primary"
-              href="/schools"
-              className="text-[#7D1F1F] dark:text-primary"
-            >
-              Schools
-            </Link>
-          </NavbarItem>
-          <NavbarItem isActive={pathname.includes("/student/profile")}>
-            <Link
-              color="primary"
-              href="/social"
-              className="text-[#7D1F1F] dark:text-primary"
-            >
-              Social
-            </Link>
-          </NavbarItem>
-          <NavbarItem isActive={pathname.includes("/about")}>
-            <Link
-              color="primary"
-              href="/about"
-              className="text-[#7D1F1F] dark:text-primary"
-            >
-              About Us
-            </Link>
-          </NavbarItem>
-          <NavbarItem isActive={pathname.includes("/about")}>
-            <Link
-              color="primary"
-              href="/contact"
-              className="text-[#7D1F1F] dark:text-primary"
-            >
-              Contact Us
-            </Link>
-          </NavbarItem>
-          <NavbarItem isActive={pathname.includes("/statusProfile")}>
-            <Link
-              color="primary"
-              href="/statusProfile"
-              className="text-[#7D1F1F] dark:text-primary"
-            >
-              Status Profile
-            </Link>
-          </NavbarItem>
+          {renderNavItems()}
           <NavbarItem>
             <ThemeToggle />
           </NavbarItem>
@@ -210,7 +231,7 @@ export const PublicNavbar = ({ account }: PublicNavbarProps) => {
                 className="border-[#7D1F1F] font-semibold text-[#7D1F1F] dark:border-primary dark:text-white"
                 href="/auth/register"
               >
-                Get Started
+                Đăng ký
               </Button>
               <Button
                 as={Link}
@@ -222,16 +243,46 @@ export const PublicNavbar = ({ account }: PublicNavbarProps) => {
                 className="bg-[#7D1F1F] font-semibold text-white dark:text-primary"
                 href="/auth/login"
               >
-                Login
+                Đăng nhập
               </Button>
             </>
           )}
         </NavbarContent>
-        {/* Mobile Menu */}
-        <NavbarMenu>
-          <div className="flex items-center gap-x-4 py-1.5"></div>
-          <Divider />
-          {/* <MobileManagementDropdown /> */}
+        {/* Mobile Navigation */}
+        <NavbarMenu className="md:hidden">
+          {renderNavItems()}
+          <NavbarItem>
+            <ThemeToggle />
+          </NavbarItem>
+          {account && <AccountMenu account={account} />}
+          {!account && (
+            <>
+              <Button
+                as={Link}
+                variant="bordered"
+                radius="full"
+                onClick={() => setLoading(true)}
+                isLoading={isLoading}
+                size="md"
+                className="border-[#7D1F1F] font-semibold text-[#7D1F1F] dark:border-primary dark:text-white"
+                href="/auth/register"
+              >
+                Đăng ký
+              </Button>
+              <Button
+                as={Link}
+                onClick={() => setLoading(true)}
+                isLoading={isLoading}
+                variant="shadow"
+                radius="full"
+                size="md"
+                className="bg-[#7D1F1F] font-semibold text-white dark:text-primary"
+                href="/auth/login"
+              >
+                Đăng nhập
+              </Button>
+            </>
+          )}
         </NavbarMenu>
       </Navbar>
     </motion.div>

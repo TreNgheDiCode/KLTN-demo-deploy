@@ -35,7 +35,7 @@ const SocialContent = ({ student }: { student: StudentLib }) => {
     "hover:cursor-pointer font-bold text-black/85 border-b-2 border-black dark:text-white";
 
   return (
-    <div className="flex flex-col lg:flex-row">
+    <div className="flex min-h-screen flex-col lg:flex-row">
       {/* Left Sidebar */}
       <div className="mb-4 w-full lg:mb-0 lg:w-1/4 lg:pr-4">
         {/* My User */}

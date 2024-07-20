@@ -23,10 +23,10 @@ const StatusProfileContent = ({ student }: { student: StudentLib }) => {
   };
 
   return (
-    <div className="mx-auto max-w-4xl overflow-hidden rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 shadow-xl">
-      <div className="p-6 text-white">
-        <div className="mb-6 text-center text-3xl font-bold">
-          Trạng Thái: <span className="text-yellow-300">{student.status}</span>
+    <div className="mx-auto mt-2 max-h-screen max-w-4xl overflow-hidden rounded-lg shadow-lg shadow-black dark:shadow-white">
+      <div className="p-6 text-black">
+        <div className="mb-6 text-center text-3xl font-bold dark:text-primary">
+          Trạng Thái: <span className="text-green-800">{student.status}</span>
         </div>
 
         {/* Avatar and Background */}
@@ -50,7 +50,7 @@ const StatusProfileContent = ({ student }: { student: StudentLib }) => {
         </div>
 
         {/* Information Sections */}
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-6 text-black dark:text-primary md:grid-cols-2">
           {/* Personal Information */}
           <InfoSection title="Thông Tin Cá Nhân">
             <InfoItem
@@ -109,11 +109,13 @@ const StatusProfileContent = ({ student }: { student: StudentLib }) => {
 
         {/* Additional Information */}
         <div className="mt-6">
-          <h3 className="mb-2 text-xl font-semibold">Thông tin bổ sung:</h3>
+          <h3 className="mb-2 text-xl font-semibold text-black dark:text-primary">
+            Thông tin bổ sung:
+          </h3>
           <Textarea
             value="Không có thông tin bổ sung gì"
             disabled
-            className="w-full rounded-md border-0 bg-white bg-opacity-20 text-white placeholder-gray-300"
+            className="w-full rounded-md border-0 bg-white bg-opacity-20 text-black placeholder-gray-300 dark:text-primary"
           />
         </div>
       </div>
@@ -130,7 +132,7 @@ const InfoSection: React.FC<InfoSectionProps> = ({ title, children }) => (
 const InfoItem: React.FC<InfoItemProps> = ({ label, value }) => (
   <div className="mb-2">
     <span className="font-semibold">{label}:</span>{" "}
-    <span className="text-gray-200">{value}</span>
+    <span className="text-primary">{value}</span>
   </div>
 );
 export default StatusProfileContent;
