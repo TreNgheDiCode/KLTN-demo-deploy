@@ -2,7 +2,7 @@
 
 import { Friend, User } from "@/types";
 import { Avatar } from "@nextui-org/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Socket, io } from "socket.io-client";
 
 // Định nghĩa kiểu dữ liệu cho tin nhắn
@@ -31,9 +31,24 @@ const Messenger = ({
   const [currentChat, setCurrentChat] = useState<string | null>(null);
   const [friend, setFriend] = useState<Friend[]>();
   //
+  // sử dụng useRef để load tin nhắn cuối
+  const messageContainerRef = useRef<HTMLDivElement>(null);
+  const scrollToBottom = () => {
+    if (messageContainerRef.current) {
+      messageContainerRef.current.scrollTop =
+        messageContainerRef.current.scrollHeight;
+    }
+  };
 
   useEffect(() => {
-    const newSocket = io("http://localhost:3002"); // sử dụng server port 3002 
+    scrollToBottom();
+  }, [groupMessages, privateMessages]);
+  //
+
+  useEffect(() => {
+    const newSocket = io(
+      process.env.NEXT_PUBLIC_PORT_SERVER || "http://localhost:3002",
+    );
     setSocket(newSocket);
 
     newSocket.on("chatGroup", (msg: Message) => {
@@ -68,7 +83,7 @@ const Messenger = ({
         return prev;
       });
     });
-    // rồi xong r đó tự nghiên cứu đi :> 
+    // rồi xong r đó tự nghiên cứu đi :>
     return () => {
       newSocket.disconnect();
     };
@@ -76,7 +91,7 @@ const Messenger = ({
   // join chat group
   useEffect(() => {
     if (socket && user && user.school.name) {
-      socket.emit("joinRoom", user.school.name, user.studentCode); // gọi đến phòng chát của trường 
+      socket.emit("joinRoom", user.school.name, user.studentCode); // gọi đến phòng chát của trường
     }
   }, [socket, user]);
   // khi mounted sẽ lấy dữ liệu chat từ database
@@ -169,7 +184,7 @@ const Messenger = ({
         setPrivateMessages((prev) => ({ ...prev, [chatKey]: [] }));
       }
       if (socket && user) {
-        socket.emit("joinRoom", chatKey, user.studentCode); // gọi đến chát của user 
+        socket.emit("joinRoom", chatKey, user.studentCode); // gọi đến chát của user
         // chat key ở đây là tên phòng của 2 sinh viên vd : sv 1: 21DH1, sv2: 21DH2 sẽ nối 2 sv với nhau "21DH1_21DH2: = tên group
       }
     }
@@ -241,7 +256,7 @@ const Messenger = ({
       <div className="h-full w-auto rounded-br-3xl bg-[#F7F9F2] text-black">
         <div className="text-black">
           <Avatar
-            src={"/logomess.png"}
+            src={"/logo_icon_light.png"}
             size="lg"
             onClick={() => setCurrentChat(null)}
           />
@@ -266,27 +281,34 @@ const Messenger = ({
       </div>
 
       {/* chat */}
-      <div className="h-full w-full">
-        {/* view chat */}
-        <div className="mb-4 h-[88%] overflow-y-auto border border-gray-300 p-2 text-black">
-          <div className="flex items-center justify-center">
-            Room:
-            <b>
-              {currentChat
-                ? `Chat with ${user.account.name}`
-                : user.school.name}
-            </b>
-          </div>
-          {renderMessages()}
+      <div className="flex h-full w-full flex-col">
+        {/* Tiêu đề phòng chat */}
+        <div className="sticky top-0 z-10 flex items-center justify-center border-b border-gray-300 bg-white py-2 text-black">
+          Room:
+          <b className="ml-2">
+            {currentChat ? `Chat with ${currentChat}` : user.school.name}
+          </b>
         </div>
-        {/* submit */}
-        <form onSubmit={sendMessage} className="flex">
-          <div className="ml-1 w-[90%]">
+
+        {/* Container tin nhắn */}
+        <div
+          ref={messageContainerRef}
+          className="flex-grow overflow-y-auto p-2 text-black"
+        >
+          <div className="flex flex-col">{renderMessages()}</div>
+        </div>
+
+        {/* Form gửi tin nhắn */}
+        <form
+          onSubmit={sendMessage}
+          className="flex border-t border-gray-300 p-2"
+        >
+          <div className="flex-grow">
             <input
               type="text"
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
-              className="w-[100%] flex-grow rounded-l border border-gray-300 bg-white px-2 py-1 text-black"
+              className="w-full rounded-l border border-gray-300 bg-white px-2 py-1 text-black"
               placeholder="Type a message..."
             />
           </div>

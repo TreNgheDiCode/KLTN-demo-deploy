@@ -2,14 +2,12 @@ import { ListLike } from "@/types";
 import { User } from "@nextui-org/react";
 import { CameraIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import ResponsiveDialog from "./alertDeleteLike";
 
 export const ComponentListLike = () => {
   const sesion = useSession();
-  const router = useRouter();
   const [postLikes, setPostLikes] = useState<ListLike[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -20,6 +18,7 @@ export const ComponentListLike = () => {
         const Url = `${process.env.NEXT_PUBLIC_API}/api/accounts/students/profiles/${sesion.data?.user.studentCode}/like`;
         const rqUrl = await fetch(Url);
         const res = await rqUrl.json();
+        console.log(res);
         setPostLikes(res);
       } catch (error) {
         toast.error("Lỗi lấy danh sách thích");
@@ -52,7 +51,7 @@ export const ComponentListLike = () => {
                     avatarProps={{
                       isBordered: true,
                       fallback: <CameraIcon className="size-14" />,
-                      src: `${like.post.images[0]}`,
+                      src: `${like.post.images[0]?.url || "undefined"} `,
                     }}
                     classNames={{
                       name: "text-primary font-semibold",

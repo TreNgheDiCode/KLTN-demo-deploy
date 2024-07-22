@@ -77,10 +77,16 @@ export type StudentLib = Student & {
     address: string;
     name: string;
     image: string;
+    email: string;
+    idCardNumber: string;
+    gender: string;
   };
   school: {
     name: string;
     logo: string;
+    programs: {
+      name: string;
+    }[];
   };
   profile: Profile & {
     posts: PostLib[];
@@ -135,6 +141,9 @@ export type User = {
 export type Friend = {
   studentCode: string;
   profile: {
+    id: string;
+    posts: PostLib[];
+
     status: string;
   };
   account: {
