@@ -10,14 +10,14 @@ import { toast } from "sonner";
 import ResponsiveDialog from "./alertDeleteSave";
 
 export const ComponentListSave = () => {
-  const sesion = useSession();
+  const session = useSession();
   const [postSaves, setPostSave] = useState<ListSave[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchListSave() {
       try {
-        const requestUrl = `${process.env.NEXT_PUBLIC_API}/api/accounts/students/profiles/${sesion.data?.user.studentCode}/save`;
+        const requestUrl = `${process.env.NEXT_PUBLIC_API}/api/accounts/students/profiles/${session.data?.user.studentCode}/save`;
         const respone = await fetch(requestUrl);
         const responeJson = await respone.json();
         setPostSave(responeJson);
@@ -29,7 +29,7 @@ export const ComponentListSave = () => {
     }
 
     fetchListSave();
-  }, [sesion.data?.user.studentCode]);
+  }, [session.data?.user.studentCode]);
 
   return (
     <>
@@ -52,7 +52,7 @@ export const ComponentListSave = () => {
                     avatarProps={{
                       isBordered: true,
                       fallback: <CameraIcon className="size-14" />,
-                      src: `${save.post.images}`,
+                      src: `${save.post.images[0]?.url || "undefined  "} `,
                     }}
                     classNames={{
                       name: "text-primary font-semibold",

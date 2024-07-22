@@ -23,9 +23,7 @@ export const AccountMenu = ({ account }: { account: AccountIdLib }) => {
     });
   };
   const handclick = () => {
-    router.push(
-      `http://localhost:3001/en/student/profile/${account.student.studentCode}`,
-    );
+    router.push(`student/profile/${account.student.studentCode}`);
   };
   return (
     <Dropdown placement="bottom-end" backdrop="blur">

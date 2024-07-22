@@ -81,6 +81,13 @@ export const UserButton = ({ user, dict }: UserButtonProps) => {
             Help & Feedback
           </DropdownItem>
           <DropdownItem
+            key="statusProfile"
+            href="/student/statusProfile"
+            className="text-black dark:text-white"
+          >
+            Status Profile
+          </DropdownItem>
+          <DropdownItem
             key="theme"
             className="text-primary"
             endContent={
