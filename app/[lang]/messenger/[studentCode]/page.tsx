@@ -46,7 +46,9 @@ const Messenger = ({
   //
 
   useEffect(() => {
-    const newSocket = io("http://localhost:3002"); // sử dụng server port 3002
+    const newSocket = io(
+      process.env.NEXT_PUBLIC_PORT_SERVER || "http://localhost:3002",
+    );
     setSocket(newSocket);
 
     newSocket.on("chatGroup", (msg: Message) => {
@@ -64,7 +66,6 @@ const Messenger = ({
     });
 
     newSocket.on("privateMessage", (msg: Message) => {
-      console.log("Received private message on client:", msg);
       const chatKey = [msg.sender, msg.receiver].sort().join("_");
       setPrivateMessages((prev) => {
         const existingMessages = prev[chatKey] || [];
@@ -255,7 +256,7 @@ const Messenger = ({
       <div className="h-full w-auto rounded-br-3xl bg-[#F7F9F2] text-black">
         <div className="text-black">
           <Avatar
-            src={"/logomess.png"}
+            src={"/logo_icon_light.png"}
             size="lg"
             onClick={() => setCurrentChat(null)}
           />
@@ -294,7 +295,7 @@ const Messenger = ({
           ref={messageContainerRef}
           className="flex-grow overflow-y-auto p-2 text-black"
         >
-          <div className="flex flex-col-reverse">{renderMessages()}</div>
+          <div className="flex flex-col">{renderMessages()}</div>
         </div>
 
         {/* Form gửi tin nhắn */}
