@@ -109,7 +109,7 @@ export const HeroHeader = ({ schools }: HeroHeaderProps) => {
           setApi={setApi}
         >
           <CarouselContent className="] h-full w-full rounded-lg ease-in-out">
-            {schools.map((school, index) => {
+            {/* {schools.map((school, index) => {
               const colors = school.color.split("rgba("); // Split to isolate color definitions
               const color1 = colors[1].replace(/,\s+/g, "").split(")"); // Remove spaces and store first color
               const color2 = colors[2].replace(/,\s+/g, "").split(")"); // Remove spaces and store second color
@@ -149,7 +149,7 @@ export const HeroHeader = ({ schools }: HeroHeaderProps) => {
                   </motion.div>
                 </CarouselItem>
               );
-            })}
+            })} */}
           </CarouselContent>
         </Carousel>
       </motion.div>

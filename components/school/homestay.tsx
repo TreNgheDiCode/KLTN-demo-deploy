@@ -246,9 +246,11 @@ export const HomeStay = () => {
                   </div>
                 </ModalContent>
                 <ModalFooter className="gap-4">
-                  <button className="w-28 rounded-md border-1 border-[#cccccc] bg-white px-2 py-1 text-sm text-black shadow-sm shadow-black hover:shadow-none dark:bg-black dark:text-white">
-                    Đặt chỗ ngay
-                  </button>
+                  <a href="https://justfly.vn/rooms/hanoi/d-hill-scent-house-soc-son">
+                    <button className="w-28 rounded-md border-1 border-[#cccccc] bg-white px-2 py-1 text-sm text-black shadow-sm shadow-black hover:shadow-none dark:bg-black dark:text-white">
+                      Đặt chỗ ngay
+                    </button>
+                  </a>
                 </ModalFooter>
               </ModalBody>
               <ModalFooter>

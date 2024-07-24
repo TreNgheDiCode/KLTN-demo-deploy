@@ -246,7 +246,7 @@ const Messenger = ({
 
   return (
     <div
-      className="flex h-screen w-full"
+      className="flex h-[calc(100vh-86px)] w-full"
       style={{
         backgroundImage: "url('/wallapaper.jpeg')",
         backgroundSize: "cover",
@@ -301,22 +301,20 @@ const Messenger = ({
         {/* Form gửi tin nhắn */}
         <form
           onSubmit={sendMessage}
-          className="flex border-t border-gray-300 p-2"
+          className="flex border-t border-gray-300 bg-white p-2"
         >
-          <div className="flex-grow">
-            <input
-              type="text"
-              value={inputMessage}
-              onChange={(e) => setInputMessage(e.target.value)}
-              className="w-full rounded-l border border-gray-300 bg-white px-2 py-1 text-black"
-              placeholder="Type a message..."
-            />
-          </div>
+          <input
+            type="text"
+            value={inputMessage}
+            onChange={(e) => setInputMessage(e.target.value)}
+            className="flex-grow rounded-l border border-gray-300 px-2 py-1 text-black"
+            placeholder="Nhập để nhắn tin..."
+          />
           <button
             type="submit"
             className="ml-2 rounded-r bg-blue-500 px-4 py-1 text-white"
           >
-            Send
+            Gửi
           </button>
         </form>
       </div>

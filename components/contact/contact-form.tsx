@@ -29,13 +29,13 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 const titleLabelMap: Record<ContactTitle, string> = {
-  [ContactTitle.FEEDBACK]: "Feedback",
-  [ContactTitle.SYSTEM]: "System Problem",
-  [ContactTitle.REFUND]: "Request A Refund",
-  [ContactTitle.BILLING]: "Biling and Payments",
-  [ContactTitle.SUBSCRIPTION]: "Cancel Subscription",
-  [ContactTitle.SCHOLARSHIP]: "Scholarship",
-  [ContactTitle.PROCEDURE]: "Study abroad procedures",
+  [ContactTitle.FEEDBACK]: "Phản hồi",
+  [ContactTitle.SYSTEM]: "Vấn đề hệ thống",
+  [ContactTitle.REFUND]: "Yêu cầu hoàn lại",
+  [ContactTitle.BILLING]: "Hóa đơn và thanh toán",
+  [ContactTitle.SUBSCRIPTION]: "Hủy đăng ký",
+  [ContactTitle.SCHOLARSHIP]: "Học bổng",
+  [ContactTitle.PROCEDURE]: "Thủ tục du học",
 };
 
 type Props = {
@@ -86,11 +86,11 @@ export const ContactForm = ({ schools }: Readonly<Props>) => {
           name="title"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Title*</FormLabel>
+              <FormLabel>Tiêu đề*</FormLabel>
               <Select onValueChange={field.onChange}>
                 <FormControl>
                   <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Choose a problem..." />
+                    <SelectValue placeholder="Chọn vấn đề..." />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -110,11 +110,11 @@ export const ContactForm = ({ schools }: Readonly<Props>) => {
           name="schoolId"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>School</FormLabel>
+              <FormLabel>Trường học</FormLabel>
               <Select onValueChange={field.onChange}>
                 <FormControl>
                   <SelectTrigger className="w-full">
-                    <SelectValue placeholder="-Choose a school-" />
+                    <SelectValue placeholder="-Chọn trường-" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -145,7 +145,7 @@ export const ContactForm = ({ schools }: Readonly<Props>) => {
             name="phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Phone*</FormLabel>
+                <FormLabel>Số điện thoại*</FormLabel>
                 <Input {...field} placeholder="0763111234" />
                 <FormMessage />
               </FormItem>
@@ -157,7 +157,7 @@ export const ContactForm = ({ schools }: Readonly<Props>) => {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name*</FormLabel>
+              <FormLabel>Tên*</FormLabel>
               <Input {...field} placeholder="John Doe" />
               <FormMessage />
             </FormItem>
@@ -168,10 +168,10 @@ export const ContactForm = ({ schools }: Readonly<Props>) => {
           name="message"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Message*</FormLabel>
+              <FormLabel>Lời nhắn*</FormLabel>
               <Textarea
                 {...field}
-                placeholder="Describe your problem here..."
+                placeholder="Mô tả vấn đề bạn gặp phải ở đây..."
               />
               <FormMessage />
             </FormItem>
@@ -183,7 +183,7 @@ export const ContactForm = ({ schools }: Readonly<Props>) => {
             className="bg-main hover:bg-main/85 dark:bg-background dark:hover:bg-background/85"
             type="submit"
           >
-            Send inquiry
+            Gửi yêu cầu
           </Button>
         </div>
       </form>

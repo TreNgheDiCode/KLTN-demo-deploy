@@ -9,7 +9,7 @@ export const DetailProgramAI = () => {
       <span className="text-xl font-bold">Chi tiết ngành học</span>
 
       <div className="mt-8 text-center text-4xl font-bold text-[#001524] dark:text-primary">
-        THÔNG TIN KHÓA UI/UX
+        THÔNG TIN KHÓA AI
       </div>
 
       <div className="mt-6 rounded-3xl border-2 border-[#61677A] bg-[#D8D9DA] p-6 dark:bg-black">

@@ -7,12 +7,13 @@ const ContactUsPage = async () => {
   return (
     <div className="container flex h-full flex-col items-center gap-y-2 pt-4 text-primary">
       <h1 className="text-3xl font-bold text-main dark:text-primary">
-        Contact Us
+        Liên Hệ
       </h1>
       <p className="text-center">
-        Need assistance? Drop us a message, describing the problem you are
+        Cần hỗ trợ? Hãy gửi cho chúng tôi một tin nhắn, mô tả vấn đề bạn đang
+        gặp phải
         <br />
-        experiencing, and we will get back to you as soon as possible.
+        đang trải nghiệm và chúng tôi sẽ phản hồi bạn sớm nhất có thể.
       </p>
       <ContactForm schools={schools} />
     </div>
