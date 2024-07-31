@@ -15,13 +15,13 @@ const { auth } = NextAuth(authConfig);
 
 export default auth((req) => {
   const locales = ["en", "vi"];
-  const defaultLocale = "en";
+  const defaultLocale = "vi";
 
   const { nextUrl, auth } = req;
   const isLoggedIn = !!auth;
 
   const getLocale = () => {
-    const headers = { "accept-language": "en" };
+    const headers = { "accept-language": "vi" };
     let languages = new Negotiator({ headers }).languages();
     return match(languages, locales, defaultLocale); // -> 'en'
   };

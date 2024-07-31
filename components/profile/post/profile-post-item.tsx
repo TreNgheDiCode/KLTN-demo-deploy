@@ -141,25 +141,25 @@ export const ProfilePostItem = ({
       </CardBody>
       <div className="px-4">
         <Divider />
-        <div className="grid grid-cols-4 gap-1 ">
+        <div className="grid grid-cols-4 gap-1">
           <Button
             onClick={onLike}
             startContent={<Heart fill={isLike ? "red" : "white"} />}
             variant="light"
             color="primary"
           >
-            {likes?.length || 0} Likes
+            {likes?.length || 0} Thích
           </Button>
           <Button
             startContent={<MessageCircleMore />}
             variant="light"
             color="primary"
           >
-            {comments?.length} Comments
+            {comments?.length} Bình luận
           </Button>
 
           <Button startContent={<Share2 />} variant="light" color="primary">
-            0 Share
+            0 Chia sẽ
           </Button>
           <Button
             onClick={onSave}
@@ -167,7 +167,7 @@ export const ProfilePostItem = ({
             variant="light"
             color="primary"
           >
-            Saved
+            Lưu
           </Button>
         </div>
         <Divider />

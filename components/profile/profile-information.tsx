@@ -109,19 +109,19 @@ export const ProfileInformation = ({
     <Card>
       <CardBody className="flex flex-col gap-2">
         {/* dasdasdas */}
-        <Label className="font-semibold">Biography</Label>
+        <Label className="font-semibold">Tiểu sử</Label>
         <div className="!flex flex-col items-start justify-center gap-2 text-sm">
           {<p className="mx-auto">{biography?.content || "chua co bio"}</p>}
           {buttonAdBio && (textValue == undefined || textValue == "") && (
             <Button onClick={onAddBio} className="h-[40px] w-full">
-              Add Biography
+              Thêm
             </Button>
           )}
           {buttonUpdateBio &&
             biography?.content != undefined &&
             biography.content != "" && (
               <Button onClick={onUpdateBio} className="h-[40px] w-full">
-                Update Biography
+                Cập nhật
               </Button>
             )}
           {buttonInputValue && (
@@ -140,7 +140,7 @@ export const ProfileInformation = ({
                 color="primary"
                 variant="faded"
               >
-                Cancle
+                Thoát
               </Button>
             )}
 
@@ -151,7 +151,7 @@ export const ProfileInformation = ({
                 size="md"
                 className="ml-2"
               >
-                Save
+                Lưu
               </Button>
             )}
           </div>
@@ -175,19 +175,21 @@ export const ProfileInformation = ({
         <Divider />
         <Label className="font-semibold">Your areas</Label>
         {areas?.length! > 0 ? (
-          <div>Your areas</div>
+          <div>Khu vực của bạn</div>
         ) : (
           <p className="text-xs italic text-muted-foreground">
-            No areas specify, please add a new one related to your kind.
+            Không có khu vực nào được chỉ định, vui lòng thêm khu vực mới liên
+            quan đến loại của bạn.
           </p>
         )}
         <Divider />
         <Label className="font-semibold">Socials</Label>
         {socials?.length! > 0 ? (
-          <div>Socials</div>
+          <div>Xã hội</div>
         ) : (
           <p className="text-xs italic text-muted-foreground">
-            No socials specify, please add a new one related to your kind.
+            Không có mạng xã hội cụ thể, vui lòng thêm mạng xã hội mới liên quan
+            đến loại của bạn.
           </p>
         )}
       </CardBody>

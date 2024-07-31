@@ -2,9 +2,14 @@
 
 import { Button } from "@nextui-org/react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 import { useRef } from "react";
 
 export const VideoSection = () => {
+  const router = useRouter();
+  const handRegis = () => {
+    router.push("/auth/register");
+  };
   const itemVariants = {
     hidden: {
       y: -100,
@@ -28,24 +33,26 @@ export const VideoSection = () => {
         stiffness: 10,
       }}
       viewport={{ once: false, amount: "all", margin: "85px" }}
-      className="container flex h-screen flex-col items-center justify-center gap-6 bg-white dark:bg-background"
+      className="container mt-[-60px] flex h-screen flex-col items-center justify-center gap-6 bg-white dark:bg-background"
     >
       <motion.h1
         variants={itemVariants}
         className="text-5xl font-bold text-[#7D1F1F] dark:text-primary"
       >
-        CONTINUE YOUR DREAM
+        Tôi và bạn hãy cùng thắp sáng ước mơ.
       </motion.h1>
-      <motion.div variants={itemVariants} className="aspect-video">
-        <video src=""></video>
+      <motion.div variants={itemVariants} className="aspect-video h-[400px]">
+        <video autoPlay loop muted playsInline>
+          <source src="/intro.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
       </motion.div>
       <motion.p
         variants={itemVariants}
         className="text-center text-sm text-[#7D1F1F] dark:text-primary"
       >
-        Enter an experience of relational learning and discover all that Christ
-        has for your life. Online or on campus, there’s an atmosphere that
-        inspires your intellect and strives to ensure your success.
+        Đăng ký tài khoản để tìm hiểu thêm nhiều thông tin đãi ngộ từ các trường
+        du học.
       </motion.p>
       <motion.div
         variants={itemVariants}
@@ -58,8 +65,9 @@ export const VideoSection = () => {
           radius="full"
           color="warning"
           className="text-white"
+          onClick={handRegis}
         >
-          Get to know us
+          Tham gia ngay !!!
         </Button>
       </motion.div>
     </motion.div>

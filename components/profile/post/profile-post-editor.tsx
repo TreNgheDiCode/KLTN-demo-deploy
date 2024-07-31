@@ -19,7 +19,7 @@ export const ProfilePostEditor = ({ logo, onOpen }: ProfilePostEditorProps) => {
           variant="shadow"
           className="flex-1 justify-start rounded-full text-zinc-600 dark:text-zinc-400"
         >
-          Create your new post...
+          Tạo bài viết...
         </Button>
       </CardHeader>
     </Card>

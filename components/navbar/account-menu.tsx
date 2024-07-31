@@ -12,20 +12,54 @@ import {
   User,
 } from "@nextui-org/react";
 import { LogOut } from "lucide-react";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-export const AccountMenu = ({ account }: { account: AccountIdLib }) => {
+export const AccountMenu = ({
+  account,
+  isMobile = false,
+}: {
+  account: AccountIdLib;
+  isMobile?: boolean;
+}) => {
   const router = useRouter();
+
   const onLogOut = async () => {
     await logout().then(() => {
       router.refresh();
     });
   };
+
   const handclick = () => {
     router.push(`student/profile/${account.student.studentCode}`);
   };
-  return (
+
+  const mobileMenuContent = (
+    <div className="flex flex-col items-center space-y-4 border-t border-gray-200 pt-4 dark:border-gray-700">
+      <User
+        name={account.name}
+        description={account.email}
+        className="text-primary"
+        avatarProps={{
+          src: account.image,
+        }}
+      />
+      <button
+        onClick={handclick}
+        className="w-full py-2 text-left text-primary hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800"
+      >
+        Thông tin của tôi
+      </button>
+      <button
+        onClick={onLogOut}
+        className="flex w-full items-center py-2 text-left text-red-500 hover:bg-gray-100 dark:hover:bg-gray-800"
+      >
+        <LogOut className="mr-2 size-4" />
+        Đăng xuất
+      </button>
+    </div>
+  );
+
+  const desktopMenuContent = (
     <Dropdown placement="bottom-end" backdrop="blur">
       <DropdownTrigger>
         <User
@@ -44,29 +78,31 @@ export const AccountMenu = ({ account }: { account: AccountIdLib }) => {
         color="primary"
         className="text-primary"
       >
-        <DropdownSection title={"Profile"} showDivider>
+        <DropdownSection title={"Hồ sơ"} showDivider>
           <DropdownItem
             key={"profile"}
             className="gap-2 font-semibold text-primary"
           >
-            <p className="font-semibold">Signed in as</p>
+            <p className="font-semibold">Đăng nhập bằng</p>
             <p className="font-semibold">{account.email}</p>
           </DropdownItem>
           <DropdownItem onClick={handclick} key={"profile"}>
-            My Profile
+            Thông tin của tôi
           </DropdownItem>
         </DropdownSection>
-        <DropdownSection title={"Actions"}>
+        <DropdownSection title={"Hành động"}>
           <DropdownItem
             onClick={onLogOut}
             color="danger"
             key={"logout"}
             startContent={<LogOut className="size-4" />}
           >
-            Logout
+            Đăng xuất
           </DropdownItem>
         </DropdownSection>
       </DropdownMenu>
     </Dropdown>
   );
+
+  return isMobile ? mobileMenuContent : desktopMenuContent;
 };

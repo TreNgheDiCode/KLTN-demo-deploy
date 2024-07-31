@@ -248,41 +248,47 @@ export const PublicNavbar = ({ account, schools = [] }: PublicNavbarProps) => {
             </>
           )}
         </NavbarContent>
-        {/* Mobile Navigation */}
-        <NavbarMenu className="md:hidden">
-          {renderNavItems()}
-          <NavbarItem>
-            <ThemeToggle />
-          </NavbarItem>
-          {account && <AccountMenu account={account} />}
-          {!account && (
-            <>
-              <Button
-                as={Link}
-                variant="bordered"
-                radius="full"
-                onClick={() => setLoading(true)}
-                isLoading={isLoading}
-                size="md"
-                className="border-[#7D1F1F] font-semibold text-[#7D1F1F] dark:border-primary dark:text-white"
-                href="/auth/register"
-              >
-                Đăng ký
-              </Button>
-              <Button
-                as={Link}
-                onClick={() => setLoading(true)}
-                isLoading={isLoading}
-                variant="shadow"
-                radius="full"
-                size="md"
-                className="bg-[#7D1F1F] font-semibold text-white dark:text-primary"
-                href="/auth/login"
-              >
-                Đăng nhập
-              </Button>
-            </>
-          )}
+        {/* mobile menu */}
+        <NavbarMenu className="flex min-h-screen flex-col justify-between space-y-4 bg-gray-50 p-4 dark:bg-gray-900 md:hidden">
+          <div className="space-y-4">
+            <div className="space-y-2">{renderNavItems()}</div>
+            <div className="flex justify-center py-2">
+              <ThemeToggle />
+            </div>
+          </div>
+
+          <div className="mt-auto w-full space-y-3">
+            {account ? (
+              <AccountMenu account={account} isMobile={true} />
+            ) : (
+              <>
+                <Button
+                  as={Link}
+                  onClick={() => setLoading(true)}
+                  isLoading={isLoading}
+                  variant="shadow"
+                  radius="full"
+                  size="lg"
+                  className="w-full bg-[#7D1F1F] font-semibold text-white transition-colors hover:bg-[#9B2626] dark:text-primary"
+                  href="/auth/login"
+                >
+                  Đăng nhập
+                </Button>
+                <Button
+                  as={Link}
+                  variant="bordered"
+                  radius="full"
+                  onClick={() => setLoading(true)}
+                  isLoading={isLoading}
+                  size="lg"
+                  className="w-full border-[#7D1F1F] font-semibold text-[#7D1F1F] transition-colors hover:bg-[#7D1F1F] hover:text-white dark:border-primary dark:text-white"
+                  href="/auth/register"
+                >
+                  Đăng ký
+                </Button>
+              </>
+            )}
+          </div>
         </NavbarMenu>
       </Navbar>
     </motion.div>

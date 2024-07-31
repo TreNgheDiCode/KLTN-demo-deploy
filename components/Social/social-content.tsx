@@ -14,7 +14,7 @@ import Link from "next/link";
 
 const SocialContent = ({ student }: { student: StudentLib }) => {
   const [friend, setFriend] = useState<Friend[]>();
-  const [activeTab, setActiveTab] = useState("posts");
+  const [activeTab, setActiveTab] = useState("Bài viết"); // Giá trị mặc định là "Bài viết"
   const [selectedFriend, setSelectedFriend] = useState<Friend | null>(null);
 
   useEffect(() => {
@@ -56,32 +56,20 @@ const SocialContent = ({ student }: { student: StudentLib }) => {
             <Divider className="mt-3 h-0.5 w-full rounded-sm" />
             {/* Tác vụ */}
             <div className="py-5">
-              {["posts", "likes", "saved", "events", "messages"].map(
-                (tab, index) => (
-                  <div key={index} className="flex items-center pb-1.5">
-                    {activeTab === tab && (
-                      <LuFlagTriangleRight className="text-black dark:text-white" />
-                    )}
-                    {tab === "messages" ? (
-                      <Link href={`/messenger/${student.studentCode}`}>
-                        <div
-                          className={
-                            activeTab === tab
-                              ? cssText
-                              : "text-primary hover:cursor-pointer hover:underline"
-                          }
-                        >
-                          {tab.charAt(0).toUpperCase() + tab.slice(1)}
-                        </div>
-                      </Link>
-                    ) : (
+              {[
+                "Bài viết",
+                "Danh sách thích",
+                "Danh sách lưu",
+                "Sự kiện",
+                "Tin nhắn",
+              ].map((tab, index) => (
+                <div key={index} className="flex items-center pb-1.5">
+                  {activeTab === tab && (
+                    <LuFlagTriangleRight className="text-black dark:text-white" />
+                  )}
+                  {tab === "Tin nhắn" ? (
+                    <Link href={`social/messenger/${student.studentCode}`}>
                       <div
-                        onClick={() => {
-                          if (tab === "posts") {
-                            setSelectedFriend(null);
-                          }
-                          setActiveTab(tab);
-                        }}
                         className={
                           activeTab === tab
                             ? cssText
@@ -90,16 +78,32 @@ const SocialContent = ({ student }: { student: StudentLib }) => {
                       >
                         {tab.charAt(0).toUpperCase() + tab.slice(1)}
                       </div>
-                    )}
-                  </div>
-                ),
-              )}
+                    </Link>
+                  ) : (
+                    <div
+                      onClick={() => {
+                        if (tab === "Bài viết") {
+                          setSelectedFriend(null);
+                        }
+                        setActiveTab(tab);
+                      }}
+                      className={
+                        activeTab === tab
+                          ? cssText
+                          : "text-primary hover:cursor-pointer hover:underline"
+                      }
+                    >
+                      {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
         </div>
         {/* List Friend */}
         <Card className="mt-7 h-80 rounded-xl border shadow-2xl dark:bg-background">
-          <h1 className="pl-3 pt-2 font-bold">List Friend</h1>
+          <h1 className="pl-3 pt-2 font-bold">Danh sách bạn</h1>
           <CardBody className="w-full overflow-y-scroll p-5">
             {friend?.map((fen, index) => {
               if (fen.studentCode === student.studentCode) return null;
@@ -133,7 +137,7 @@ const SocialContent = ({ student }: { student: StudentLib }) => {
 
       {/* Main Content */}
       <div className="ml-4 w-full lg:w-3/4">
-        {activeTab === "posts" && !selectedFriend && (
+        {activeTab === "Bài viết" && !selectedFriend && (
           <div className="h-full bg-white px-1.5 text-black dark:bg-background dark:text-white">
             <ProfilePosts
               name={student.account.name}
@@ -169,28 +173,28 @@ const SocialContent = ({ student }: { student: StudentLib }) => {
             )}
           </div>
         )}
-        {activeTab === "likes" && (
+        {activeTab === "Danh sách thích" && (
           <div className="border-#cccc h-full w-full border px-1.5 py-1.5 text-black dark:bg-background dark:text-white">
             <div className="mx-auto mt-2.5 h-96 w-[90%] rounded-lg dark:bg-background">
               <ComponentListLike />
             </div>
           </div>
         )}
-        {activeTab === "saved" && (
+        {activeTab === "Danh sách lưu" && (
           <div className="border-#cccc h-full w-full border px-1.5 py-1.5 text-black dark:bg-background dark:text-white">
             <div className="mx-auto mt-2.5 h-96 w-[90%] rounded-lg dark:bg-background">
               <ComponentListSave />
             </div>
           </div>
         )}
-        {activeTab === "events" && (
+        {activeTab === "Sự kiện" && (
           <div className="border-#cccc h-full w-full border px-1.5 py-1.5 text-black dark:bg-background dark:text-white">
             <div className="mx-auto mt-2.5 h-96 w-[90%] rounded-lg dark:bg-background">
               <ComponentEvent />
             </div>
           </div>
         )}
-        {activeTab === "messages" && (
+        {activeTab === "Tin nhắn" && (
           <div className="border-#cccc h-full w-full border px-1.5 py-1.5 text-black dark:bg-background dark:text-white">
             <div className="mx-auto mt-2.5 h-96 w-[90%] rounded-lg dark:bg-background">
               <ComponentMessenger />

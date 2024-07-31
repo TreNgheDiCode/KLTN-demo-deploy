@@ -4,14 +4,17 @@ import { ProfilePosts } from "@/components/profile/post/profile-post";
 import { ProfilePostsList } from "@/components/profile/post/profile-posts-list";
 import { GetStudentLibByStudentCode } from "@/lib/student";
 import { StudentLib } from "@/types";
+import { redirect } from "next/navigation";
 const ProfileIdPage = async ({
   params: { studentCode },
 }: {
   params: { studentCode: string };
 }) => {
+  if (!studentCode) {
+    redirect("/");
+  }
   const student: StudentLib = await GetStudentLibByStudentCode(studentCode);
   return (
-    
     <div className="relative hidden gap-4 md:grid lg:grid-cols-12">
       <div className="lg:col-span-3">
         <ProfileInformation
@@ -37,7 +40,6 @@ const ProfileIdPage = async ({
               profileId={student.profile.id}
             />
           )}
-          <CrispProvider />
         </div>
       </div>
     </div>

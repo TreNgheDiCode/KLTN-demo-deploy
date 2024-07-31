@@ -86,13 +86,13 @@ export const ProfileCommentItem = ({
             </span>
             <p className="text-sm text-primary">{content}</p>
             {image && (
-              <Image src={image} alt="cmt" className="h-[220px] w-full  " />
+              <Image src={image} alt="cmt" className="h-[220px] w-full" />
             )}
           </div>
         </div>
         {isMount && <ResponsiveDialog id={id} />}
       </div>
-      <div className="ml-[48px] flex  items-center gap-3 text-sm text-primary">
+      <div className="ml-[48px] flex items-center gap-3 text-sm text-primary">
         <span className="text-zinc-600 dark:text-zinc-400">
           {formatDistanceToNowStrict(createdAt, {
             locale: vi,
@@ -105,7 +105,7 @@ export const ProfileCommentItem = ({
             isLike && "font-bold text-rose-500",
           )}
         >
-          Like
+          Thích
         </span>
         <span
           onClick={() => setIsCommenting((value) => !value)}
@@ -114,7 +114,7 @@ export const ProfileCommentItem = ({
             isCommenting && "font-bold",
           )}
         >
-          Reply
+          Phản hồi
         </span>
       </div>
       {childLength! > 0 && !isExpanded && (
@@ -124,21 +124,21 @@ export const ProfileCommentItem = ({
             onClick={onLoad}
             className="cursor-pointer text-base text-zinc-600 hover:underline dark:text-zinc-400"
           >
-            See {childLength} response(s)
+            Xem {childLength} phản hồi
           </span>
           {isPending && <Spinner size="sm" />}
         </div>
       )}
       {isExpanded && (
-        <div className="ml-[48px] flex  flex-col gap-2">
+        <div className="ml-[48px] flex flex-col gap-2">
           <ProfileCommentsList comments={items} name={name} image={logo} />
-          <div className="flex  items-center gap-2">
+          <div className="flex items-center gap-2">
             <CornerLeftUp className="size-4" />
             <span
               onClick={() => setIsExpanded(false)}
               className="cursor-pointer text-base text-zinc-600 hover:underline dark:text-zinc-400"
             >
-              Hide all responses
+              Ẩn phản hồi
             </span>
             {isPending && <Spinner size="sm" />}
           </div>

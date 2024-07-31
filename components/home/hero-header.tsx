@@ -13,12 +13,17 @@ import {
   CarouselContent,
   CarouselItem,
 } from "../ui/carousel";
+import { useRouter } from "next/navigation";
 
 interface HeroHeaderProps {
   schools: SchoolLib[];
 }
 
 export const HeroHeader = ({ schools }: HeroHeaderProps) => {
+  const router = useRouter();
+  const handShowSchool = (id: string) => {
+    router.push(`schools/${id}`);
+  };
   const [api, setApi] = useState<CarouselApi>();
 
   const [current, setCurrent] = useState(1);
@@ -205,9 +210,10 @@ export const HeroHeader = ({ schools }: HeroHeaderProps) => {
                           variant="shadow"
                           color="primary"
                           size="md"
+                          onClick={() => handShowSchool(school.id)}
                           className="min-w-[230px] bg-white font-semibold text-[#7D1F1F] dark:bg-background dark:text-primary"
                         >
-                          Explore
+                          Xem ngay
                         </Button>
                       </motion.div>
                     </motion.div>

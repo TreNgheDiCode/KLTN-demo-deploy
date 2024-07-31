@@ -127,7 +127,7 @@ export const ProfileCommentForm = ({
                     autoFocus
                     variant="faded"
                     radius="sm"
-                    placeholder="Write a comment..."
+                    placeholder="Viết bình luận..."
                     className="flex-1 break-words"
                     size="sm"
                     endContent={
@@ -197,7 +197,7 @@ export const ProfileCommentForm = ({
                         <button type="submit" className="ml-auto">
                           <SendHorizonal
                             onClick={() => form.handleSubmit(onSubmit)}
-                            className=" h-6 w-6 text-primary hover:cursor-pointer"
+                            className="h-6 w-6 text-primary hover:cursor-pointer"
                           />
                         </button>
                       </div>
