@@ -13,6 +13,24 @@ interface InfoItemProps {
   value: string;
 }
 const StatusProfileContent = ({ student }: { student: StudentLib }) => {
+  const translateValue = (value: string) => {
+    const translations: { [key: string]: string } = {
+      // Trạng thái
+      STUDYING: "Đang học",
+      DROPPED: "Đã bỏ học",
+      AWAITING: "Đang chờ",
+      APPROVED: "Đã được chấp nhận",
+      // Trình độ học tập
+      HIGHSCHOOL: "Trung học phổ thông",
+      UNIVERSITY: "Đại học",
+      // Giới tính
+      MALE: "Nam",
+      FEMALE: "Nữ",
+    };
+
+    return translations[value] || value;
+  };
+
   const formatDate = (date: Date) => {
     if (!date) return "Không có thông tin";
     try {
@@ -26,7 +44,10 @@ const StatusProfileContent = ({ student }: { student: StudentLib }) => {
     <div className="mx-auto mt-2 max-h-screen max-w-4xl overflow-hidden rounded-lg shadow-lg shadow-black dark:shadow-white">
       <div className="p-6 text-black">
         <div className="mb-6 text-center text-3xl font-bold dark:text-primary">
-          Trạng Thái: <span className="text-green-800">{student.status}</span>
+          Trạng Thái:
+          <span className="text-green-800">
+            {translateValue(student.status)}
+          </span>
         </div>
 
         {/* Avatar and Background */}
@@ -63,7 +84,9 @@ const StatusProfileContent = ({ student }: { student: StudentLib }) => {
             />
             <InfoItem
               label="Giới tính"
-              value={student.account.gender || "Không có thông tin"}
+              value={
+                translateValue(student.account.gender) || "Không có thông tin"
+              }
             />
             <InfoItem
               label="Ngày sinh"
@@ -102,7 +125,7 @@ const StatusProfileContent = ({ student }: { student: StudentLib }) => {
             />
             <InfoItem
               label="Trình độ học tập"
-              value={student.degreeType || "Không có thông tin"}
+              value={translateValue(student.degreeType) || "Không có thông tin"}
             />
           </InfoSection>
         </div>

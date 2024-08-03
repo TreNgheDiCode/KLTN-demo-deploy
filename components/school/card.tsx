@@ -1,6 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   name: string;
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export const Card = ({ name, des, avatar, background, time }: Props) => {
+  const { t } = useTranslation("school");
   return (
     <div className="group/card w-full max-w-xs">
       <div
@@ -31,11 +33,15 @@ export const Card = ({ name, des, avatar, background, time }: Props) => {
           />
           <div className="flex flex-col">
             <p className="text-base font-semibold text-white">{name}</p>
-            <p className="text-sm text-gray-300">{time} min read</p>
+            <p className="text-sm text-gray-300">
+              {time} {t("time")}
+            </p>
           </div>
         </div>
         <div className="text-content relative z-10">
-          <h2 className="text-xl font-bold text-white md:text-2xl">Nội dung</h2>
+          <h2 className="text-xl font-bold text-white md:text-2xl">
+            {t("Content")}
+          </h2>
           <p className="mt-2 text-sm text-gray-200">{des}</p>
         </div>
       </div>

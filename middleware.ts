@@ -5,8 +5,6 @@ import {
   authRoutes,
   publicRoutes,
 } from "@/routes";
-import Negotiator from "negotiator";
-import { match } from "@formatjs/intl-localematcher";
 import { NextResponse } from "next/server";
 import NextAuth from "next-auth";
 import authConfig from "./auth.config";
@@ -14,44 +12,17 @@ import authConfig from "./auth.config";
 const { auth } = NextAuth(authConfig);
 
 export default auth((req) => {
-  const locales = ["en", "vi"];
-  const defaultLocale = "en";
-
   const { nextUrl, auth } = req;
   const isLoggedIn = !!auth;
 
-  const getLocale = () => {
-    const headers = { "accept-language": "en" };
-    let languages = new Negotiator({ headers }).languages();
-    return match(languages, locales, defaultLocale); // -> 'en'
-  };
-
-  const isLocalePathname = locales.some(
-    (locale) =>
-      nextUrl.pathname.startsWith(`/${locale}`) ||
-      nextUrl.pathname === `${locale}`,
-  );
-
-  const isPublicPath = (path: string) => {
-    const checkPath = path.replace(/^\/[a-zA-Z]{2}/, "");
-
-    if (checkPath == "") return true;
-
-    return publicRoutes.includes(checkPath);
-  };
-
-  const isAuthPath = (path: string) => {
-    const checkPath = path.replace(/^\/[a-zA-Z]{2}/, "");
-
-    return authRoutes.includes(checkPath);
-  };
-
-  const locale = getLocale();
-
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isApiEdgestoreRoute = nextUrl.pathname.startsWith(apiEdgestorePrefix);
-  const isPublicRoute = isPublicPath(nextUrl.pathname);
-  const isAuthRoute = isAuthPath(nextUrl.pathname);
+  const isPublicRoute = publicRoutes.includes(
+    nextUrl.pathname.replace(/^\/[a-zA-Z]{2}/, ""),
+  );
+  const isAuthRoute = authRoutes.includes(
+    nextUrl.pathname.replace(/^\/[a-zA-Z]{2}/, ""),
+  );
 
   const token = nextUrl.searchParams.get("token");
 
@@ -59,14 +30,6 @@ export default auth((req) => {
     return NextResponse.next();
   }
 
-  if (!isLocalePathname) {
-    return Response.redirect(
-      new URL(
-        `/${locale}${nextUrl.pathname}${token ? `?token=${token}` : ""}`,
-        nextUrl,
-      ),
-    );
-  }
   if (isAuthRoute) {
     if (isLoggedIn) {
       return Response.redirect(new URL(`${DEFAULT_LOGIN_REDIRECT}`, nextUrl));
@@ -74,8 +37,9 @@ export default auth((req) => {
     return NextResponse.next();
   }
 
+  // Uncomment this if you want to redirect non-logged-in users to the login page
   // if (!isLoggedIn && !isPublicRoute) {
-  //   return Response.redirect(new URL(`/${locale}/auth/login`, nextUrl));
+  //   return Response.redirect(new URL(`/auth/login${token ? `?token=${token}` : ""}`, nextUrl));
   // }
 
   return NextResponse.next();

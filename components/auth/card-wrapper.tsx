@@ -12,29 +12,17 @@ import { BackButton } from "./back-button";
 
 interface CardWrapperProps {
   children: React.ReactNode;
-  headerLabel: string;
-  subLabel?: string;
-  backButtonLabel: string;
-  backButtonHref: string;
 }
 
-export const CardWrapper = ({
-  children,
-  headerLabel,
-  subLabel,
-  backButtonHref,
-  backButtonLabel,
-}: CardWrapperProps) => {
+export const CardWrapper = ({ children }: CardWrapperProps) => {
   return (
     <Card className="w-[500px] px-3 py-4">
       <CardHeader>
-        <Header label={headerLabel} subLabel={subLabel} />
+        <Header  />
       </CardHeader>
       <CardBody>{children}</CardBody>
       <Divider />
-      <CardFooter className="flex items-center justify-center">
-        <BackButton label={backButtonLabel} href={backButtonHref} />
-      </CardFooter>
+      <CardFooter className="flex items-center justify-center"></CardFooter>
     </Card>
   );
 };

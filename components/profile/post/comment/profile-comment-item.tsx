@@ -12,6 +12,7 @@ import { ProfileCommentsList } from "./profile-comments-list";
 import { PostCommentLib } from "@/types";
 import { GetCommentsByParentId, LikeCmt } from "@/actions/profile/comment";
 import ResponsiveDialog from "@/components/Component-Profile/alertDeleteComment";
+import { useTranslation } from "react-i18next";
 
 interface ProfileCommentItemProps {
   postId: string;
@@ -42,6 +43,8 @@ export const ProfileCommentItem = ({
   profileId,
   childLength,
 }: ProfileCommentItemProps) => {
+  const { t } = useTranslation("social");
+
   const router = useRouter();
   const [isCommenting, setIsCommenting] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -86,13 +89,13 @@ export const ProfileCommentItem = ({
             </span>
             <p className="text-sm text-primary">{content}</p>
             {image && (
-              <Image src={image} alt="cmt" className="h-[220px] w-full  " />
+              <Image src={image} alt="cmt" className="h-[220px] w-full" />
             )}
           </div>
         </div>
         {isMount && <ResponsiveDialog id={id} />}
       </div>
-      <div className="ml-[48px] flex  items-center gap-3 text-sm text-primary">
+      <div className="ml-[48px] flex items-center gap-3 text-sm text-primary">
         <span className="text-zinc-600 dark:text-zinc-400">
           {formatDistanceToNowStrict(createdAt, {
             locale: vi,
@@ -105,7 +108,7 @@ export const ProfileCommentItem = ({
             isLike && "font-bold text-rose-500",
           )}
         >
-          Like
+          {t("like")}
         </span>
         <span
           onClick={() => setIsCommenting((value) => !value)}
@@ -114,7 +117,7 @@ export const ProfileCommentItem = ({
             isCommenting && "font-bold",
           )}
         >
-          Reply
+          {t("Request")}
         </span>
       </div>
       {childLength! > 0 && !isExpanded && (
@@ -124,21 +127,21 @@ export const ProfileCommentItem = ({
             onClick={onLoad}
             className="cursor-pointer text-base text-zinc-600 hover:underline dark:text-zinc-400"
           >
-            See {childLength} response(s)
+            {t("watch")} {childLength} {t("request")}
           </span>
           {isPending && <Spinner size="sm" />}
         </div>
       )}
       {isExpanded && (
-        <div className="ml-[48px] flex  flex-col gap-2">
+        <div className="ml-[48px] flex flex-col gap-2">
           <ProfileCommentsList comments={items} name={name} image={logo} />
-          <div className="flex  items-center gap-2">
+          <div className="flex items-center gap-2">
             <CornerLeftUp className="size-4" />
             <span
               onClick={() => setIsExpanded(false)}
               className="cursor-pointer text-base text-zinc-600 hover:underline dark:text-zinc-400"
             >
-              Hide all responses
+              {t("hideComment")}
             </span>
             {isPending && <Spinner size="sm" />}
           </div>

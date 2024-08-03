@@ -42,7 +42,7 @@ export function LanguageToggle({ className }: LanguageToggleProps) {
         <Button
           variant="outline"
           size="icon"
-          className="z-[99999] block rounded-[10px]"
+          className="z-[101] block rounded-[10px]"
         >
           <ReactCountryFlag
             className="emojiFlag text-2xl"

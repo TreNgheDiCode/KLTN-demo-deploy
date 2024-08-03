@@ -13,20 +13,26 @@ import {
   CarouselContent,
   CarouselItem,
 } from "../ui/carousel";
+import { useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 interface HeroHeaderProps {
   schools: SchoolLib[];
 }
 
 export const HeroHeader = ({ schools }: HeroHeaderProps) => {
-  const [api, setApi] = useState<CarouselApi>();
+  const { t } = useTranslation("home");
 
+  const router = useRouter();
+  const handShowSchool = (id: string) => {
+    router.push(`schools/${id}`);
+  };
+  const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(1);
 
   const onClick = useCallback(
     (index: number) => {
       if (!api) return;
-
       api.scrollTo(index);
     },
     [api],
@@ -101,15 +107,15 @@ export const HeroHeader = ({ schools }: HeroHeaderProps) => {
           staggerDirection: -1,
         }}
         viewport={{ once: false }}
-        className="absolute bottom-6 right-14 z-10 w-6/12 overflow-x-hidden text-primary"
+        className="absolute bottom-6 right-14 z-10 w-full overflow-x-hidden text-primary md:w-6/12"
       >
         <Carousel
           className="w-full text-primary"
           opts={{ align: "center", loop: true }}
           setApi={setApi}
         >
-          <CarouselContent className="] h-full w-full rounded-lg ease-in-out">
-            {schools.map((school, index) => {
+          <CarouselContent className="h-full w-full rounded-lg ease-in-out">
+            {/* {schools.map((school, index) => {
               const colors = school.color.split("rgba("); // Split to isolate color definitions
               const color1 = colors[1].replace(/,\s+/g, "").split(")"); // Remove spaces and store first color
               const color2 = colors[2].replace(/,\s+/g, "").split(")"); // Remove spaces and store second color
@@ -149,7 +155,7 @@ export const HeroHeader = ({ schools }: HeroHeaderProps) => {
                   </motion.div>
                 </CarouselItem>
               );
-            })}
+            })} */}
           </CarouselContent>
         </Carousel>
       </motion.div>
@@ -181,17 +187,17 @@ export const HeroHeader = ({ schools }: HeroHeaderProps) => {
                         staggerChildren: 0.1,
                         staggerDirection: -1,
                       }}
-                      className="relative z-10 !flex h-full flex-col justify-center gap-8"
+                      className="relative z-10 flex h-full flex-col justify-center gap-8 px-4 md:px-32"
                     >
                       <motion.h1
                         variants={main}
-                        className="z-10 line-clamp-3 w-6/12 break-words pl-32 text-6xl font-bold uppercase text-white"
+                        className="z-10 line-clamp-3 w-full break-words text-4xl font-bold uppercase text-white md:w-6/12 md:text-6xl"
                       >
                         {school.name}
                       </motion.h1>
                       <motion.p
                         variants={main}
-                        className="z-10 line-clamp-5 w-5/12 pl-32 font-semibold text-white"
+                        className="z-10 line-clamp-5 w-full font-semibold text-white md:w-5/12"
                       >
                         {school.short}
                       </motion.p>
@@ -199,15 +205,16 @@ export const HeroHeader = ({ schools }: HeroHeaderProps) => {
                         whileHover={{ scaleY: 1.1 }}
                         whileTap={{ scaleY: 0.95 }}
                         variants={main}
-                        className="z-10 ml-32 flex items-center gap-x-6"
+                        className="z-10 flex items-center gap-x-6"
                       >
                         <Button
                           variant="shadow"
                           color="primary"
                           size="md"
+                          onClick={() => handShowSchool(school.id)}
                           className="min-w-[230px] bg-white font-semibold text-[#7D1F1F] dark:bg-background dark:text-primary"
                         >
-                          Explore
+                          {t("ButtonView")}
                         </Button>
                       </motion.div>
                     </motion.div>
@@ -219,7 +226,7 @@ export const HeroHeader = ({ schools }: HeroHeaderProps) => {
                         quality={100}
                         alt="school_image"
                         src={school.background}
-                        className="opacity-100"
+                        className="object-cover opacity-100"
                       />
                       <div
                         className="absolute inset-0 opacity-20"

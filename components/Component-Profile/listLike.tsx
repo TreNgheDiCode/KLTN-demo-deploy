@@ -18,7 +18,6 @@ export const ComponentListLike = () => {
         const Url = `${process.env.NEXT_PUBLIC_API}/api/accounts/students/profiles/${sesion.data?.user.studentCode}/like`;
         const rqUrl = await fetch(Url);
         const res = await rqUrl.json();
-        console.log(res);
         setPostLikes(res);
       } catch (error) {
         toast.error("Lỗi lấy danh sách thích");

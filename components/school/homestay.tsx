@@ -5,8 +5,10 @@ import { Button } from "@mui/material";
 import { ChevronRight, CircleDollarSign, MapPinIcon } from "lucide-react";
 import { Modal, ModalBody, ModalContent, ModalFooter } from "../modals/Model";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 export const HomeStay = () => {
+  const { t } = useTranslation("school");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const images = [
     "/homestay/homestay1.png",
@@ -125,7 +127,7 @@ export const HomeStay = () => {
     <>
       <div className="relative flex flex-col items-center bg-gray-100 py-16 shadow-inner dark:bg-black">
         <h1 className="mb-16 text-center text-4xl font-extrabold text-black dark:text-primary sm:text-5xl lg:text-6xl">
-          Quy trình kết nối Homestay
+          {t("TitleHomeStay")}
         </h1>
         <div className="z-10 mx-auto grid max-w-7xl grid-cols-1 gap-16 px-12 md:grid-cols-3">
           {homestayDetails.map((detail, index) => (
@@ -155,7 +157,7 @@ export const HomeStay = () => {
                     endIcon={<ChevronRight />}
                     onClick={() => setIsModalOpen(true)}
                   >
-                    <span className="text-base font-bold">Liên hệ</span>
+                    <span className="text-base font-bold">{t("Contact")}</span>
                   </Button>
                 </div>
               </div>
@@ -173,7 +175,7 @@ export const HomeStay = () => {
               >
                 <ModalContent>
                   <h4 className="mb-8 text-center text-lg font-bold text-neutral-600 dark:text-neutral-100 md:text-2xl">
-                    Đặt home stay VinCome ngay bây giờ!! 🏠
+                    {t("Book VinHome homestay now")}!! 🏠
                   </h4>
                   {/* images */}
                   <div className="flex items-center justify-center">
@@ -246,9 +248,11 @@ export const HomeStay = () => {
                   </div>
                 </ModalContent>
                 <ModalFooter className="gap-4">
-                  <button className="w-28 rounded-md border-1 border-[#cccccc] bg-white px-2 py-1 text-sm text-black shadow-sm shadow-black hover:shadow-none dark:bg-black dark:text-white">
-                    Đặt chỗ ngay
-                  </button>
+                  <a href="https://justfly.vn/rooms/hanoi/d-hill-scent-house-soc-son">
+                    <button className="w-28 rounded-md border-1 border-[#cccccc] bg-white px-2 py-1 text-sm text-black shadow-sm shadow-black hover:shadow-none dark:bg-black dark:text-white">
+                      Đặt chỗ ngay
+                    </button>
+                  </a>
                 </ModalFooter>
               </ModalBody>
               <ModalFooter>

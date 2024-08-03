@@ -6,6 +6,7 @@ import DetailProgramAI from "./detail-program-ai";
 import DetailProgramUXUI from "./detail-program-uxui";
 import DetailProgramMobile from "./detail-program-mobile";
 import { ContainerScroll } from "../ui/container-scroll-animation";
+import { useTranslation } from "react-i18next";
 
 type ViewType = "uxui" | "website" | "ai" | "mobile" | null;
 
@@ -17,6 +18,7 @@ interface Program {
 
 const Program = () => {
   const [activeView, setActiveView] = useState<ViewType>(null);
+  const { t } = useTranslation("school");
 
   const handleSetView = (view: ViewType) => {
     setActiveView(activeView === view ? null : view);
@@ -26,13 +28,17 @@ const Program = () => {
     { id: "uxui", name: "UX/UI", component: <DetailProgramUXUI /> },
     {
       id: "website",
-      name: "Lập trình website",
+      name: `${t("Websiteprogramming")}`,
       component: <DetailProgramWebsite />,
     },
-    { id: "ai", name: "Trí tuệ nhân tạo", component: <DetailProgramAI /> },
+    {
+      id: "ai",
+      name: `${t("Artificialintelligence")}`,
+      component: <DetailProgramAI />,
+    },
     {
       id: "mobile",
-      name: "Lập trình di động",
+      name: `${t("Mobileprogramming")}`,
       component: <DetailProgramMobile />,
     },
   ];
@@ -41,7 +47,9 @@ const Program = () => {
     <ContainerScroll>
       <div className="flex rounded-lg bg-gray-100 p-4 text-primary shadow-lg dark:bg-black dark:text-white">
         <div className="w-[30%]">
-          <div className="mb-4 text-lg font-bold">Thông tin ngành học:</div>
+          <div className="mb-4 text-lg font-bold">
+            {t("ProgramInformation")}:
+          </div>
           <ul className="ml-4 space-y-2">
             {programs.map((program) => (
               <li

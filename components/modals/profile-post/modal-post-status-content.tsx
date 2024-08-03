@@ -39,22 +39,25 @@ export const ModalPostStatusContent = ({
       <ModalHeader className="relative items-center justify-center">
         <button
           onClick={() => onReturn(false)}
-          className="absolute left-6 top-5 "
+          className="absolute left-6 top-5"
         >
           <ArrowLeft className="h-5 w-5" />
         </button>
-        Subject of the post
+        Chủ đề của bài viết
       </ModalHeader>
       <Divider />
       <ModalBody>
         <div className="flex flex-col">
-          <h1 className="text-base font-semibold">Who can see your post?</h1>
+          <h1 className="text-base font-semibold">
+            Ai có thể xem bài đăng của bạn?
+          </h1>
           <p className="text-sm text-zinc-600 dark:text-zinc-400">
-            Your post will display on news feed, profile and search results.
+            Bài viết của bạn sẽ hiển thị trên bảng tin, trang cá nhân và kết quả
+            tìm kiếm.
           </p>
           <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-            Default setting is <strong>Public</strong>, but you can change this
-            below.
+            Cài đặt mặc định là <strong>Công khai</strong>, nhưng bạn có thể
+            thay đổi cài đặt này bên dưới.
           </p>
         </div>
         <StatusButton
@@ -87,7 +90,7 @@ export const ModalPostStatusContent = ({
           color="primary"
           variant="bordered"
         >
-          Cancel
+          Thoát
         </Button>
         <Button
           onClick={() => {
@@ -95,7 +98,7 @@ export const ModalPostStatusContent = ({
           }}
           color="primary"
         >
-          Confirm
+          Xác nhận
         </Button>
       </ModalFooter>
     </ModalContent>

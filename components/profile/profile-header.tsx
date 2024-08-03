@@ -88,7 +88,7 @@ export const ProfileHeader = ({
                 variant="shadow"
                 onClick={onOpen}
               >
-                Change cover
+                Thay đổi ảnh bìa
               </Button>
             )}
           </div>
@@ -114,7 +114,7 @@ export const ProfileHeader = ({
             onClick={() => setIsEditOpen(true)}
             className="!flex"
           >
-            Edit profile
+            Chỉnh sửa hồ sơ
           </Button>
         </CardBody>
 
