@@ -122,12 +122,7 @@ export const RegisterForm = ({ schools }: RegisterFormProps) => {
   }, [mounted]);
 
   return (
-    <CardWrapper
-      headerLabel="Create an account"
-      backButtonLabel="Already have an account? Login"
-      backButtonHref="/auth/login"
-      subLabel="Create account to manange your account today"
-    >
+    <CardWrapper>
       {!mounted ? (
         <Spinner label="Please wait while loading..." />
       ) : (

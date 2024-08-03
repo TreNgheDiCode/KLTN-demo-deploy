@@ -2,6 +2,7 @@
 import React from "react";
 import { PinContainer } from "../ui/3d-pin";
 import Image from "next/image";
+import { useTranslation } from "react-i18next";
 
 export function Operation2() {
   return (

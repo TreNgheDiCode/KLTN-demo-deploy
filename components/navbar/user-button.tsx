@@ -2,7 +2,6 @@
 
 import { logout } from "@/actions/auth/logout";
 import { ExtendedUser } from "@/auth";
-import { DictionaryLanguage } from "@/data/dictionaries";
 import {
   Avatar,
   CircularProgress,
@@ -21,10 +20,9 @@ import { UserAvatar } from "../user-avatar";
 
 interface UserButtonProps {
   user: ExtendedUser;
-  dict: DictionaryLanguage;
 }
 
-export const UserButton = ({ user, dict }: UserButtonProps) => {
+export const UserButton = ({ user }: UserButtonProps) => {
   const [mounted, setMounted] = useState(false);
   const { setTheme, theme } = useTheme();
 
@@ -48,11 +46,7 @@ export const UserButton = ({ user, dict }: UserButtonProps) => {
         <Avatar isBordered color="secondary" size="sm" src={user.image || ""} />
       </DropdownTrigger>
       <DropdownMenu aria-label="User Actions" variant="flat">
-        <DropdownSection
-          title="Student's information"
-          showDivider
-          aria-label="Student"
-        >
+        <DropdownSection title="Hồ sơ" showDivider aria-label="Student">
           <DropdownItem
             as={Link}
             key="profile"
@@ -71,21 +65,21 @@ export const UserButton = ({ user, dict }: UserButtonProps) => {
         </DropdownSection>
         <DropdownSection title="Actions" showDivider aria-label="Actions">
           <DropdownItem as={Link} href="/student/settings" key="settings">
-            Settings
+            Cài đặt
           </DropdownItem>
           <DropdownItem
             as={Link}
             href="/student/support"
             key="help_and_feedback"
           >
-            Help & Feedback
+            Hổ trợ
           </DropdownItem>
           <DropdownItem
             key="statusProfile"
-            href="/student/statusProfile"
+            href="/statusProfile"
             className="text-black dark:text-white"
           >
-            Status Profile
+            Trạng thái hồ sơ
           </DropdownItem>
           <DropdownItem
             key="theme"

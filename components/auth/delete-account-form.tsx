@@ -42,11 +42,7 @@ export const DeleteAccountForm = () => {
   }, [onSubmit]);
 
   return (
-    <CardWrapper
-      headerLabel="Deleting account..."
-      backButtonLabel="Back to register"
-      backButtonHref="/auth/register"
-    >
+    <CardWrapper>
       <div className="flex w-full items-center justify-center">
         {isLoading && <BeatLoader />}
       </div>

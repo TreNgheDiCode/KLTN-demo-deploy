@@ -61,12 +61,7 @@ export const DeleteForm = () => {
   };
 
   return (
-    <CardWrapper
-      headerLabel="Delete your account"
-      subLabel="Be careful, this action is irreversible."
-      backButtonLabel="Forgot your password?"
-      backButtonHref="/auth/reset"
-    >
+    <CardWrapper>
       <Form {...form}>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="space-y-2">

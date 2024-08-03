@@ -11,10 +11,12 @@ import { ProfilePosts } from "../profile/post/profile-post";
 import { ProfilePostsList } from "../profile/post/profile-posts-list";
 import { ComponentMessenger } from "../Component-Profile/messeger";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
 const SocialContent = ({ student }: { student: StudentLib }) => {
+  const { t } = useTranslation("social");
   const [friend, setFriend] = useState<Friend[]>();
-  const [activeTab, setActiveTab] = useState("Bài viết"); // Giá trị mặc định là "Bài viết"
+  const [activeTab, setActiveTab] = useState(`${t("post")}`); // Giá trị mặc định là "Bài viết"
   const [selectedFriend, setSelectedFriend] = useState<Friend | null>(null);
 
   useEffect(() => {
@@ -41,33 +43,20 @@ const SocialContent = ({ student }: { student: StudentLib }) => {
         {/* My User */}
         <div className="rounded-xl shadow-xl dark:border dark:bg-background">
           <div className="p-5">
-            <User
-              name={student.account.name!}
-              description={student.studentCode}
-              avatarProps={{
-                isBordered: true,
-                fallback: (
-                  <CameraIcon className="size-6 animate-pulse text-default-500" />
-                ),
-                src: `${student.account.image}`,
-              }}
-              classNames={{ name: "text-primary font-semibold" }}
-            />
-            <Divider className="mt-3 h-0.5 w-full rounded-sm" />
             {/* Tác vụ */}
             <div className="py-5">
               {[
-                "Bài viết",
-                "Danh sách thích",
-                "Danh sách lưu",
-                "Sự kiện",
-                "Tin nhắn",
+                `${t("post")}`,
+                `${t("listLike")}`,
+                `${t("listSave")}`,
+                `${t("event")}`,
+                `${t("messenger")}`,
               ].map((tab, index) => (
                 <div key={index} className="flex items-center pb-1.5">
                   {activeTab === tab && (
                     <LuFlagTriangleRight className="text-black dark:text-white" />
                   )}
-                  {tab === "Tin nhắn" ? (
+                  {tab === `${t("messenger")}` ? (
                     <Link href={`social/messenger/${student.studentCode}`}>
                       <div
                         className={
@@ -82,7 +71,7 @@ const SocialContent = ({ student }: { student: StudentLib }) => {
                   ) : (
                     <div
                       onClick={() => {
-                        if (tab === "Bài viết") {
+                        if (tab === `${t("post")}`) {
                           setSelectedFriend(null);
                         }
                         setActiveTab(tab);
@@ -103,7 +92,7 @@ const SocialContent = ({ student }: { student: StudentLib }) => {
         </div>
         {/* List Friend */}
         <Card className="mt-7 h-80 rounded-xl border shadow-2xl dark:bg-background">
-          <h1 className="pl-3 pt-2 font-bold">Danh sách bạn</h1>
+          <h1 className="pl-3 pt-2 font-bold">{t("listfriend")}</h1>
           <CardBody className="w-full overflow-y-scroll p-5">
             {friend?.map((fen, index) => {
               if (fen.studentCode === student.studentCode) return null;
@@ -137,7 +126,7 @@ const SocialContent = ({ student }: { student: StudentLib }) => {
 
       {/* Main Content */}
       <div className="ml-4 w-full lg:w-3/4">
-        {activeTab === "Bài viết" && !selectedFriend && (
+        {activeTab === `${t("post")}` && !selectedFriend && (
           <div className="h-full bg-white px-1.5 text-black dark:bg-background dark:text-white">
             <ProfilePosts
               name={student.account.name}
@@ -173,28 +162,28 @@ const SocialContent = ({ student }: { student: StudentLib }) => {
             )}
           </div>
         )}
-        {activeTab === "Danh sách thích" && (
+        {activeTab === `${t("listLike")}` && (
           <div className="border-#cccc h-full w-full border px-1.5 py-1.5 text-black dark:bg-background dark:text-white">
             <div className="mx-auto mt-2.5 h-96 w-[90%] rounded-lg dark:bg-background">
               <ComponentListLike />
             </div>
           </div>
         )}
-        {activeTab === "Danh sách lưu" && (
+        {activeTab === `${t("listSave")}` && (
           <div className="border-#cccc h-full w-full border px-1.5 py-1.5 text-black dark:bg-background dark:text-white">
             <div className="mx-auto mt-2.5 h-96 w-[90%] rounded-lg dark:bg-background">
               <ComponentListSave />
             </div>
           </div>
         )}
-        {activeTab === "Sự kiện" && (
+        {activeTab === `${t("event")}` && (
           <div className="border-#cccc h-full w-full border px-1.5 py-1.5 text-black dark:bg-background dark:text-white">
             <div className="mx-auto mt-2.5 h-96 w-[90%] rounded-lg dark:bg-background">
               <ComponentEvent />
             </div>
           </div>
         )}
-        {activeTab === "Tin nhắn" && (
+        {activeTab === `${t("event")}` && (
           <div className="border-#cccc h-full w-full border px-1.5 py-1.5 text-black dark:bg-background dark:text-white">
             <div className="mx-auto mt-2.5 h-96 w-[90%] rounded-lg dark:bg-background">
               <ComponentMessenger />

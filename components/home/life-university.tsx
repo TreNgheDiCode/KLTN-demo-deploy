@@ -1,23 +1,23 @@
+"use client";
 import { Button } from "@nextui-org/react";
 import Image from "next/image";
+import { useTranslation } from "react-i18next";
 
 const LifeUniversity = () => {
+  const { t } = useTranslation("home");
   return (
     <>
       <div className="mt-[25px] flex flex-wrap">
         <div className="mb-6 w-full md:mb-0 md:w-[472px]">
           <h1 className="text-[28px] font-bold text-[#7D1F1F] md:text-[40px]">
-            Cuộc sống của du học sinh
+            {t("Student's life")}
           </h1>
           <div className="text-sm text-primary md:text-base">
-            Thế giới cần những bộ óc tò mò, logic với khuynh hướng giải quyết
-            vấn đề sáng tạo. Cornerstone giúp xây dựng nền tảng vững chắc cho
-            thị trường việc làm đầy thách thức ngày nay trong các lĩnh vực khoa
-            học máy tính, kỹ thuật và toán học.
+            {t("ContentLife")}
           </div>
           <div className="mt-3">
             <Button className="border-1 border-black bg-white dark:border-white dark:bg-black">
-              Tìm hiểu thêm
+              {t("FindOutMore")}
             </Button>
           </div>
           <Image

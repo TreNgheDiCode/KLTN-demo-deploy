@@ -13,6 +13,7 @@ import {
 } from "@nextui-org/react";
 import { LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 export const AccountMenu = ({
   account,
@@ -21,6 +22,7 @@ export const AccountMenu = ({
   account: AccountIdLib;
   isMobile?: boolean;
 }) => {
+  const { t } = useTranslation("nav");
   const router = useRouter();
 
   const onLogOut = async () => {
@@ -47,14 +49,14 @@ export const AccountMenu = ({
         onClick={handclick}
         className="w-full py-2 text-left text-primary hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800"
       >
-        Thông tin của tôi
+        {t("myInformation")}
       </button>
       <button
         onClick={onLogOut}
         className="flex w-full items-center py-2 text-left text-red-500 hover:bg-gray-100 dark:hover:bg-gray-800"
       >
         <LogOut className="mr-2 size-4" />
-        Đăng xuất
+        {t("logout")}
       </button>
     </div>
   );
@@ -78,26 +80,26 @@ export const AccountMenu = ({
         color="primary"
         className="text-primary"
       >
-        <DropdownSection title={"Hồ sơ"} showDivider>
+        <DropdownSection title={`${t("information")}`} showDivider>
           <DropdownItem
             key={"profile"}
             className="gap-2 font-semibold text-primary"
           >
-            <p className="font-semibold">Đăng nhập bằng</p>
+            <p className="font-semibold">{t("loginby")}</p>
             <p className="font-semibold">{account.email}</p>
           </DropdownItem>
           <DropdownItem onClick={handclick} key={"profile"}>
-            Thông tin của tôi
+            {t("myInformation")}
           </DropdownItem>
         </DropdownSection>
-        <DropdownSection title={"Hành động"}>
+        <DropdownSection title={`${t("action")}`}>
           <DropdownItem
             onClick={onLogOut}
             color="danger"
             key={"logout"}
             startContent={<LogOut className="size-4" />}
           >
-            Đăng xuất
+            {t("logout")}
           </DropdownItem>
         </DropdownSection>
       </DropdownMenu>

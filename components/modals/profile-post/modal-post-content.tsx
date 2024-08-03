@@ -28,6 +28,7 @@ import { ChevronDown, Smile } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { ElementRef, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { IoImagesOutline } from "react-icons/io5";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -50,6 +51,7 @@ export const ModalPostContent = ({
   currentStatus,
   onClose,
 }: ModalPostContentProps) => {
+  const { t } = useTranslation("social");
   const router = useRouter();
 
   const inputRef = useRef<ElementRef<"textarea">>(null);
@@ -167,7 +169,9 @@ export const ModalPostContent = ({
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <ModalContent className="bg-white text-primary dark:bg-background">
-          <ModalHeader className="justify-center">Tạo bài viết</ModalHeader>
+          <ModalHeader className="justify-center">
+            {t("createPost")}
+          </ModalHeader>
           <Divider />
           <ScrollShadow className="max-h-[50vh]">
             <ModalBody>
@@ -205,7 +209,7 @@ export const ModalPostContent = ({
                           onChange={(e) => {
                             field.onChange(e);
                           }}
-                          placeholder="Hãy viết thứ bạn đang nghỉ."
+                          placeholder={t("doSomething")}
                           classNames={{
                             inputWrapper:
                               "min-h-[20vh] bg-transparent data-[hover=true]:bg-transparent group-data-[focus-visible=true]:bg-transparent group-data-[focus=true]:bg-transparent shadow-none p-0 group-data-[focus-visible=true]:ring-offset-0  group-data-[focus-visible=true]:ring-0",
@@ -241,7 +245,7 @@ export const ModalPostContent = ({
           </ScrollShadow>
           <ModalFooter className="flex-col justify-center">
             <div className="flex items-center justify-between rounded-md border-2 border-zinc-200 p-3">
-              <p>Thêm hình ảnh</p>
+              <p>{t("addImage")} </p>
               <button
                 type="button"
                 onClick={() => setModeImage((value) => !value)}
@@ -256,7 +260,7 @@ export const ModalPostContent = ({
                 variant="shadow"
                 color="primary"
               >
-                Tạo
+                {t("create")}
               </Button>
             ) : (
               <div className="flex items-center justify-center">

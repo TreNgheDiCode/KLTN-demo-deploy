@@ -2,6 +2,7 @@
 
 import { Avatar, Button, Card, CardBody, CardHeader } from "@nextui-org/react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface ProfilePostEditorProps {
   logo: string | undefined;
@@ -9,6 +10,7 @@ interface ProfilePostEditorProps {
 }
 
 export const ProfilePostEditor = ({ logo, onOpen }: ProfilePostEditorProps) => {
+  const { t } = useTranslation("social");
   return (
     <Card>
       <CardHeader className="gap-2">
@@ -19,7 +21,7 @@ export const ProfilePostEditor = ({ logo, onOpen }: ProfilePostEditorProps) => {
           variant="shadow"
           className="flex-1 justify-start rounded-full text-zinc-600 dark:text-zinc-400"
         >
-          Tạo bài viết...
+          {t("createPost")}...
         </Button>
       </CardHeader>
     </Card>

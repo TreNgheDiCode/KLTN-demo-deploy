@@ -20,16 +20,17 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { ManagementDropdown } from "./management-dropdown";
 import { MobileManagementDropdown } from "./mobile-management-dropdown";
-import { DictionaryLanguage } from "@/data/dictionaries";
 import Image from "next/image";
 import { UserAvatar } from "../user-avatar";
+import { AccountMenu } from "./account-menu";
+import { AccountIdLib } from "@/types";
 
 interface ProtectedNavbarProps {
   user: ExtendedUser;
-  dict: DictionaryLanguage;
+  account?: AccountIdLib;
 }
 
-export const ProtectedNavbar = ({ user, dict }: ProtectedNavbarProps) => {
+export const ProtectedNavbar = ({ user, account }: ProtectedNavbarProps) => {
   const pathname = usePathname();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -98,45 +99,15 @@ export const ProtectedNavbar = ({ user, dict }: ProtectedNavbarProps) => {
             href="/student/profile"
             className="text-[#7D1F1F] dark:text-primary"
           >
-            Profile
-          </Link>
-        </NavbarItem>
-        <ManagementDropdown />
-        <NavbarItem isActive={pathname.includes("/settings")}>
-          <Link
-            color="primary"
-            href="/student/settings"
-            className="text-[#7D1F1F] dark:text-primary"
-          >
-            Settings
+            Thông tin hồ sơ
           </Link>
         </NavbarItem>
       </NavbarContent>
-      <NavbarContent as="div" justify="end" className="hidden md:flex">
-        <Input
-          placeholder="Type to search..."
-          size="sm"
-          startContent={<SearchIcon size={18} />}
-          type="search"
-          classNames={{
-            base: "max-w-full md:max-w-[16rem] h-10",
-            mainWrapper: "h-full",
-            input: "text-small",
-            inputWrapper:
-              "h-full font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20",
-          }}
-        />
-        <UserButton user={user} dict={dict} />
-      </NavbarContent>
+      <div className="hidden md:flex">
+        <AccountMenu account={account!} />
+      </div>
       {/* Mobile Menu */}
       <NavbarMenu>
-        <div className="flex items-center gap-x-4 py-1.5">
-          <UserAvatar
-            name={user.name!}
-            description={user.studentCode}
-            image={user.image || undefined}
-          />
-        </div>
         <Divider />
         <MobileManagementDropdown />
       </NavbarMenu>

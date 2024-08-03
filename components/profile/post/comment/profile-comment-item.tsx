@@ -12,6 +12,7 @@ import { ProfileCommentsList } from "./profile-comments-list";
 import { PostCommentLib } from "@/types";
 import { GetCommentsByParentId, LikeCmt } from "@/actions/profile/comment";
 import ResponsiveDialog from "@/components/Component-Profile/alertDeleteComment";
+import { useTranslation } from "react-i18next";
 
 interface ProfileCommentItemProps {
   postId: string;
@@ -42,6 +43,8 @@ export const ProfileCommentItem = ({
   profileId,
   childLength,
 }: ProfileCommentItemProps) => {
+  const { t } = useTranslation("social");
+
   const router = useRouter();
   const [isCommenting, setIsCommenting] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -105,7 +108,7 @@ export const ProfileCommentItem = ({
             isLike && "font-bold text-rose-500",
           )}
         >
-          Thích
+          {t("like")}
         </span>
         <span
           onClick={() => setIsCommenting((value) => !value)}
@@ -114,7 +117,7 @@ export const ProfileCommentItem = ({
             isCommenting && "font-bold",
           )}
         >
-          Phản hồi
+          {t("Request")}
         </span>
       </div>
       {childLength! > 0 && !isExpanded && (
@@ -124,7 +127,7 @@ export const ProfileCommentItem = ({
             onClick={onLoad}
             className="cursor-pointer text-base text-zinc-600 hover:underline dark:text-zinc-400"
           >
-            Xem {childLength} phản hồi
+            {t("watch")} {childLength} {t("request")}
           </span>
           {isPending && <Spinner size="sm" />}
         </div>
@@ -138,7 +141,7 @@ export const ProfileCommentItem = ({
               onClick={() => setIsExpanded(false)}
               className="cursor-pointer text-base text-zinc-600 hover:underline dark:text-zinc-400"
             >
-              Ẩn phản hồi
+              {t("hideComment")}
             </span>
             {isPending && <Spinner size="sm" />}
           </div>

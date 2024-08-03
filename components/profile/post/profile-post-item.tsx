@@ -33,6 +33,7 @@ import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import ResponsiveDialog from "@/components/Component-Profile/alertDeletePost";
 import { Like } from "@/actions/profile/like";
 import { Save } from "@/actions/profile/save";
+import { useTranslation } from "react-i18next";
 
 interface ProfilePostItemProps {
   id: string;
@@ -69,6 +70,7 @@ export const ProfilePostItem = ({
   saves,
   profileId,
 }: ProfilePostItemProps) => {
+  const { t } = useTranslation("social");
   const router = useRouter();
   const session = useSession();
   const studentCode = session.data?.user.studentCode;
@@ -148,18 +150,18 @@ export const ProfilePostItem = ({
             variant="light"
             color="primary"
           >
-            {likes?.length || 0} Thích
+            {likes?.length || 0} {t("like")}
           </Button>
           <Button
             startContent={<MessageCircleMore />}
             variant="light"
             color="primary"
           >
-            {comments?.length} Bình luận
+            {comments?.length} {t("comment")}
           </Button>
 
           <Button startContent={<Share2 />} variant="light" color="primary">
-            0 Chia sẽ
+            0 {t("share")}
           </Button>
           <Button
             onClick={onSave}
@@ -167,7 +169,7 @@ export const ProfilePostItem = ({
             variant="light"
             color="primary"
           >
-            Lưu
+            {t("save")}
           </Button>
         </div>
         <Divider />

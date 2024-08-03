@@ -3,12 +3,30 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 
 const logos = [
-  { src: "/UCW.png", alt: "logo trường UCW" },
-  { src: "/Cor.png", alt: "logo trường UCW" },
-  { src: "/cornerstone.png", alt: "logo trường UCW" },
-  { src: "/MTR.png", alt: "logo trường UCW" },
-  { src: "/Sport.png", alt: "logo trường UCW" },
-  { src: "/UFV.png", alt: "logo trường UCW" },
+  { src: "/logotruong/CICC_Logo.png", alt: "logo trường UCW" },
+  { src: "/logotruong/hanyang.jpg", alt: "logo trường UCW" },
+  { src: "/logotruong/MCC.png", alt: "logo trường UCW" },
+  { src: "/logotruong/Sejong_University.png", alt: "logo trường UCW" },
+  {
+    src: "/logotruong/Sprott_Shaw_College_Newest_Logo_as_of_Jan_2013.png",
+    alt: "logo trường UCW",
+  },
+  {
+    src: "/logotruong/TOORAKCOLLEGE.png",
+    alt: "logo trường UCW",
+  },
+  {
+    src: "/logotruong/ucw2.png",
+    alt: "logo trường UCW",
+  },
+  {
+    src: "/logotruong/ufv.png",
+    alt: "logo trường UCW",
+  },
+  {
+    src: "/logotruong/wesley_college.jpg",
+    alt: "logo trường UCW",
+  },
 ];
 
 const AutoViewLogo = () => {
@@ -38,8 +56,9 @@ const AutoViewLogo = () => {
               <Image
                 alt={logo.alt}
                 src={logo.src}
-                layout="fill"
-                objectFit="contain"
+                fill // Thay thế layout="fill"
+                style={{ objectFit: "contain" }} // Thay thế objectFit="contain"
+                sizes="100vw" // Thêm thuộc tính sizes để xác định kích thước hình ảnh
               />
             </div>
           </div>

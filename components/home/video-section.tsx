@@ -4,8 +4,10 @@ import { Button } from "@nextui-org/react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 export const VideoSection = () => {
+  const { t } = useTranslation("home");
   const router = useRouter();
   const handRegis = () => {
     router.push("/auth/register");
@@ -39,7 +41,7 @@ export const VideoSection = () => {
         variants={itemVariants}
         className="text-5xl font-bold text-[#7D1F1F] dark:text-primary"
       >
-        Tôi và bạn hãy cùng thắp sáng ước mơ.
+        {t("Title")}
       </motion.h1>
       <motion.div variants={itemVariants} className="aspect-video h-[400px]">
         <video autoPlay loop muted playsInline>
@@ -51,8 +53,7 @@ export const VideoSection = () => {
         variants={itemVariants}
         className="text-center text-sm text-[#7D1F1F] dark:text-primary"
       >
-        Đăng ký tài khoản để tìm hiểu thêm nhiều thông tin đãi ngộ từ các trường
-        du học.
+        {t("DesTitle")}
       </motion.p>
       <motion.div
         variants={itemVariants}
@@ -67,7 +68,7 @@ export const VideoSection = () => {
           className="text-white"
           onClick={handRegis}
         >
-          Tham gia ngay !!!
+          {t("ButtonJoin")}
         </Button>
       </motion.div>
     </motion.div>

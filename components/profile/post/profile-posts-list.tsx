@@ -12,6 +12,7 @@ import { Check, ChevronDown } from "lucide-react";
 import { useEffect, useState } from "react";
 import { PostLib } from "@/types";
 import { ProfilePostItem } from "./profile-post-item";
+import { useTranslation } from "react-i18next";
 
 interface ProfilePostsListProps {
   logo?: string;
@@ -26,6 +27,7 @@ export const ProfilePostsList = ({
   posts,
   profileId,
 }: ProfilePostsListProps) => {
+  const { t } = useTranslation("social");
   const [sort, setSort] = useState<"New" | "Relevant">("New");
 
   const [mounted, setMounted] = useState(false);
@@ -50,50 +52,9 @@ export const ProfilePostsList = ({
   return (
     <>
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-bold text-primary">
-          My {posts?.length} posts
+        <h1 className="ml-2 text-xl font-bold text-primary">
+          {posts?.length} {t("posts")}
         </h1>
-        <div className="flex items-center ">
-          <span className="text-sm text-zinc-600 dark:text-zinc-400">
-            SORT BY
-          </span>
-          <Dropdown>
-            <DropdownTrigger>
-              <Button
-                endContent={<ChevronDown className="size-4" />}
-                variant="light"
-                color="primary"
-                className="font-bold"
-              >
-                {sort}
-              </Button>
-            </DropdownTrigger>
-            <DropdownMenu className="bg-white text-primary dark:bg-primary">
-              <DropdownItem onClick={() => setSort("New")}>
-                <div className="flex items-center justify-between gap-2">
-                  <div className="flex flex-col items-start gap-0.5">
-                    <p className="text-sm font-bold">Newest</p>
-                    <p className="text-xs text-zinc-600 dark:text-zinc-400">
-                      Display newest posts
-                    </p>
-                  </div>
-                  {sort === "New" && <Check className="h-6 w-6" />}
-                </div>
-              </DropdownItem>
-              <DropdownItem onClick={() => setSort("Relevant")}>
-                <div className="flex items-center justify-between gap-2">
-                  <div className="flex flex-col items-start gap-0.5">
-                    <p className="text-sm font-bold">Relevant</p>
-                    <p className="text-xs text-zinc-600 dark:text-zinc-400">
-                      Display the most recent comments on posts
-                    </p>
-                  </div>
-                  {sort === "Relevant" && <Check className="h-6 w-6" />}
-                </div>
-              </DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
-        </div>
       </div>
       {posts?.map((post) => {
         return (

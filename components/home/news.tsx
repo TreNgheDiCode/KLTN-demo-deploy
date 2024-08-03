@@ -1,6 +1,6 @@
 import { GetNews } from "@/lib/news";
 import type { News } from "@/types";
-import NewsHome from "../news-home/new-home";
+import NewsHome from "../news-home/news-home";
 
 const News = async () => {
   const news: News[] | null = await GetNews();

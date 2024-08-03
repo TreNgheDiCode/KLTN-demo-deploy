@@ -14,6 +14,7 @@ import { toast } from "sonner";
 import { useEdgeStore } from "@/hooks/use-edgestore";
 import { Comment } from "@/actions/profile/comment";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 interface ProfileCommentFormProps {
   logo: string;
@@ -28,6 +29,7 @@ export const ProfileCommentForm = ({
   parentId,
   onLoad,
 }: ProfileCommentFormProps) => {
+  const { t } = useTranslation("social");
   const router = useRouter();
 
   const [isEmojiOpen, setIsEmojiOpen] = useState(false);
@@ -127,7 +129,7 @@ export const ProfileCommentForm = ({
                     autoFocus
                     variant="faded"
                     radius="sm"
-                    placeholder="Viết bình luận..."
+                    placeholder={t("writeComment") + "..."}
                     className="flex-1 break-words"
                     size="sm"
                     endContent={
