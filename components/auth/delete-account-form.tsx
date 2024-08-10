@@ -42,7 +42,11 @@ export const DeleteAccountForm = () => {
   }, [onSubmit]);
 
   return (
-    <CardWrapper>
+    <CardWrapper
+      headerLabel="Đang xóa tài khoản..."
+      backButtonLabel="Quay lại trang đăng ký"
+      backButtonHref="/auth/register"
+    >
       <div className="flex w-full items-center justify-center">
         {isLoading && <BeatLoader />}
       </div>

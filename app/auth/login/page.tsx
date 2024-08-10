@@ -1,13 +1,11 @@
 import { LoginForm } from "@/components/auth/login-form";
 import Image from "next/image";
-import { metadata } from "../../layout";
 
-const LoginPage = async ({
-  params: { lang },
-}: {
-  params: { lang: "en" | "vi" };
-}) => {
-  metadata.title = "Login";
+export const metadata = {
+  title: "Đăng nhập",
+};
+
+const LoginPage = async () => {
   return (
     <div className="relative h-full w-full scrollbar-hide">
       <Image

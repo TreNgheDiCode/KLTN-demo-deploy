@@ -7,6 +7,10 @@ interface BackButtonProps {
   label: string;
 }
 
-export const BackButton = () => {
-  return;
+export const BackButton = ({ href, label }: BackButtonProps) => {
+  return (
+    <Link color="foreground" href={href} className="mt-2 hover:underline">
+      {label}
+    </Link>
+  );
 };

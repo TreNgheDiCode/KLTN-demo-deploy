@@ -13,7 +13,7 @@ interface HeaderProps {
   subLabel?: string;
 }
 
-export const Header = () => {
+export const Header = ({ label, subLabel }: HeaderProps) => {
   return (
     <div className="flex w-full flex-col items-center justify-center gap-y-4">
       <h1
@@ -21,7 +21,12 @@ export const Header = () => {
           "text-center text-3xl font-semibold text-[#7D1F1F] dark:text-white",
           font.className,
         )}
-      ></h1>
+      >
+        {label}
+      </h1>
+      {subLabel && (
+        <p className="text-center text-sm text-muted-foreground">{subLabel}</p>
+      )}
     </div>
   );
 };

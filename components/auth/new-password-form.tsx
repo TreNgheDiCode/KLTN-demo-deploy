@@ -64,7 +64,11 @@ export const NewPasswordForm = () => {
   };
 
   return (
-    <CardWrapper>
+    <CardWrapper
+      headerLabel="Nhập mật khẩu mới của bạn"
+      backButtonLabel="Quay lại trang đăng nhập"
+      backButtonHref="/auth/login"
+    >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-8">

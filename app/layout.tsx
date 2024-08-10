@@ -5,13 +5,11 @@ import { ThemeProvider } from "@/components/providers/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { EdgeStoreProvider } from "@/hooks/use-edgestore";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
 import { Montserrat } from "next/font/google";
 import "react-day-picker/dist/style.css";
 import "./globals.css";
-import { I18nProvider } from "./i18n/i18nContext";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -32,34 +30,27 @@ export default async function RootLayout({
   const session = await auth();
 
   return (
-    <html lang={params.lang || "en"}>
-      <head>
-        {/* Thêm các thẻ meta hoặc link cần thiết ở đây */}
-        <GoogleAnalytics gaId="G-0V5PG7FTX1" />
-      </head>
-      <body className={montserrat.className}>
-        <SessionProvider session={session}>
+    <SessionProvider session={session}>
+      <html lang={params.lang || "en"}>
+        <head>
+          {/* Thêm các thẻ meta hoặc link cần thiết ở đây */}
+          <GoogleAnalytics gaId="G-0V5PG7FTX1" />
+        </head>
+        <body className={montserrat.className}>
           <EdgeStoreProvider>
             <ThemeProvider
-              storageKey="theme"
               attribute="class"
               defaultTheme="system"
               enableSystem
+              disableTransitionOnChange
             >
               <ModalProvider />
-              <Providers>
-                <I18nProvider>
-                  <main className="h-full w-full bg-white dark:bg-background">
-                    {children}
-                    <SpeedInsights />
-                  </main>
-                </I18nProvider>
-                <Toaster richColors closeButton />
-              </Providers>
+              <Providers>{children}</Providers>
+              <Toaster richColors closeButton />
             </ThemeProvider>
           </EdgeStoreProvider>
-        </SessionProvider>
-      </body>
-    </html>
+        </body>
+      </html>
+    </SessionProvider>
   );
 }

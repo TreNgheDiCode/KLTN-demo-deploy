@@ -6,16 +6,14 @@ import LifeUniversity from "@/components/home/life-university";
 import News from "@/components/home/news";
 import { CrispProvider } from "@/scripts/crisp-provider";
 import "../i18n/i18n";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 export const metadata = {
-  title: "",
+  title: "Trang chủ",
 };
 
-export default async function Home({
-  params: { lang },
-}: {
-  params: { lang: "en" | "vi" };
-}) {
+export default async function Home() {
   const schools = await GetSchoolLib();
 
   return (
@@ -26,7 +24,9 @@ export default async function Home({
       <div className="pl-[99px] pr-[110px]">
         <LifeUniversity />
       </div>
-      <News />
+      <Suspense fallback={<Loading />}>
+        <News />
+      </Suspense>
       <CrispProvider />
     </main>
   );

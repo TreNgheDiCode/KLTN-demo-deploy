@@ -42,7 +42,11 @@ export const NewVerificationForm = () => {
   }, [onSubmit]);
 
   return (
-    <CardWrapper>
+    <CardWrapper
+    headerLabel="Xác minh tài khoản"
+    backButtonLabel="Quay lại trang đăng nhập"
+    backButtonHref="/auth/login"
+    >
       <div className="flex w-full items-center justify-center">
         {isLoading && <BeatLoader />}
       </div>

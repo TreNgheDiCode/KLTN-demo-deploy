@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import { News } from "@/types";
 import { ChevronRight, ChevronDown } from "lucide-react";
