@@ -1,12 +1,14 @@
 "use client";
 
+import { register } from "@/actions/auth/register";
 import { RegisterSchema } from "@/schemas";
 import { SchoolLib } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Spinner, Tab, Tabs } from "@nextui-org/react";
 import { CertificateType, DegreeType, Gender, GradeType } from "@prisma/client";
 import { GraduationCap, NotepadText, User } from "lucide-react";
-import { Key, useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { Key, useEffect, useState } from "react";
 import "react-day-picker/dist/style.css";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -16,9 +18,6 @@ import { CardWrapper } from "./card-wrapper";
 import { AccountTab } from "./register/account-tab";
 import { EducationTab } from "./register/education-tab";
 import { ProfileTab } from "./register/profile-tab";
-import { register } from "@/actions/auth/register";
-import { useRouter } from "next/navigation";
-import { removeAllListeners } from "process";
 
 interface RegisterFormProps {
   schools: SchoolLib[];
@@ -123,10 +122,10 @@ export const RegisterForm = ({ schools }: RegisterFormProps) => {
 
   return (
     <CardWrapper
-      headerLabel="Create an account"
-      backButtonLabel="Already have an account? Login"
+      headerLabel="Đăng ký hồ sơ"
+      backButtonLabel="Đã có tài khoản? Đăng nhập ngay"
       backButtonHref="/auth/login"
-      subLabel="Create account to manange your account today"
+      subLabel="Điền đầy đủ thông tin để tạo hồ sơ du học của bạn"
     >
       {!mounted ? (
         <Spinner label="Please wait while loading..." />

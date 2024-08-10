@@ -43,8 +43,8 @@ export const DeleteAccountForm = () => {
 
   return (
     <CardWrapper
-      headerLabel="Deleting account..."
-      backButtonLabel="Back to register"
+      headerLabel="Đang xóa tài khoản..."
+      backButtonLabel="Quay lại trang đăng ký"
       backButtonHref="/auth/register"
     >
       <div className="flex w-full items-center justify-center">

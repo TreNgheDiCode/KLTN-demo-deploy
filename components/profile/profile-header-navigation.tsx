@@ -33,7 +33,7 @@ export const ProfileHeaderNavigation = ({
         title={
           <div className="flex items-center gap-2 text-primary">
             <Chip radius="full">{postCount}</Chip>
-            <span className="text-lg font-semibold">Posts</span>
+            <span className="text-lg font-semibold">Bài viết</span>
           </div>
         }
         href={`/student/profile/${studentCode}`}
@@ -45,7 +45,7 @@ export const ProfileHeaderNavigation = ({
         title={
           <div className="flex items-center gap-2 text-primary">
             <Chip radius="full">{0}</Chip>
-            <span className="text-lg font-semibold">Followers</span>
+            <span className="text-lg font-semibold">Theo dõi</span>
           </div>
         }
         href={`/student/profile/${studentCode}/followers`}
@@ -57,7 +57,7 @@ export const ProfileHeaderNavigation = ({
         title={
           <div className="flex items-center gap-2 text-primary">
             <Chip radius="full">{0}</Chip>
-            <span className="text-lg font-semibold">Following</span>
+            <span className="text-lg font-semibold">Đang theo dõi</span>
           </div>
         }
         href={`/student/profile/${studentCode}/following`}
@@ -69,7 +69,7 @@ export const ProfileHeaderNavigation = ({
         title={
           <div className="flex items-center gap-2 text-primary">
             <Chip radius="full">{0}</Chip>
-            <span className="text-lg font-semibold">Friends</span>
+            <span className="text-lg font-semibold">Bạn bè</span>
           </div>
         }
         href={`/student/profile/${studentCode}/friends`}
@@ -81,7 +81,7 @@ export const ProfileHeaderNavigation = ({
         title={
           <div className="flex items-center gap-2 text-primary">
             <Chip radius="full">{0}</Chip>
-            <span className="text-lg font-semibold">Blogs</span>
+            <span className="text-lg font-semibold">Nhật ký</span>
           </div>
         }
         href={`/student/profile/${studentCode}/blogs`}

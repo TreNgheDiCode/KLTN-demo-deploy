@@ -1,15 +1,17 @@
 import Image from "next/image";
 import { Montserrat } from "next/font/google";
+import { useTranslation } from "react-i18next";
 
 const font = Montserrat({ weight: "500", subsets: ["vietnamese"] });
 
 export const DetailProgramMobile = () => {
+  const { t } = useTranslation("school");
   return (
     <div className="mx-auto w-[70%]">
-      <span className="text-xl font-bold">Chi tiết ngành học</span>
+      <span className="text-xl font-bold">{t("DeatilProgram")}</span>
 
       <div className="mt-8 text-center text-4xl font-bold text-[#001524] dark:text-primary">
-        THÔNG TIN KHÓA LẬP TRÌNH MOBILE
+        {t("InformationProgram")} MOBILE
       </div>
 
       <div className="mt-6 rounded-3xl border-2 border-[#61677A] bg-[#D8D9DA] p-6 dark:bg-black">
@@ -36,7 +38,7 @@ export const DetailProgramMobile = () => {
       </div>
 
       <div className="mt-12 text-center text-4xl font-bold text-[#001524] dark:text-primary">
-        CHƯƠNG TRÌNH HỌC
+        {t("EducationProgram")}
       </div>
 
       <div className="mt-6 rounded-3xl border-2 border-[#61677A] bg-[#D8D9DA] p-6 dark:bg-black">

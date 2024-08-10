@@ -43,9 +43,9 @@ export const NewVerificationForm = () => {
 
   return (
     <CardWrapper
-      headerLabel="Confirming your verification"
-      backButtonLabel="Back to login"
-      backButtonHref="/auth/login"
+    headerLabel="Xác minh tài khoản"
+    backButtonLabel="Quay lại trang đăng nhập"
+    backButtonHref="/auth/login"
     >
       <div className="flex w-full items-center justify-center">
         {isLoading && <BeatLoader />}

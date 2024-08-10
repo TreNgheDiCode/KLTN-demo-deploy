@@ -1,7 +1,6 @@
 "use client";
 
 import { login } from "@/actions/auth/login";
-import { DictionaryLanguage } from "@/data/dictionaries";
 import { LoginSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input } from "@nextui-org/react";
@@ -16,7 +15,7 @@ import Link from "next/link";
 
 type LoginForm = z.infer<typeof LoginSchema>;
 
-export const LoginForm = ({ dict }: { dict: DictionaryLanguage }) => {
+export const LoginForm = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -50,9 +49,9 @@ export const LoginForm = ({ dict }: { dict: DictionaryLanguage }) => {
 
   return (
     <CardWrapper
-      backButtonLabel={dict.Authentication.No_Account}
+      backButtonLabel="Không có tài khoản? Đăng ký"
       backButtonHref="/auth/register"
-      headerLabel={dict.Authentication.Login_Header}
+      headerLabel="Đăng nhập"
     >
       <Form {...form}>
         <form
@@ -69,11 +68,9 @@ export const LoginForm = ({ dict }: { dict: DictionaryLanguage }) => {
                     <Input
                       autoFocus
                       isDisabled={isLoading}
-                      label={dict.Authentication.Email_Label}
                       labelPlacement="outside"
                       variant="bordered"
                       size="md"
-                      placeholder={dict.Authentication.Email_Placeholder}
                       startContent={<Mail className="size-4" />}
                       errorMessage={fieldState.error?.message}
                       isInvalid={fieldState.invalid}
@@ -93,12 +90,10 @@ export const LoginForm = ({ dict }: { dict: DictionaryLanguage }) => {
                   <FormControl>
                     <Input
                       isDisabled={isLoading}
-                      label={dict.Authentication.Password_Label}
                       labelPlacement="outside"
                       type={isVisible ? "text" : "password"}
                       variant="bordered"
                       size="md"
-                      placeholder={dict.Authentication.Password_Placeholder}
                       startContent={<Key className="size-4" />}
                       endContent={
                         <button
@@ -126,9 +121,7 @@ export const LoginForm = ({ dict }: { dict: DictionaryLanguage }) => {
             <Link
               className="italic hover:cursor-pointer hover:underline"
               href="/auth/reset"
-            >
-              {dict.Authentication.Forgot_Password}
-            </Link>
+            ></Link>
           </div>
           <Button
             isLoading={isLoading}
@@ -136,7 +129,7 @@ export const LoginForm = ({ dict }: { dict: DictionaryLanguage }) => {
             type="submit"
             className="mt-4 w-full bg-[#7D1F1F] font-semibold text-white"
           >
-            {dict.Authentication.Login_Button}
+            Đăng nhập
           </Button>
         </form>
       </Form>

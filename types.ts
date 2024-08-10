@@ -151,3 +151,18 @@ export type Friend = {
     image: string;
   };
 };
+
+export type News = {
+  id: string;
+  title: string;
+  content: string;
+  type: string;
+  cover: string;
+  isPublished: string;
+  schoolId: string;
+  creatAt: string;
+  updateAt: string;
+  school: {
+    name: string;
+  };
+};

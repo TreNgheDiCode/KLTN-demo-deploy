@@ -5,6 +5,7 @@ import { School } from "@prisma/client";
 import { Boxes } from "../ui/background-boxes";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const fadeInFromTop = {
   hidden: { opacity: 0, y: -50 },
@@ -14,8 +15,8 @@ const fadeInFromTop = {
 interface Props {
   school: School;
 }
-
 const Welcome = ({ school }: Props) => {
+  const { t } = useTranslation("school");
   return (
     <>
       <div className="relative flex h-96 min-h-screen w-full flex-col items-center justify-center overflow-hidden rounded-lg bg-slate-900">
@@ -49,13 +50,13 @@ const Welcome = ({ school }: Props) => {
           variants={fadeInFromTop}
           className="relative z-20 mt-2 text-center text-neutral-300"
         >
-          Community College
+          {t("Community college")}
         </motion.p>
       </div>
       {/* History */}
       <div className="mt-1 bg-gray-100 dark:bg-black">
         <h1 className="ml-3 py-4 text-3xl font-extrabold text-black dark:text-primary md:text-5xl">
-          THÔNG TIN
+          {t("Information")}
         </h1>
         <div className="container px-2 py-4">
           <div className="grid gap-8 md:grid-cols-3">
@@ -75,10 +76,18 @@ const Welcome = ({ school }: Props) => {
             </div>
 
             <div className="relative rounded-lg bg-white p-6 text-black shadow-lg dark:border-2 dark:border-[#cccccc] dark:bg-black dark:text-primary md:col-span-2">
-              <div className="font-semibold">Thông tin về trường:</div>
+              <div className="font-semibold">
+                {t("InformationAboutSchool")}:
+              </div>
               <div className="mt-2">
                 <div className="relative mb-12 pl-8">
-                  <span>{school.history}</span>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html:
+                        school?.history ??
+                        "Đamg cập nhật thêm về thông tin của trường",
+                    }}
+                  />
                 </div>
               </div>
               <div className="">

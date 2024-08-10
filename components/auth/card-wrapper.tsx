@@ -16,6 +16,8 @@ interface CardWrapperProps {
   subLabel?: string;
   backButtonLabel: string;
   backButtonHref: string;
+  subIcon?: React.ReactNode | JSX.Element;
+  subIconAction?: () => void;
 }
 
 export const CardWrapper = ({
@@ -24,11 +26,21 @@ export const CardWrapper = ({
   subLabel,
   backButtonHref,
   backButtonLabel,
+  subIcon,
+  subIconAction,
 }: CardWrapperProps) => {
   return (
     <Card className="w-[500px] px-3 py-4">
-      <CardHeader>
+      <CardHeader className="relative">
         <Header label={headerLabel} subLabel={subLabel} />
+        {subIcon && subIconAction && (
+          <div
+            onClick={subIconAction}
+            className="absolute right-6 top-5 transition hover:scale-105 hover:cursor-pointer hover:font-bold"
+          >
+            {subIcon}
+          </div>
+        )}
       </CardHeader>
       <CardBody>{children}</CardBody>
       <Divider />

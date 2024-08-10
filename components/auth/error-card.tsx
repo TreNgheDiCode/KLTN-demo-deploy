@@ -1,14 +1,12 @@
-import { Header } from "./header";
-import { BackButton } from "./back-button";
-import { CardWrapper } from "./card-wrapper";
 import { AlertTriangle } from "lucide-react";
+import { CardWrapper } from "./card-wrapper";
 
 export const ErrorCard = () => {
   return (
     <CardWrapper
-      headerLabel="Oops! Something went wrong"
+      headerLabel="Ôi không! Đã xảy ra lỗi không mong muốn."
       backButtonHref="/auth/login"
-      backButtonLabel="Back to login"
+      backButtonLabel="Quay lại trang đăng nhập"
     >
       <div className="flex w-full items-center justify-center">
         <AlertTriangle className="text-destructive" />
