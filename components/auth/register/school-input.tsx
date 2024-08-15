@@ -1,11 +1,11 @@
 "use client";
 
-import { SchoolLib } from "@/types";
+import { SchoolData } from "@/types";
 import { Image, Select, SelectItem } from "@nextui-org/react";
 
 interface SchoolInputProps {
   field: any;
-  schools: SchoolLib[];
+  schools: SchoolData;
   onSelectionChange: () => void;
   isLoading: boolean;
   value: string;

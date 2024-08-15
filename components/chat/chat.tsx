@@ -9,18 +9,7 @@ type Props = {
 };
 
 const Chat = ({ clientId }: Props) => {
-  const client = new Ably.Realtime({
-    authUrl: "/api/ably",
-    authMethod: "POST",
-  });
-
-  return (
-    <AblyProvider client={client}>
-      <ChannelProvider channelName="support">
-        <ChatBox clientId={clientId} />
-      </ChannelProvider>
-    </AblyProvider>
-  );
+  return <ChatBox clientId={clientId} />;
 };
 
 export default Chat;

@@ -5,10 +5,14 @@ import { useChatMessages } from "@/hooks/use-chat-messages";
 import { ChatSupportFormValues, ChatSupportSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChatSessionRole } from "@prisma/client";
-import { IconArrowElbowLeft } from "@tabler/icons-react";
+import {
+  IconArrowElbowLeft,
+  IconVolume,
+  IconVolumeOff,
+} from "@tabler/icons-react";
 import { format } from "date-fns";
 import { useSession } from "next-auth/react";
-import { KeyboardEventHandler, useRef } from "react";
+import { KeyboardEventHandler, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
@@ -27,6 +31,8 @@ type Props = {
 };
 
 export const ChatBox = ({ clientId }: Props) => {
+  const [isSoundOn, setIsSoundOn] = useState(true);
+
   const {
     messages: receivedMessages,
     setMessages,
@@ -37,6 +43,16 @@ export const ChatBox = ({ clientId }: Props) => {
   const { data } = useSession();
 
   let messageEnd = useRef<HTMLDivElement>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    // Play sound when a new message arrives
+    if (isSoundOn && receivedMessages.length > 0) {
+      if (audioRef.current) {
+        audioRef.current.play();
+      }
+    }
+  }, [receivedMessages, isSoundOn]);
 
   const sendChatMessage = (messageText: string) => {
     if (!messageText) {
@@ -81,8 +97,13 @@ export const ChatBox = ({ clientId }: Props) => {
 
   const message = form.watch("message");
 
+  const toggleSound = () => {
+    setIsSoundOn(!isSoundOn);
+  };
+
   return (
     <div className="flex h-[500px] flex-col">
+      <audio ref={audioRef} src="/notification.wav" preload="auto" />
       <div className="flex-1 overflow-y-auto text-main dark:text-white">
         {loading ? (
           <div className="h-4 w-4 animate-pulse rounded-full bg-gray-200"></div>
@@ -165,6 +186,18 @@ export const ChatBox = ({ clientId }: Props) => {
             </Button>
           </form>
         </Form>
+
+        <button
+          type="button"
+          onClick={toggleSound}
+          className="ml-4 rounded-full bg-gray-200 p-2 dark:bg-gray-700"
+        >
+          {isSoundOn ? (
+            <IconVolume className="h-6 w-6 text-main dark:text-white" />
+          ) : (
+            <IconVolumeOff className="h-6 w-6 text-main dark:text-white" />
+          )}
+        </button>
       </div>
     </div>
   );

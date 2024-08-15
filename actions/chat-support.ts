@@ -1,5 +1,6 @@
 "use server";
 
+import { currentAccount } from "@/lib/account";
 import { ChatSupportFormValues, ChatSupportSchema } from "@/schemas";
 import { ChatSessionLib } from "@/types";
 import { ChatSessionMessage } from "@prisma/client";
@@ -54,27 +55,25 @@ export const getChatSessionMessages = async (
   return (chatMessages = res.messages);
 };
 
-export const deleteChatMessages = async (
-  clientId: string,
-  accountId?: string,
-) => {
+export const deleteChatMessages = async (clientId: string) => {
   try {
-    if (!clientId && !accountId) {
+    if (!clientId) {
       return { error: "Không tìm thấy mã máy khách và mã người dùng." };
     }
 
-    const url = `${process.env.NEXT_PUBLIC_API}/api/chat-session/${clientId}/${accountId}`;
+    const account = await currentAccount();
+    let accountId = undefined;
+    if (account && account.id) {
+      accountId = account.id;
+    }
 
-    const req = await fetch(url, {
+    const url = `${process.env.NEXT_PUBLIC_API}/api/chat-session/${clientId}/${accountId}`;
+    console.log("DELETE CHAT MESSAGES URL", url);
+
+    await fetch(url, {
       method: "DELETE",
       cache: "no-cache",
     });
-
-    const res = await req.json();
-
-    if (res.error) {
-      return { error: res.error };
-    }
 
     return { success: "Hội thoại đã được xóa." };
   } catch (error) {
