@@ -1,8 +1,9 @@
 import {
   CertificateType,
-  ContactTitle,
+  ChatSessionRole,
   Country,
   DegreeType,
+  FeedbackType,
   Gender,
   GradeType,
   NewsType,
@@ -383,12 +384,15 @@ export const ContactSchema = z.object({
   }),
   title: z.enum(
     [
-      ContactTitle.BILLING,
-      ContactTitle.FEEDBACK,
-      ContactTitle.PROCEDURE,
-      ContactTitle.REFUND,
-      ContactTitle.SCHOLARSHIP,
-      ContactTitle.SYSTEM,
+      FeedbackType.BILLING,
+      FeedbackType.FEEDBACK,
+      FeedbackType.PROCEDURE,
+      FeedbackType.REFUND,
+      FeedbackType.SCHOLARSHIP,
+      FeedbackType.SYSTEM,
+      FeedbackType.GENERAL,
+      FeedbackType.QUESTION,
+      FeedbackType.UNKNOWN,
     ],
     {
       message: "Vui lòng chọn tiêu đề",
@@ -448,3 +452,20 @@ export const CommentSchema = z.object({
   content: z.optional(z.string()),
   image: z.optional(z.string()),
 });
+
+export const ChatSupportSchema = z.object({
+  userId: z.optional(z.string()),
+  name: z.optional(z.string()),
+  email: z.optional(z.string()),
+  phone: z.optional(z.string()),
+  clientId: z.optional(z.string()),
+  role: z.enum([ChatSessionRole.ADMIN, ChatSessionRole.USER], {
+    required_error: "Vai trò không được để trống",
+    invalid_type_error: "Vai trò không hợp lệ",
+  }),
+  message: z.string().min(1, {
+    message: "Tin nhắn không được để trống",
+  }),
+});
+
+export type ChatSupportFormValues = z.infer<typeof ChatSupportSchema>;
