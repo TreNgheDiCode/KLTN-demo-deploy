@@ -21,5 +21,6 @@
   "messenger": "Lời nhắn",
   "desMess": "Mô tả vấn đề bạn đang gặp phải",
   "errorMess": "Vui lòng nhập nội dung",
-  "button": "Gửi yêu cầu"
+  "button": "Gửi yêu cầu",
+  "NoSchoolsAvailable": "Không tìm thấy thông tin của trường"
 }

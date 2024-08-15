@@ -45,6 +45,7 @@ export const ContactForm = ({ schools }: Readonly<Props>) => {
   };
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const hasSchools = schools && schools.length > 0;
 
   const form = useForm<ContactFormValues>({
     mode: "all",
@@ -115,31 +116,39 @@ export const ContactForm = ({ schools }: Readonly<Props>) => {
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="schoolId"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>{t("school")}</FormLabel>
-                  <Select onValueChange={field.onChange}>
-                    <FormControl>
-                      <SelectTrigger className="w-full">
-                        <SelectValue
-                          placeholder={"-" + `${t("SelectSchool")}` + "-"}
-                        />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {schools?.map((school) => (
-                        <SelectItem key={school.id} value={school.id}>
-                          {school.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  {hasSchools ? (
+                    <Select onValueChange={field.onChange}>
+                      <FormControl>
+                        <SelectTrigger className="w-full">
+                          <SelectValue
+                            placeholder={"-" + `${t("SelectSchool")}` + "-"}
+                          />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {schools.map((school) => (
+                          <SelectItem key={school.id} value={school.id}>
+                            {school.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  ) : (
+                    <p className="text-sm text-gray-500">
+                      {t("NoSchoolsAvailable")}
+                    </p>
+                  )}
                 </FormItem>
               )}
             />
+
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
               <FormField
                 control={form.control}

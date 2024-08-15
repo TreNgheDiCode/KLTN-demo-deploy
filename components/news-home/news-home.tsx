@@ -14,11 +14,8 @@ interface Props {
 const NewsHome = ({ news }: Props) => {
   const { t } = useTranslation("home");
   const [showAll, setShowAll] = useState(false);
-  const mainNews = news[0];
-  const sideNews = news.slice(1);
-  const displayedNews = showAll ? sideNews : sideNews.slice(0, 3);
   const router = useRouter();
-  if (!news || news.length === 0) {
+  if (!news || news.length === 0 || !Array.isArray(news)) {
     return (
       <div className="mt-10 px-4 text-center md:px-8 lg:px-16 xl:px-24">
         <h2 className="text-2xl font-bold text-[#FF8811] md:text-3xl">
@@ -30,6 +27,9 @@ const NewsHome = ({ news }: Props) => {
       </div>
     );
   }
+  const mainNews = news[0];
+  const sideNews = news.slice(1);
+  const displayedNews = showAll ? sideNews : sideNews.slice(0, 3);
   const handleClicknewsId = (newsId: string) => {
     router.push(`news/${newsId}`);
   };

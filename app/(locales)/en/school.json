@@ -15,5 +15,6 @@
   "DeatilProgram": "Detail program",
   "InformationProgram": "Information program",
   "EducationProgram": "Education Program",
-  "InformationAboutSchool": "Information about school"
+  "InformationAboutSchool": "Information about school",
+  "NoSchoolsAvailable": "Not School Available"
 }

@@ -49,6 +49,10 @@ export const HeroHeader = ({ schools }: HeroHeaderProps) => {
     });
   }, [api, current]);
 
+  if (!schools || !Array.isArray(schools) || schools.length === 0) {
+    return <div>Không có trường học</div>;
+  }
+
   const item = {
     offScreen: {
       x: "-100vw",
