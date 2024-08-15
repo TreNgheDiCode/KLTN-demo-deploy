@@ -1,20 +1,19 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import { SchoolLib } from "@/types";
 import { Button, Card, CardBody } from "@nextui-org/react";
 import Autoplay from "embla-carousel-autoplay";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Carousel,
   CarouselApi,
   CarouselContent,
   CarouselItem,
 } from "../ui/carousel";
-import { useRouter } from "next/navigation";
-import { useTranslation } from "react-i18next";
 
 interface HeroHeaderProps {
   schools: SchoolLib[];

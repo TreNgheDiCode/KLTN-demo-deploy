@@ -1,9 +1,12 @@
 import { DeleteForm } from "@/components/auth/delete-form";
 import Image from "next/image";
-import { metadata } from "../../layout";
+
+export const metadata = {
+  title: "Xóa tài khoản",
+  description: "Xóa tài khoản của bạn khỏi hệ thống",
+};
 
 const ResetPage = () => {
-  metadata.title = "Delete account";
   return (
     <div className="relative h-full w-full">
       <Image
@@ -17,6 +20,9 @@ const ResetPage = () => {
       <div className="relative z-50 flex h-full items-center justify-evenly gap-x-4 p-4">
         <DeleteForm />
       </div>
+      <p className="dark:text-main-foreground absolute bottom-2 left-2 text-sm font-semibold text-white">
+        8660740207586182375 Study Abroad - CEMC CO,. LTD - Nguyễn Trung Hưng
+      </p>
     </div>
   );
 };

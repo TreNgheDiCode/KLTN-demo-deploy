@@ -48,7 +48,11 @@ export const LoginForm = () => {
   };
 
   return (
-    <CardWrapper>
+    <CardWrapper
+      backButtonLabel="Không có tài khoản? Đăng ký"
+      backButtonHref="/auth/register"
+      headerLabel="Đăng nhập"
+    >
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -124,7 +128,9 @@ export const LoginForm = () => {
             isDisabled={isLoading}
             type="submit"
             className="mt-4 w-full bg-[#7D1F1F] font-semibold text-white"
-          ></Button>
+          >
+            Đăng nhập
+          </Button>
         </form>
       </Form>
     </CardWrapper>
