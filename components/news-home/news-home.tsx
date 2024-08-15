@@ -17,6 +17,18 @@ const NewsHome = ({ news }: Props) => {
   const sideNews = news.slice(1);
   const displayedNews = showAll ? sideNews : sideNews.slice(0, 3);
   const router = useRouter();
+  if (!news || news.length === 0) {
+    return (
+      <div className="mt-10 px-4 text-center md:px-8 lg:px-16 xl:px-24">
+        <h2 className="text-2xl font-bold text-[#FF8811] md:text-3xl">
+          {t("NewsAndEvent")}
+        </h2>
+        <p className="mt-4 text-lg text-primary dark:text-white">
+          {t("NoNewsAvailable")}
+        </p>
+      </div>
+    );
+  }
   const handleClicknewsId = (newsId: string) => {
     router.push(`news/${newsId}`);
   };
@@ -39,6 +51,7 @@ const NewsHome = ({ news }: Props) => {
           <ChevronRight className="ml-[-10px] transition-transform duration-300 group-hover:translate-x-1" />
         </button>
       </div>
+
       <div className="flex flex-col gap-8 lg:flex-row">
         <div
           className="lg:w-2/3"

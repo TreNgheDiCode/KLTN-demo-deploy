@@ -84,9 +84,9 @@ export const PublicNavbar = ({ account, schools = [] }: PublicNavbarProps) => {
   const renderSchoolList = () => (
     <Dropdown>
       <DropdownTrigger>
-        <Button className="text-[#7D1F1F] dark:text-primary" variant="light">
+        <button className="text-[16px] text-[#7D1F1F] dark:text-primary">
           {t("School")}
-        </Button>
+        </button>
       </DropdownTrigger>
 
       <DropdownMenu
@@ -302,6 +302,7 @@ export const PublicNavbar = ({ account, schools = [] }: PublicNavbarProps) => {
         <NavbarMenu className="flex min-h-screen flex-col justify-between space-y-4 bg-gray-50 p-4 dark:bg-gray-900 md:hidden">
           <div className="space-y-4">
             <div className="space-y-2">{renderNavItems()}</div>
+
             <div className="flex justify-center py-2">
               <NavbarItem>
                 <Dropdown>
@@ -343,6 +344,11 @@ export const PublicNavbar = ({ account, schools = [] }: PublicNavbarProps) => {
                     </DropdownItem>
                   </DropdownMenu>
                 </Dropdown>
+              </NavbarItem>
+            </div>
+            <div className="flex justify-center">
+              <NavbarItem>
+                <ThemeToggle />
               </NavbarItem>
             </div>
             <div className="w-full space-y-3">
