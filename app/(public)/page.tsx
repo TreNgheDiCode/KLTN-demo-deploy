@@ -1,12 +1,11 @@
-import { HeroHeader } from "@/components/home/hero-header";
-import { VideoSection } from "@/components/home/video-section";
-import { GetSchoolLib } from "@/lib/school";
 import AutoViewLogo from "@/components/home/auto-view-logo";
+import { HeroHeader } from "@/components/home/hero-header";
 import LifeUniversity from "@/components/home/life-university";
 import News from "@/components/home/news";
-import { CrispProvider } from "@/scripts/crisp-provider";
-import "../i18n/i18n";
+import { VideoSection } from "@/components/home/video-section";
+import { GetSchoolLib } from "@/lib/school";
 import { Suspense } from "react";
+import "../i18n/i18n";
 import Loading from "./loading";
 
 export const metadata = {
@@ -18,7 +17,7 @@ export default async function Home() {
 
   return (
     <main className="flex flex-col">
-      <HeroHeader schools={schools || []} />
+      <HeroHeader schools={schools?.data} />
       <VideoSection />
       <AutoViewLogo />
       <div className="pl-[99px] pr-[110px]">
@@ -27,7 +26,6 @@ export default async function Home() {
       <Suspense fallback={<Loading />}>
         <News />
       </Suspense>
-      <CrispProvider />
     </main>
   );
 }

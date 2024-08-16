@@ -1,6 +1,6 @@
 "use client";
 
-import { SchoolLib } from "@/types";
+import { SchoolData, SchoolLib } from "@/types";
 import { Button, Card, CardBody } from "@nextui-org/react";
 import Autoplay from "embla-carousel-autoplay";
 import { motion } from "framer-motion";
@@ -16,7 +16,7 @@ import {
 } from "../ui/carousel";
 
 interface HeroHeaderProps {
-  schools: SchoolLib[];
+  schools?: SchoolData | null;
 }
 
 export const HeroHeader = ({ schools }: HeroHeaderProps) => {
@@ -97,6 +97,8 @@ export const HeroHeader = ({ schools }: HeroHeaderProps) => {
       },
     },
   };
+
+  if (!schools) return null;
 
   return (
     <div className="relative">

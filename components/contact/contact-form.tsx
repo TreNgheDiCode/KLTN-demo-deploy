@@ -1,8 +1,15 @@
 "use client";
 
+import { createContact } from "@/actions/contact";
 import { ContactFormValues, ContactSchema } from "@/schemas";
+import { SchoolData } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
+import { Button } from "../ui/button";
 import {
   Form,
   FormControl,
@@ -11,6 +18,7 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
+import { Input } from "../ui/input";
 import {
   Select,
   SelectContent,
@@ -18,30 +26,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { ContactTitle } from "@prisma/client";
-import { useState } from "react";
-import { Button } from "../ui/button";
-import { SchoolLib } from "@/types";
-import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
-import { createContact } from "@/actions/contact";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
-import { useTranslation } from "react-i18next";
+import { FeedbackType } from "@prisma/client";
 
 type Props = {
-  schools: SchoolLib[] | null;
+  schools: SchoolData | null;
 };
 export const ContactForm = ({ schools }: Readonly<Props>) => {
   const { t } = useTranslation("contact");
-  const titleLabelMap: Record<ContactTitle, string> = {
-    [ContactTitle.FEEDBACK]: `${t("request")}`,
-    [ContactTitle.SYSTEM]: `${t("systemProblem")}`,
-    [ContactTitle.REFUND]: `${t("request for refund")}`,
-    [ContactTitle.BILLING]: `${t("order and payment")}`,
-    [ContactTitle.SUBSCRIPTION]: `${t("unSubscribe")}`,
-    [ContactTitle.SCHOLARSHIP]: `${t("Scholarship")}`,
-    [ContactTitle.PROCEDURE]: `${t("Study abroad procedures")}`,
+  const titleLabelMap: Record<FeedbackType, string> = {
+    [FeedbackType.FEEDBACK]: `${t("request")}`,
+    [FeedbackType.SYSTEM]: `${t("systemProblem")}`,
+    [FeedbackType.REFUND]: `${t("request for refund")}`,
+    [FeedbackType.BILLING]: `${t("order and payment")}`,
+    [FeedbackType.SUBSCRIPTION]: `${t("unSubscribe")}`,
+    [FeedbackType.SCHOLARSHIP]: `${t("Scholarship")}`,
+    [FeedbackType.PROCEDURE]: `${t("Study abroad procedures")}`,
+    [FeedbackType.GENERAL]: `${t("System problem")}`,
+    [FeedbackType.UNKNOWN]: `${t("System problem")}`,
+    [FeedbackType.QUESTION]: `${t("System problem")}`,
   };
   const [loading, setLoading] = useState(false);
   const router = useRouter();

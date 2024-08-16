@@ -1,7 +1,7 @@
 "use client";
 
 import { FormControl, FormField, FormItem } from "@/components/ui/form";
-import { SchoolLib } from "@/types";
+import { SchoolData } from "@/types";
 import { CertificateType, GradeType } from "@prisma/client";
 import { ImageDropInput } from "./image-drop-input";
 import { ImageInput } from "./image-input";
@@ -17,7 +17,7 @@ interface EducationTabProps {
   isLoading: boolean;
   schoolName: string;
   programs: { name: string }[];
-  schools: SchoolLib[];
+  schools: SchoolData;
   ctfType: CertificateType;
   ctfImg: string;
   onFileChange: (url: string) => void;

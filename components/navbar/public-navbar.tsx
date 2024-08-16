@@ -19,7 +19,7 @@ import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
 import { AccountMenu } from "./account-menu";
 import { ThemeToggle } from "./theme-toggle";
-import { AccountIdLib, SchoolLib } from "@/types";
+import { AccountIdLib, SchoolData, SchoolLib } from "@/types";
 import { usePathname } from "next/navigation";
 import { LanguageToggle } from "../language-switcher";
 import { useTranslation } from "react-i18next";
@@ -29,7 +29,7 @@ import ReactCountryFlag from "react-country-flag";
 
 interface PublicNavbarProps {
   account?: AccountIdLib;
-  schools?: SchoolLib[];
+  schools?: SchoolData;
 }
 type NavItem = {
   key: string;
@@ -38,7 +38,7 @@ type NavItem = {
   component?: React.ReactNode;
 };
 
-export const PublicNavbar = ({ account, schools = [] }: PublicNavbarProps) => {
+export const PublicNavbar = ({ account, schools }: PublicNavbarProps) => {
   const pathname = usePathname();
   const [isLoading, setLoading] = useState(false);
   const { theme } = useTheme();
@@ -75,6 +75,8 @@ export const PublicNavbar = ({ account, schools = [] }: PublicNavbarProps) => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [theme]);
+
+  if (!schools) return null;
 
   // Set active nav item on click
   const handleNavItemClick = (item: string) => {

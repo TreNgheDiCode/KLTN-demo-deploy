@@ -7,9 +7,9 @@ export const GetSchoolLib = async () => {
       cache: "no-cache",
     });
 
-    const schools: SchoolLib[] = await res.json();
+    const { schools } = await res.json();
 
-    return schools;
+    return schools as SchoolLib;
   } catch (error) {
     return null;
   }

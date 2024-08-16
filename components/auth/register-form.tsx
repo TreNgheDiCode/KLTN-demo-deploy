@@ -2,7 +2,7 @@
 
 import { register } from "@/actions/auth/register";
 import { RegisterSchema } from "@/schemas";
-import { SchoolLib } from "@/types";
+import { SchoolData } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Spinner, Tab, Tabs } from "@nextui-org/react";
 import { CertificateType, DegreeType, Gender, GradeType } from "@prisma/client";
@@ -20,7 +20,7 @@ import { EducationTab } from "./register/education-tab";
 import { ProfileTab } from "./register/profile-tab";
 
 interface RegisterFormProps {
-  schools: SchoolLib[];
+  schools: SchoolData;
 }
 
 export type RegisterFormType = z.infer<typeof RegisterSchema>;
