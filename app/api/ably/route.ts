@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { v4 as uuidv4 } from "uuid";
 
-export async function POST(req: Request, res: Response) {
+export async function POST() {
   const cookieStore = cookies();
 
   let clientId = cookieStore.get("ably_clientId");

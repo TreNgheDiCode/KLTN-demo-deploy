@@ -1,13 +1,10 @@
+import ChatTrigger from "@/components/chat/chat-trigger";
 import FooterDemo from "@/components/footer/footer";
 import { PublicNavbar } from "@/components/navbar/public-navbar";
 import { GetAccountIdLib, currentAccount } from "@/lib/account";
 import { GetSchoolLib } from "@/lib/school";
 import dynamic from "next/dynamic";
 import { cookies } from "next/headers";
-
-const ChatTrigger = dynamic(() => import("@/components/chat/chat-trigger"), {
-  ssr: false,
-});
 
 const PublicLayout = async ({ children }: { children: React.ReactNode }) => {
   const accountPromise = currentAccount();
@@ -23,7 +20,7 @@ const PublicLayout = async ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className="relative">
-      <ChatTrigger clientId={clientId?.value ?? ""} />
+      <ChatTrigger clientId={clientId?.value} />
       <PublicNavbar account={loggedInAccount} schools={schools?.data || []} />
       <div className="h-full w-full scrollbar-hide">{children}</div>
       <FooterDemo />

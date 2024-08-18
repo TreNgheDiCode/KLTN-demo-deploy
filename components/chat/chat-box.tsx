@@ -12,22 +12,16 @@ import {
 } from "@tabler/icons-react";
 import { format } from "date-fns";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 import { KeyboardEventHandler, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "../ui/form";
+import { Form, FormControl, FormField, FormItem } from "../ui/form";
 import { Textarea } from "../ui/textarea";
-import Image from "next/image";
 
 type Props = {
-  clientId: string;
+  clientId: string | undefined;
 };
 
 export const ChatBox = ({ clientId }: Props) => {
@@ -35,7 +29,6 @@ export const ChatBox = ({ clientId }: Props) => {
 
   const {
     messages: receivedMessages,
-    setMessages,
     loading,
     channel,
   } = useChatMessages(clientId);
