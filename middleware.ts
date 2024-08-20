@@ -13,11 +13,8 @@ import { analytics } from "./lib/analytics";
 const { auth } = NextAuth(authConfig);
 export default auth((req) => {
   // Analytics
-  if (
-    !config.matcher.some((pattern) =>
-      new RegExp(pattern).test(req.nextUrl.pathname),
-    )
-  ) {
+  if (!req.nextUrl.pathname.startsWith("/api")) {
+    console.log("Tracking pageview", req.nextUrl.pathname);
     analytics.track("pageview", {
       page: req.nextUrl.pathname,
       country: req.geo?.country,
