@@ -5,16 +5,14 @@ import { ChatBox } from "./chat-box";
 import { useEffect, useRef } from "react";
 import * as Ably from "ably";
 import { AblyProvider, ChannelProvider } from "ably/react";
+import AblyClient from "@/hooks/use-ably";
 
 type Props = {
   clientId: string | undefined;
 };
 
 const Chat = ({ clientId }: Props) => {
-  const client = new Ably.Realtime({
-    authUrl: "/api/ably",
-    authMethod: "POST",
-  });
+  const client = AblyClient.getInstance();
 
   const retry = useRef(0);
 
@@ -29,6 +27,10 @@ const Chat = ({ clientId }: Props) => {
         "Không thể tạo phiên hỗ trợ. Vui lòng kiểm tra lại trình duyệt web (có thể do chế độ ẩn danh) hoặc liên hệ với chúng tôi để được hỗ trợ.",
       );
   }, [clientId]);
+
+  if (!client) {
+    return null;
+  }
 
   return (
     <AblyProvider client={client}>

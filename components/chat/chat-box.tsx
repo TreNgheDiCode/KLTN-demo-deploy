@@ -26,6 +26,7 @@ type Props = {
 
 export const ChatBox = ({ clientId }: Props) => {
   const [isSoundOn, setIsSoundOn] = useState(true);
+  const [mounted, setMounted] = useState(false);
 
   const {
     messages: receivedMessages,
@@ -47,21 +48,22 @@ export const ChatBox = ({ clientId }: Props) => {
     }
   }, [receivedMessages, isSoundOn]);
 
+  useEffect(() => {
+    if (messageEnd.current) {
+      messageEnd.current.scrollIntoView({ behavior: "smooth" });
+    }
+  });
+
   const sendChatMessage = (messageText: string) => {
     if (!messageText) {
       return;
     }
-    channel.publish({ name: "support", data: messageText });
+    channel.publish({ name: `support:${clientId}`, data: messageText });
   };
 
-  const handleKeyPress: KeyboardEventHandler<HTMLTextAreaElement> = (event) => {
-    if (event.code !== "Enter" || message.length === 0) {
-      return;
-    }
-
-    handleSubmit(onSubmit)();
-    event.preventDefault();
-  };
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const form = useForm<ChatSupportFormValues>({
     resolver: zodResolver(ChatSupportSchema),
@@ -69,7 +71,7 @@ export const ChatBox = ({ clientId }: Props) => {
     defaultValues: {
       role: ChatSessionRole.USER,
       message: "",
-      clientId,
+      clientId: clientId,
       userId: data?.user.id,
     },
   });
@@ -88,11 +90,28 @@ export const ChatBox = ({ clientId }: Props) => {
     });
   };
 
+  const handleKeyPress: KeyboardEventHandler<HTMLTextAreaElement> = (event) => {
+    if (event.code !== "Enter" || message.length === 0) {
+      return;
+    }
+
+    handleSubmit(onSubmit)();
+    event.preventDefault();
+  };
+
   const message = form.watch("message");
 
   const toggleSound = () => {
     setIsSoundOn(!isSoundOn);
   };
+
+  if (!mounted) {
+    return (
+      <div className="text-main dark:text-main-foreground">
+        Đang tải thông tin...
+      </div>
+    );
+  }
 
   return (
     <div className="flex h-[500px] flex-col">

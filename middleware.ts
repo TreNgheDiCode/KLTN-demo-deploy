@@ -17,14 +17,9 @@ export default auth((req) => {
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isApiEdgestoreRoute = nextUrl.pathname.startsWith(apiEdgestorePrefix);
-  const isPublicRoute = publicRoutes.includes(
-    nextUrl.pathname.replace(/^\/[a-zA-Z]{2}/, ""),
-  );
   const isAuthRoute = authRoutes.includes(
     nextUrl.pathname.replace(/^\/[a-zA-Z]{2}/, ""),
   );
-
-  const token = nextUrl.searchParams.get("token");
 
   if (isApiAuthRoute || isApiEdgestoreRoute) {
     return NextResponse.next();

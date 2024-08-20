@@ -13,7 +13,7 @@ export const sendChatSupport = async (values: ChatSupportFormValues) => {
       return { error: "Dữ liệu không hợp lệ." };
     }
 
-    console.log(values);
+    console.log(values.clientId);
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_API}/api/chat-session`, {
       method: "POST",
