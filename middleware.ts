@@ -8,23 +8,27 @@ import {
 import { NextResponse } from "next/server";
 import NextAuth from "next-auth";
 import authConfig from "./auth.config";
+import { analytics } from "./lib/analytics";
 
 const { auth } = NextAuth(authConfig);
-
 export default auth((req) => {
+  // Analytics
+  if (!req.nextUrl.pathname.startsWith("/api")) {
+    console.log("Tracking pageview", req.nextUrl.pathname);
+    analytics.track("pageview", {
+      page: req.nextUrl.pathname,
+      country: req.geo?.country,
+    });
+  }
+
   const { nextUrl, auth } = req;
   const isLoggedIn = !!auth;
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isApiEdgestoreRoute = nextUrl.pathname.startsWith(apiEdgestorePrefix);
-  const isPublicRoute = publicRoutes.includes(
-    nextUrl.pathname.replace(/^\/[a-zA-Z]{2}/, ""),
-  );
   const isAuthRoute = authRoutes.includes(
     nextUrl.pathname.replace(/^\/[a-zA-Z]{2}/, ""),
   );
-
-  const token = nextUrl.searchParams.get("token");
 
   if (isApiAuthRoute || isApiEdgestoreRoute) {
     return NextResponse.next();
@@ -36,11 +40,6 @@ export default auth((req) => {
     }
     return NextResponse.next();
   }
-
-  // Uncomment this if you want to redirect non-logged-in users to the login page
-  // if (!isLoggedIn && !isPublicRoute) {
-  //   return Response.redirect(new URL(`/auth/login${token ? `?token=${token}` : ""}`, nextUrl));
-  // }
 
   return NextResponse.next();
 });

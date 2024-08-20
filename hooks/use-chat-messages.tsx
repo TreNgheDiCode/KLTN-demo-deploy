@@ -1,5 +1,4 @@
 import { getChatSessionMessages } from "@/actions/chat-support";
-import { currentAccount } from "@/lib/account";
 import { ChatSessionRole } from "@prisma/client";
 import * as Ably from "ably";
 import { useChannel } from "ably/react";
@@ -36,30 +35,33 @@ export const useChatMessages = (clientId?: string) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [senderName, setSenderName] = useState<string>("Bạn");
 
-  const { channel } = useChannel("support", (message: Ably.Message) => {
-    const history = receivedMessages.slice(-50);
+  const { channel } = useChannel(
+    `support:${clientId}`,
+    (message: Ably.Message) => {
+      const history = receivedMessages.slice(-50);
 
-    const messageExists = history.some(
-      (m) =>
-        m.message === message.data &&
-        new Date(m.createdAt).getTime() ===
-          new Date(message.timestamp!).getTime(),
-    );
+      const messageExists = history.some(
+        (m) =>
+          m.message === message.data &&
+          new Date(m.createdAt).getTime() ===
+            new Date(message.timestamp!).getTime(),
+      );
 
-    if (!messageExists) {
-      setMessages([
-        ...history,
-        new ChatSessionMessage(
-          message.clientId === clientId ? senderName : "Hỗ trợ viên",
-          message.data,
-          message.clientId === clientId
-            ? ChatSessionRole.USER
-            : ChatSessionRole.ADMIN,
-          new Date(message.timestamp ?? new Date()),
-        ),
-      ]);
-    }
-  });
+      if (!messageExists) {
+        setMessages([
+          ...history,
+          new ChatSessionMessage(
+            message.clientId === clientId ? senderName : "Hỗ trợ viên",
+            message.data,
+            message.clientId === clientId
+              ? ChatSessionRole.USER
+              : ChatSessionRole.ADMIN,
+            new Date(message.timestamp ?? new Date()),
+          ),
+        ]);
+      }
+    },
+  );
 
   const { data } = useSession();
   const getMessages = async () => {
