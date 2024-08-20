@@ -8,10 +8,22 @@ import {
 import { NextResponse } from "next/server";
 import NextAuth from "next-auth";
 import authConfig from "./auth.config";
+import { analytics } from "./lib/analytics";
 
 const { auth } = NextAuth(authConfig);
-
 export default auth((req) => {
+  // Analytics
+  if (
+    !config.matcher.some((pattern) =>
+      new RegExp(pattern).test(req.nextUrl.pathname),
+    )
+  ) {
+    analytics.track("pageview", {
+      page: req.nextUrl.pathname,
+      country: req.geo?.country,
+    });
+  }
+
   const { nextUrl, auth } = req;
   const isLoggedIn = !!auth;
 
@@ -31,11 +43,6 @@ export default auth((req) => {
     }
     return NextResponse.next();
   }
-
-  // Uncomment this if you want to redirect non-logged-in users to the login page
-  // if (!isLoggedIn && !isPublicRoute) {
-  //   return Response.redirect(new URL(`/auth/login${token ? `?token=${token}` : ""}`, nextUrl));
-  // }
 
   return NextResponse.next();
 });
