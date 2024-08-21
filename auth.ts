@@ -1,5 +1,5 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import NextAuth from "next-auth";
+import NextAuth, { DefaultSession } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
 import { db } from "@/lib/db";
@@ -27,10 +27,19 @@ declare module "@auth/core/types" {
     isTwoFactorEnabled: boolean;
   }
   interface Session {
-    user: User & DefaultSession["user"];
+    user: ExtendedUser;
     expires: string;
   }
 }
+
+export type ExtendedUser = DefaultSession["user"] & {
+  emailVerified: Date;
+  student: {
+    studentCode: string;
+    status: StudentStatus;
+  };
+  isTwoFactorEnabled: boolean;
+};
 
 export const {
   handlers: { GET, POST },

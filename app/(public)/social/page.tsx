@@ -9,7 +9,7 @@ const Social = async () => {
     redirect("/");
   }
   const student: StudentLib = await GetStudentLibByStudentCode(
-    user.studentCode,
+    user.student.studentCode,
   );
   return <SocialContent student={student} />;
 };

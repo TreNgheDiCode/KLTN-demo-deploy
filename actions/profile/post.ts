@@ -9,7 +9,7 @@ export const CreatePost = async (values: z.infer<typeof PostSchema>) => {
   try {
     const user = await currentAccount();
     const req = await fetch(
-      `${process.env.NEXT_PUBLIC_API}/api/accounts/students/profiles/${user?.studentCode}/posts`,
+      `${process.env.NEXT_PUBLIC_API}/api/accounts/students/profiles/${user?.student.studentCode}/posts`,
       {
         method: "POST",
         cache: "no-store",
@@ -34,7 +34,7 @@ export const CreatePost = async (values: z.infer<typeof PostSchema>) => {
 export const deletePost = async (postId: string) => {
   try {
     const session = await auth();
-    const studentCode = session?.user.studentCode;
+    const studentCode = session?.user.student.studentCode;
     const reqUrl = `${process.env.NEXT_PUBLIC_API}/api/accounts/students/profiles/${studentCode}/posts/${postId}`;
     const req = await fetch(reqUrl, {
       method: "DELETE",

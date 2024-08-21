@@ -11,7 +11,7 @@ const ProfilePage = async () => {
     redirect("/");
   }
   const student: StudentLib = await GetStudentLibByStudentCode(
-    user?.studentCode || "",
+    user?.student.studentCode || "",
   );
   return <StatusProfileContent student={student} />;
 };
