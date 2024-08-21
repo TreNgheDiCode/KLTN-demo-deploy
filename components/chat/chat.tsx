@@ -1,17 +1,18 @@
 "use client";
 
+import AblyClient from "@/hooks/use-ably";
+import { currentAccount } from "@/lib/account";
+import { AblyProvider, ChannelProvider } from "ably/react";
+import { useEffect, useRef } from "react";
 import { toast } from "sonner";
 import { ChatBox } from "./chat-box";
-import { useEffect, useRef } from "react";
-import * as Ably from "ably";
-import { AblyProvider, ChannelProvider } from "ably/react";
-import AblyClient from "@/hooks/use-ably";
 
 type Props = {
   clientId: string | undefined;
+  session: Awaited<ReturnType<typeof currentAccount>>;
 };
 
-const Chat = ({ clientId }: Props) => {
+const Chat = ({ clientId, session }: Props) => {
   const client = AblyClient.getInstance();
 
   const retry = useRef(0);
@@ -35,7 +36,7 @@ const Chat = ({ clientId }: Props) => {
   return (
     <AblyProvider client={client}>
       <ChannelProvider channelName={`support:${clientId}`}>
-        <ChatBox clientId={clientId} />
+        <ChatBox clientId={clientId} session={session} />
       </ChannelProvider>
     </AblyProvider>
   );
