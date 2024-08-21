@@ -102,6 +102,7 @@ export const {
           ...token,
           emailVerified: user.emailVerified,
           name: user.name,
+          picture: user.image,
           student: {
             studentCode: user.student.studentCode,
             status: user.student.status,
@@ -134,6 +135,7 @@ export const {
           ...token,
           emailVerified: res.emailVerified,
           name: res.name,
+          picture: res.image,
           student: {
             studentCode: res.student.studentCode,
             status: res.student.status,
@@ -153,6 +155,7 @@ export const {
       session.user.email = token.email as string;
       session.user.id = token.sub as string;
       session.user.name = token.name as string;
+      session.user.image = token.picture as string;
       session.userId = token.sub as string;
 
       return {

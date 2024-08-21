@@ -3,7 +3,7 @@
 export const newVerification = async (token?: string) => {
   try {
     const req = await fetch(
-      `${process.env.NEXT_PUBLIC_API}/api/auth/new-verification`,
+      `${process.env.API_URL}/api/auth/new-verification`,
       {
         method: "POST",
         cache: "no-store",

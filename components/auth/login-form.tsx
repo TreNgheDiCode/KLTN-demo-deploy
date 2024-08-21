@@ -12,12 +12,14 @@ import { z } from "zod";
 import { Form, FormControl, FormField, FormItem } from "../ui/form";
 import { CardWrapper } from "./card-wrapper";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 type LoginForm = z.infer<typeof LoginSchema>;
 
 export const LoginForm = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const toggleVisibility = () => setIsVisible(!isVisible);
 
@@ -41,6 +43,7 @@ export const LoginForm = () => {
 
           if (data.success) {
             toast.success(data.success);
+            router.push("/");
           }
         }
       })
