@@ -4,14 +4,16 @@ import { IconBrandWechat, IconX } from "@tabler/icons-react";
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import { ChatAction } from "./chat-action";
+import { currentAccount } from "@/lib/account";
 
 const Chat = dynamic(() => import("@/components/chat/chat"), { ssr: false });
 
 type Props = {
   clientId: string | undefined;
+  session: Awaited<ReturnType<typeof currentAccount>>;
 };
 
-const ChatTrigger = ({ clientId }: Props) => {
+const ChatTrigger = ({ clientId, session }: Props) => {
   const [open, setOpen] = useState(false);
   const iconCls = "w-12 h-12 text-primary-500 m-2";
   const icon = open ? (
@@ -30,7 +32,7 @@ const ChatTrigger = ({ clientId }: Props) => {
               {clientId && <ChatAction clientId={clientId} />}
             </div>
             <div className="flex flex-col gap-2">
-              <Chat clientId={clientId} />
+              <Chat clientId={clientId} session={session} />
             </div>
           </div>
         </div>

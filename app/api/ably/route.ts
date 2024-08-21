@@ -1,14 +1,17 @@
+import { currentAccount } from "@/lib/account";
 import * as Ably from "ably";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { v4 as uuidv4 } from "uuid";
 
 export async function POST() {
+  const session = await currentAccount();
   const cookieStore = cookies();
 
   let clientId = cookieStore.get("ably_clientId");
 
   if (!clientId || !clientId.value || clientId.value === "") {
+    if (session?.id) return;
     const newClientId = uuidv4();
     let res = cookieStore.set("ably_clientId", newClientId, {
       path: "/",

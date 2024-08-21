@@ -12,6 +12,8 @@ const PublicLayout = async ({ children }: { children: React.ReactNode }) => {
   const cookieStore = cookies();
   const clientId = cookieStore.get("ably_clientId");
 
+  console.log("CLIENT ID", clientId);
+
   const account = await accountPromise;
   const loggedInAccountPromise = GetAccountIdLib(account?.id!);
   const loggedInAccount = await loggedInAccountPromise;
@@ -20,7 +22,7 @@ const PublicLayout = async ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className="relative">
-      <ChatTrigger clientId={clientId?.value} />
+      <ChatTrigger clientId={clientId?.value} session={account} />
       <PublicNavbar account={loggedInAccount} schools={schools?.data || []} />
       <div className="h-full w-full scrollbar-hide">{children}</div>
       <FooterDemo />
