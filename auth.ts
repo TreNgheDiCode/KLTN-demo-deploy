@@ -1,21 +1,34 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import NextAuth, { DefaultSession } from "next-auth";
+import NextAuth from "next-auth";
+import Credentials from "next-auth/providers/credentials";
 
-import authConfig from "@/auth.config";
 import { db } from "@/lib/db";
 import { StudentStatus } from "@prisma/client";
-import { GetAccountIdLib } from "./lib/account";
-import { AccountIdLib } from "./types";
+import { LoginSchema } from "./schemas";
 
-export type ExtendedUser = DefaultSession["user"] & {
-  studentCode: string;
-  isTwoFactorEnabled: boolean;
-  status: StudentStatus;
-};
+declare module "@auth/core/jwt" {
+  interface JWT {
+    student: {
+      studentCode: string;
+      status: StudentStatus;
+    };
+    isTwoFactorEnabled: boolean;
+    emailVerified: Date;
+  }
+}
 
-declare module "next-auth" {
+declare module "@auth/core/types" {
+  interface User {
+    emailVerified: Date;
+    student: {
+      studentCode: string;
+      status: StudentStatus;
+    };
+    isTwoFactorEnabled: boolean;
+  }
   interface Session {
-    user: ExtendedUser;
+    user: User & DefaultSession["user"];
+    expires: string;
   }
 }
 
@@ -25,45 +38,118 @@ export const {
   signIn,
   signOut,
 } = NextAuth({
+  trustHost: true,
   pages: {
     signIn: "/auth/login",
     error: "/auth/error",
   },
   adapter: PrismaAdapter(db),
+  providers: [
+    Credentials({
+      credentials: {
+        username: { label: "Email", type: "text" },
+        password: { label: "Mật khẩu", type: "password" },
+      },
+      async authorize(credentials) {
+        const validatedFields = LoginSchema.safeParse(credentials);
+
+        if (!validatedFields.success) {
+          return null;
+        }
+
+        const req = await fetch(`${process.env.API_URL}/api/auth/login`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(credentials),
+        });
+
+        const res = await req.json();
+
+        if (res.error) {
+          return null;
+        }
+
+        return {
+          email: res.email,
+          name: res.name,
+          student: {
+            studentCode: res.student.studentCode,
+            status: res.student.status,
+          },
+          isTwoFactorEnabled: res.isTwoFactorEnabled,
+          emailVerified: res.emailVerified,
+          id: res.id,
+        };
+      },
+    }),
+  ],
   callbacks: {
-    async session({ token, session }) {
-      if (session.user) {
-        if (token.sub) {
-          session.user.id = token.sub;
-        }
-        if (token.studentCode) {
-          session.user.studentCode = token.studentCode as string;
-        }
-        if (token.status) {
-          session.user.status = token.status as StudentStatus;
-        }
-        if (token.isTwoFactorEnabled) {
-          session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
-        }
-      }
-      return session;
-    },
-    async jwt({ token }) {
-      if (!token.email || !token.sub) return token;
-
-      const existingUser: AccountIdLib = await GetAccountIdLib(token.sub);
-
-      if (!existingUser) {
+    // @ts-ignore
+    async jwt({ token, user }) {
+      if (user && user.id && user.emailVerified) {
+        return {
+          ...token,
+          emailVerified: user.emailVerified,
+          name: user.name,
+          student: {
+            studentCode: user.student.studentCode,
+            status: user.student.status,
+          },
+          isTwoFactorEnabled: user.isTwoFactorEnabled,
+          email: user.email,
+          sub: user.id,
+          iat: new Date(),
+          exp: new Date().getTime() + 30 * 24 * 60 * 60 * 1000, // 30 days
+        };
+      } else if (token.exp && Date.now() < token.exp) {
         return token;
+      } else {
+        if (!token.sub || !token.emailVerified) {
+          throw new Error("Invalid token");
+        }
+
+        const req = await fetch(
+          `${process.env.API_URL}/api/accounts/${token.sub}`,
+          { method: "GET" },
+        );
+
+        const res = await req.json();
+
+        if (res.error) {
+          throw new Error(res.error);
+        }
+
+        return {
+          ...token,
+          emailVerified: res.emailVerified,
+          name: res.name,
+          student: {
+            studentCode: res.student.studentCode,
+            status: res.student.status,
+          },
+          isTwoFactorEnabled: res.isTwoFactorEnabled,
+          email: res.email,
+          sub: res.id,
+          iat: new Date(),
+          exp: new Date().getTime() + 30 * 24 * 60 * 60 * 1000, // 30 days
+        };
       }
+    },
+    async session({ token, session }) {
+      session.user.emailVerified = token.emailVerified;
+      session.user.student = token.student;
+      session.user.isTwoFactorEnabled = token.isTwoFactorEnabled;
+      session.user.email = token.email as string;
+      session.user.id = token.sub as string;
+      session.user.name = token.name as string;
+      session.userId = token.sub as string;
 
-      token.studentCode = existingUser.student.studentCode;
-      token.status = existingUser.student.studentCode;
-      token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
-
-      return token;
+      return {
+        ...session,
+      };
     },
   },
   session: { strategy: "jwt", maxAge: 60 * 60 * 24 * 7 },
-  ...authConfig,
 });
