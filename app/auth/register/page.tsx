@@ -1,6 +1,6 @@
-import { RegisterForm } from "@/components/auth/register-form";
-import { GetSchoolLib } from "@/lib/school";
-import Image from "next/image";
+import RegisterForm from "@/components/auth/register/form/register-form";
+import { RegisterHero } from "@/components/auth/register/hero";
+import { GetSchoolsAuth } from "@/data/school";
 import { redirect } from "next/navigation";
 
 export const metadata = {
@@ -9,24 +9,17 @@ export const metadata = {
 };
 
 const RegisterPage = async () => {
-  const schools = await GetSchoolLib();
+  const schools = await GetSchoolsAuth();
 
-  if (!schools) {
+  if (!schools || schools.length === 0) {
     redirect("/");
   }
 
   return (
-    <div className="relative h-full w-full">
-      <Image
-        fill
-        src={"/register.jpg"}
-        alt="register"
-        className="absolute object-cover blur"
-        quality={100}
-        priority
-      />
-      <div className="relative z-50 flex h-full items-center justify-evenly gap-x-4 p-4">
-        <RegisterForm schools={schools.data} />
+    <div className="size-full">
+      <div className="relative size-full overflow-x-hidden">
+        <RegisterHero />
+        <RegisterForm schools={schools} />
       </div>
     </div>
   );
