@@ -1,9 +1,8 @@
 "use client";
 
-import { onDeleteListSave } from "@/actions/profile/save";
 import { ListSave } from "@/types";
-import { Image, User } from "@nextui-org/react";
-import { CameraIcon, Trash2 } from "lucide-react";
+import { User } from "@nextui-org/react";
+import { CameraIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -17,7 +16,7 @@ export const ComponentListSave = () => {
   useEffect(() => {
     async function fetchListSave() {
       try {
-        const requestUrl = `${process.env.NEXT_PUBLIC_API}/api/accounts/students/profiles/${session.data?.user.studentCode}/save`;
+        const requestUrl = `${process.env.NEXT_PUBLIC_API}/api/accounts/students/profiles/${session.data?.user.student.studentCode}/save`;
         const respone = await fetch(requestUrl);
         const responeJson = await respone.json();
         setPostSave(responeJson);
@@ -29,7 +28,7 @@ export const ComponentListSave = () => {
     }
 
     fetchListSave();
-  }, [session.data?.user.studentCode]);
+  }, [session.data?.user.student.studentCode]);
 
   return (
     <>

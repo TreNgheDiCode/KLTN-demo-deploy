@@ -15,7 +15,7 @@ export const ComponentListLike = () => {
     async function fetchListLike() {
       try {
         setLoading(true);
-        const Url = `${process.env.NEXT_PUBLIC_API}/api/accounts/students/profiles/${sesion.data?.user.studentCode}/like`;
+        const Url = `${process.env.NEXT_PUBLIC_API}/api/accounts/students/profiles/${sesion.data?.user.student.studentCode}/like`;
         const rqUrl = await fetch(Url);
         const res = await rqUrl.json();
         setPostLikes(res);
@@ -27,7 +27,7 @@ export const ComponentListLike = () => {
     }
 
     fetchListLike();
-  }, [sesion.data?.user.studentCode]);
+  }, [sesion.data?.user.student.studentCode]);
 
   return (
     <>

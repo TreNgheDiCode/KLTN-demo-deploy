@@ -52,13 +52,13 @@ export const UserButton = ({ user }: UserButtonProps) => {
             key="profile"
             aria-label="User with information"
             className="h-14 gap-4"
-            href={`/student/profile/${user.studentCode}`}
+            href={`/student/profile/${user.student.studentCode}`}
           >
             <div className="p-1">
               <UserAvatar
                 name={user.name!}
                 image={user.image || undefined}
-                description={user.studentCode}
+                description={user.student.studentCode}
               />
             </div>
           </DropdownItem>

@@ -1,6 +1,5 @@
 "use client";
 
-import { ExtendedUser } from "@/auth";
 import { ActionModal } from "@/components/modals/action-modal";
 import {
   Form,
@@ -26,9 +25,10 @@ import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { SettingsHeader } from "./settings-header";
+import { ExtendedUser } from "@/auth";
 
 interface AccountFormProps {
-  user: Pick<ExtendedUser, "email" | "name" | "status" | "isTwoFactorEnabled">;
+  user: Pick<ExtendedUser, "email" | "name" | "student" | "isTwoFactorEnabled">;
 }
 
 type AccountFormValues = z.infer<typeof AccountFormSchema>;
@@ -109,18 +109,19 @@ export const AccountForm = ({ user }: AccountFormProps) => {
           <form className="flex flex-col gap-y-8 text-primary">
             <div className="flex items-center justify-between">
               <h1 className="text-sm">Student status:</h1>
-              {user.status && status[user.status] && ( <Chip
-                color={
-                  status[user.status].color as
-                     "warning"
-                    | "primary"
-                    | "default"
-                    | "success"
-                }
-              >
-                {status[user.status].label}
-              </Chip>) }
-             
+              {user.student.status && status[user.student.status] && (
+                <Chip
+                  color={
+                    status[user.student.status].color as
+                      | "warning"
+                      | "primary"
+                      | "default"
+                      | "success"
+                  }
+                >
+                  {status[user.student.status].label}
+                </Chip>
+              )}
             </div>
             <Input
               isDisabled

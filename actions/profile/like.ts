@@ -4,7 +4,7 @@ import { auth } from "@/auth";
 export const Like = async (postId: string) => {
   try {
     const session = await auth();
-    const studentCode = session?.user.studentCode;
+    const studentCode = session?.user.student.studentCode;
     const Url = `${process.env.NEXT_PUBLIC_API}/api/accounts/students/profiles/${studentCode}/posts/${postId}/like`;
     const reqUrl = await fetch(Url, {
       method: "GET",
@@ -19,7 +19,7 @@ export const Like = async (postId: string) => {
 export const onDeleteListLike = async (likeId: string) => {
   try {
     const session = await auth();
-    const requestUrl = `${process.env.NEXT_PUBLIC_API}/api/accounts/students/profiles/${session?.user.studentCode}/like/${likeId}`;
+    const requestUrl = `${process.env.NEXT_PUBLIC_API}/api/accounts/students/profiles/${session?.user.student.studentCode}/like/${likeId}`;
     const respone = await fetch(requestUrl, {
       method: "DELETE",
     });
