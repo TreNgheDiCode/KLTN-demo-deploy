@@ -32,108 +32,139 @@ export const LoginSchema = z.object({
 
 export const RegisterSchema = z
   .object({
+    image: z.optional(z.string()),
     email: z
-      .string()
+      .string({
+        required_error: "Vui lòng nhập email",
+      })
       .min(1, {
-        message: "Email is required",
+        message: "Vui lòng nhập email",
       })
       .email({
-        message: "Invalid type of email",
+        message: "Vui lòng nhập email hợp lệ",
       }),
-    password: z.string().min(1, {
-      message: "Password is required",
-    }),
-    confirmPassword: z.string().min(1, {
-      message: "Confirm password is required",
-    }),
-    name: z.string().min(1, {
-      message: "Fullname is required",
-    }),
+    password: z
+      .string({
+        required_error: "Vui lòng nhập mật khẩu",
+      })
+      .min(1, {
+        message: "Vui lòng nhập mật khẩu",
+      }),
+    confirmPassword: z
+      .string({
+        required_error: "Vui lòng xác nhận mật khẩu",
+      })
+      .min(1, {
+        message: "Vui lòng xác nhận mật khẩu",
+      }),
+    name: z
+      .string({
+        required_error: "Vui lòng nhập họ và tên",
+      })
+      .min(1, {
+        message: "Vui lòng nhập họ và tên",
+      }),
     dob: z
       .date({
-        required_error: "Date of birth is required",
+        required_error: "Vui lòng chọn ngày sinh",
       })
       .min(new Date("1970-01-01"), {
-        message: "Your age is too old",
+        message: "Tuổi của bạn quá lớn",
       })
       .max(new Date("2006-31-12"), {
-        message: "Your age is too young",
+        message: "Tuổi của bạn quá nhỏ",
       }),
     gender: z.enum([Gender.MALE, Gender.FEMALE], {
-      invalid_type_error: "Invalid type, please reselect",
+      invalid_type_error: "Giới tính không hợp lệ",
     }),
     phoneNumber: z
       .string({
-        invalid_type_error: "Invalid phone number",
-        required_error: "Phone number is required",
+        invalid_type_error: "Số điện thoại không hợp lệ",
+        required_error: "Số điện thoại là bắt buộc",
       })
       .min(10, {
-        message: "Minimum 10 numbers is required",
+        message: "Vui lòng nhập ít nhất 10 số",
       })
       .max(13, {
-        message: "Maximum 13 numbers is required",
+        message: "Vui lòng nhập tối đa 13 số",
       }),
     idCardNumber: z
       .string({
-        required_error: "Id card number is required",
+        required_error: "CCCD/CMND là bắt buộc",
       })
       .min(1, {
-        message: "Id card number is required",
+        message: "Vui lòng nhập CCCD/CMND",
       }),
     country: z.enum([Country.AUSTRALIA, Country.CANADA, Country.KOREA], {
-      message: "Nation is required",
+      message: "Vui lòng chọn quốc gia",
     }),
-    city: z.string().min(1, {
-      message: "City is required",
-    }),
-    district: z.string().min(1, {
-      message: "District is required",
-    }),
-    ward: z.string().min(1, {
-      message: "Ward is required",
-    }),
-    addressLine: z.string().min(1, {
-      message: "Address line is required",
-    }),
-    schoolName: z
+    city: z
       .string({
-        required_error: "School is required",
+        required_error: "Vui lòng chọn thành phố",
       })
       .min(1, {
-        message: "School is required",
+        message: "Vui lòng chọn thành phố",
+      }),
+    district: z
+      .string({
+        required_error: "Vui lòng chọn quận/huyện",
+      })
+      .min(1, {
+        message: "Vui lòng chọn quận/huyện",
+      }),
+    ward: z
+      .string({
+        required_error: "Vui lòng chọn phường/xã",
+      })
+      .min(1, {
+        message: "Vui lòng chọn phường/xã",
+      }),
+    addressLine: z
+      .string({
+        required_error: "Vui lòng nhập địa chỉ",
+      })
+      .min(1, {
+        message: "Vui lòng nhập địa chỉ",
+      }),
+    schoolName: z
+      .string({
+        required_error: "Vui lòng chọn trường học",
+      })
+      .min(1, {
+        message: "Vui lòng chọn trường học",
       }),
     programName: z
       .string({
-        required_error: "Program is required",
+        required_error: "Vui lòng chọn chương trình đào tạo",
       })
       .min(1, {
-        message: "Program is required",
+        message: "Vui lòng chọn chương trình đào tạo",
       }),
     degreeType: z.enum([DegreeType.HIGHSCHOOL, DegreeType.UNIVERSITY], {
-      required_error: "Degree type is required",
-      invalid_type_error: "Invalid type, please reselect",
+      required_error: "Vui lòng chọn loại học vấn",
+      invalid_type_error: "Loại học vấn không hợp lệ",
     }),
     certificateType: z.enum([CertificateType.IELTS, CertificateType.TOEFL], {
-      required_error: "Certificate type is required",
-      invalid_type_error: "Invalid type, please reselect",
+      required_error: "Vui lòng chọn loại chứng chỉ",
+      invalid_type_error: "Loại chứng chỉ không hợp lệ",
     }),
     certificateImg: z
       .string({
-        required_error: "Certificate image is required",
+        required_error: "Vui lòng chọn ảnh chứng chỉ",
       })
       .min(1, {
-        message: "Certificate image is required",
+        message: "Vui lòng chọn ảnh chứng chỉ",
       }),
     gradeType: z.enum([GradeType.GPA, GradeType.CGPA], {
-      required_error: "Grade type is required",
-      invalid_type_error: "Invalid type, please reselect",
+      required_error: "Vui lòng chọn thang điểm",
+      invalid_type_error: "Thang điểm không hợp lệ",
     }),
     gradeScore: z
       .string({
-        required_error: "Grade score is required",
+        required_error: "Vui lòng nhập tổng điểm trung bình tích lũy",
       })
       .min(1, {
-        message: "Grade score is required",
+        message: "Vui lòng nhập tổng điểm trung bình tích lũy",
       }),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -167,10 +198,12 @@ export const RegisterSchema = z
       }
     },
     {
-      message: "Invalid grade score (maximum is 4 or 10)",
+      message: "Điểm không hợp lệ với thang điểm",
       path: ["gradeScore"],
     },
   );
+
+export type RegisterFormValues = z.infer<typeof RegisterSchema>;
 
 export const NewPasswordSchema = z
   .object({
