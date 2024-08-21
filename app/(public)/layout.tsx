@@ -3,7 +3,6 @@ import FooterDemo from "@/components/footer/footer";
 import { PublicNavbar } from "@/components/navbar/public-navbar";
 import { GetAccountIdLib, currentAccount } from "@/lib/account";
 import { GetSchoolLib } from "@/lib/school";
-import dynamic from "next/dynamic";
 import { cookies } from "next/headers";
 
 const PublicLayout = async ({ children }: { children: React.ReactNode }) => {

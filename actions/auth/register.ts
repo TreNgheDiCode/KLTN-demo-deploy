@@ -7,7 +7,7 @@ import { RegisterSchema } from "@/schemas";
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API}/api/auth/register`,
+      `${process.env.NEXT_PUBLIC_API_REGISTER}/api/auth/register`,
       {
         method: "POST",
         cache: "no-cache",

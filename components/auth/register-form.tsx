@@ -2,7 +2,7 @@
 
 import { register } from "@/actions/auth/register";
 import { RegisterSchema } from "@/schemas";
-import { SchoolData } from "@/types";
+import { SchoolData, SchoolLib } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Spinner, Tab, Tabs } from "@nextui-org/react";
 import { CertificateType, DegreeType, Gender, GradeType } from "@prisma/client";
