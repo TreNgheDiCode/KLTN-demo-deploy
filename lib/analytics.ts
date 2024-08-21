@@ -10,7 +10,7 @@ type TrackingOptions = {
 };
 
 export class Analytics {
-  private retention = 60 * 60 * 24 * 7; // 7 days
+  private retention = 60 * 60 * 24 * 30; // 30 days
 
   constructor(opts?: AnalyticsArg) {
     if (opts?.retention) {
