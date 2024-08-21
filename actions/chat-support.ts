@@ -15,7 +15,7 @@ export const sendChatSupport = async (values: ChatSupportFormValues) => {
 
     console.log(values.clientId);
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API}/api/chat-session`, {
+    const res = await fetch(`${process.env.API_URL}/api/chat-session`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
