@@ -51,6 +51,11 @@ export type ListSave = {
   };
 };
 
+export type NameSchool = {
+  id: string;
+  name: string;
+};
+
 export type SchoolData = (School & {
   news: News[];
   galleries: (SchoolGallery & {

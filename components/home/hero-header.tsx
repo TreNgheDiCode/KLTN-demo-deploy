@@ -47,7 +47,6 @@ export const HeroHeader = ({ schools }: HeroHeaderProps) => {
       setCurrent(api.selectedScrollSnap());
     });
   }, [api, current]);
-
   if (!schools || !Array.isArray(schools) || schools.length === 0) {
     return <div>Không có trường học</div>;
   }
@@ -103,7 +102,7 @@ export const HeroHeader = ({ schools }: HeroHeaderProps) => {
           opts={{ align: "center", loop: true }}
           setApi={setApi}
         >
-          <CarouselContent className="h-full w-full rounded-lg ease-in-out">
+          {/* <CarouselContent className="h-full w-full rounded-lg ease-in-out">
             {schools.map((school, index) => {
               const colors = school.color.split("rgba(");
               const color1 = colors[1].replace(/,\s+/g, "").split(")");
@@ -164,7 +163,7 @@ export const HeroHeader = ({ schools }: HeroHeaderProps) => {
                 </CarouselItem>
               );
             })}
-          </CarouselContent>
+          </CarouselContent> */}
         </Carousel>
       </motion.div>
 

@@ -19,7 +19,7 @@ import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
 import { AccountMenu } from "./account-menu";
 import { ThemeToggle } from "./theme-toggle";
-import { AccountIdLib, SchoolData, SchoolLib } from "@/types";
+import { AccountIdLib, NameSchool, SchoolData, SchoolLib } from "@/types";
 import { usePathname } from "next/navigation";
 import { LanguageToggle } from "../language-switcher";
 import { useTranslation } from "react-i18next";
@@ -29,7 +29,7 @@ import ReactCountryFlag from "react-country-flag";
 
 interface PublicNavbarProps {
   account?: AccountIdLib;
-  schools?: SchoolData;
+  schools?: NameSchool[];
 }
 type NavItem = {
   key: string;
@@ -92,21 +92,21 @@ export const PublicNavbar = ({ account, schools }: PublicNavbarProps) => {
       </DropdownTrigger>
 
       <DropdownMenu
-        aria-label="School List"
-        className="rounded-xl border-2 border-[#cccccc]"
-      >
-        {schools.length > 0 ? (
-          schools.map((school) => (
-            <DropdownItem key={school.id} className="text-primary">
-              <Link href={`/schools/${school.id}`}>{school.name}</Link>
-            </DropdownItem>
-          ))
-        ) : (
-          <DropdownItem className="text-black dark:text-primary">
-            {t("NoSchoolFound")}
+      aria-label="School List"
+      className="rounded-xl border-2 border-[#cccccc]"
+    >
+      {schools.length > 0 ? (
+        schools.map((school) => (
+          <DropdownItem key={school.id} className="text-primary">
+            <Link href={`/schools/${school.id}`}>{school.name}</Link>
           </DropdownItem>
-        )}
-      </DropdownMenu>
+        ))
+      ) : (
+        <DropdownItem className="text-black dark:text-primary">
+          {t("NoSchoolFound")}
+        </DropdownItem>
+      )}
+    </DropdownMenu>
     </Dropdown>
   );
 

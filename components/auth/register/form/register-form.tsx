@@ -42,9 +42,7 @@ const RegisterForm = ({ schools }: Props) => {
     formState: { errors },
   } = form;
 
-  const onSubmit = async () => {
-    console.log(data);
-  };
+  const onSubmit = async () => {};
 
   const processForm: SubmitHandler<RegisterFormValues> = (data) => {
     setData(data);
