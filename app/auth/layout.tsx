@@ -1,22 +1,25 @@
 import { LanguageToggle } from "@/components/language-switcher";
 import { Image } from "@nextui-org/react";
+import Link from "next/link";
 
 const AuthLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <div className="absolute flex w-full items-center justify-between">
-        <Image
-          width={85}
-          src="/logo_icon_light.png"
-          alt="logo"
-          className="m-4 flex-1 dark:hidden"
-        />
-        <Image
-          width={85}
-          src="/logo_icon_light.png"
-          alt="logo"
-          className="m-4 hidden flex-1 dark:block"
-        />
+        <Link href="/" className="cursor-pointer">
+          <Image
+            width={85}
+            src="/logo_icon_light.png"
+            alt="logo"
+            className="m-4 flex-1 dark:hidden"
+          />
+          <Image
+            width={85}
+            src="/logo_icon_light.png"
+            alt="logo"
+            className="m-4 hidden flex-1 dark:block"
+          />
+        </Link>
         <div className="mx-4 flex items-center gap-x-2">
           <LanguageToggle />
         </div>
