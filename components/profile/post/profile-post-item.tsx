@@ -73,7 +73,7 @@ export const ProfilePostItem = ({
   const { t } = useTranslation("social");
   const router = useRouter();
   const session = useSession();
-  const studentCode = session.data?.user.studentCode;
+  const studentCode = session.data?.user.student.studentCode;
 
   if (!studentCode) {
     router.push(DEFAULT_LOGIN_REDIRECT);

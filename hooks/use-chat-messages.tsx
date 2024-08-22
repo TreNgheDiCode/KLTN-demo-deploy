@@ -1,4 +1,5 @@
-import { getChatSessionMessages } from "@/actions/chat-support";
+import { getChatSession } from "@/actions/chat-support";
+import { currentAccount } from "@/lib/account";
 import { ChatSessionRole } from "@prisma/client";
 import * as Ably from "ably";
 import { useChannel } from "ably/react";
@@ -30,7 +31,10 @@ export class ChatSessionMessage {
  * @returns: Trả về danh sách tin nhắn với kiểu dữ liệu ChatSessionMessage
  */
 
-export const useChatMessages = (clientId?: string) => {
+export const useChatMessages = (
+  session: Awaited<ReturnType<typeof currentAccount>>,
+  clientId?: string,
+) => {
   const [receivedMessages, setMessages] = useState<ChatSessionMessage[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [senderName, setSenderName] = useState<string>("Bạn");
@@ -63,17 +67,19 @@ export const useChatMessages = (clientId?: string) => {
     },
   );
 
-  const { data } = useSession();
   const getMessages = async () => {
-    if (data && data.user.name) {
-      setSenderName(data.user.name);
+    const chatSession = await getChatSession(clientId, session?.id);
+    if (session && session.name) {
+      setSenderName(session.name);
     }
 
-    const messages = await getChatSessionMessages(clientId, data?.user.id);
+    const messages = chatSession?.messages ?? [];
     const newMessages = messages.map(
       (message) =>
         new ChatSessionMessage(
-          message.role === ChatSessionRole.USER ? senderName : "Hỗ trợ viên",
+          message.role === ChatSessionRole.USER
+            ? (chatSession?.name ?? senderName)
+            : "Hỗ trợ viên",
           message.message,
           message.role,
           message.createdAt,
@@ -133,7 +139,7 @@ export const useChatMessages = (clientId?: string) => {
     setLoading(false);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [clientId, data?.user.id]);
+  }, [clientId, session?.id]);
 
   return { messages: receivedMessages, setMessages, loading, channel };
 };

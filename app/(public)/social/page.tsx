@@ -11,7 +11,7 @@ const Social = async () => {
     redirect("/");
   }
 
-  if (!user.studentCode) {
+  if (!user.student.studentCode) {
     return (
       <div className="flex h-screen items-center justify-center text-center text-[24px] font-bold text-primary dark:text-white">
         <p>Bạn chưa được nhà trường xác thực tài khoản!!.</p>
@@ -20,7 +20,7 @@ const Social = async () => {
   }
 
   const student: StudentLib = await GetStudentLibByStudentCode(
-    user.studentCode,
+    user.student.studentCode,
   );
 
   return <SocialContent student={student} />;

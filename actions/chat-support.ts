@@ -4,6 +4,7 @@ import { currentAccount } from "@/lib/account";
 import { ChatSupportFormValues, ChatSupportSchema } from "@/schemas";
 import { ChatSessionLib } from "@/types";
 import { ChatSessionMessage } from "@prisma/client";
+import { cookies } from "next/headers";
 
 export const sendChatSupport = async (values: ChatSupportFormValues) => {
   try {
@@ -13,7 +14,7 @@ export const sendChatSupport = async (values: ChatSupportFormValues) => {
       return { error: "Dữ liệu không hợp lệ." };
     }
 
-    console.log(values.clientId);
+    console.log(values);
 
     const res = await fetch(`${process.env.API_URL}/api/chat-session`, {
       method: "POST",
@@ -31,14 +32,9 @@ export const sendChatSupport = async (values: ChatSupportFormValues) => {
   }
 };
 
-export const getChatSessionMessages = async (
-  clientId?: string,
-  accountId?: string,
-) => {
-  let chatMessages: ChatSessionMessage[] = [];
-
+export const getChatSession = async (clientId?: string, accountId?: string) => {
   if (!clientId && !accountId) {
-    return chatMessages;
+    return null;
   }
 
   const url = `${process.env.NEXT_PUBLIC_API}/api/chat-session/${clientId}/${accountId}`;
@@ -50,11 +46,17 @@ export const getChatSessionMessages = async (
 
   const res: ChatSessionLib = await req.json();
 
+  const cookieStore = cookies();
+  cookieStore.set("ably_clientId", res?.clientId!, {
+    path: "/",
+    secure: true,
+  });
+
   if (!res) {
-    return chatMessages;
+    return null;
   }
 
-  return (chatMessages = res.messages);
+  return res;
 };
 
 export const deleteChatMessages = async (clientId: string) => {

@@ -16,12 +16,12 @@ const ProfilePage = async () => {
     redirect("/");
   }
 
-  if (!user.studentCode) {
+  if (!user.student.studentCode) {
     const account: StudentEmail = await GetStudentLibByEmail(email || "");
     return <StatusProfileNotMSSVContent account={account} />;
   }
   const student: StudentLib = await GetStudentLibByStudentCode(
-    user?.studentCode || "",
+    user?.student.studentCode || "",
   );
   return <StatusProfileContent student={student} />;
 };

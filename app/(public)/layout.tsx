@@ -1,4 +1,4 @@
-import ChatTrigger from "@/components/chat/chat-trigger";
+import ChatTrigger from "@/components/supports/chat/chat-trigger";
 import FooterDemo from "@/components/footer/footer";
 import { PublicNavbar } from "@/components/navbar/public-navbar";
 import { GetAccountIdLib, currentAccount } from "@/lib/account";
@@ -11,6 +11,8 @@ const PublicLayout = async ({ children }: { children: React.ReactNode }) => {
   const cookieStore = cookies();
   const clientId = cookieStore.get("ably_clientId")?.value || "";
 
+  console.log("CLIENT ID", clientId);
+
   const account = await accountPromise;
   const loggedInAccountPromise = account?.id
     ? GetAccountIdLib(account.id)
@@ -22,8 +24,8 @@ const PublicLayout = async ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className="relative">
-      <ChatTrigger clientId={clientId} />
-      <PublicNavbar account={loggedInAccount} schools={schools} />
+      <ChatTrigger clientId={clientId?.value} />
+      <PublicNavbar account={loggedInAccount} schools={schools?.data || []} />
       <div className="h-full w-full scrollbar-hide">{children}</div>
       <FooterDemo />
     </div>

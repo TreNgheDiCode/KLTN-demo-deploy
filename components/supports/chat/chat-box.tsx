@@ -2,6 +2,7 @@
 
 import { sendChatSupport } from "@/actions/chat-support";
 import { useChatMessages } from "@/hooks/use-chat-messages";
+import { currentAccount } from "@/lib/account";
 import { ChatSupportFormValues, ChatSupportSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChatSessionRole } from "@prisma/client";
@@ -11,20 +12,20 @@ import {
   IconVolumeOff,
 } from "@tabler/icons-react";
 import { format } from "date-fns";
-import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { KeyboardEventHandler, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { Button } from "../ui/button";
-import { Form, FormControl, FormField, FormItem } from "../ui/form";
-import { Textarea } from "../ui/textarea";
+import { Button } from "../../ui/button";
+import { Form, FormControl, FormField, FormItem } from "../../ui/form";
+import { Textarea } from "../../ui/textarea";
 
 type Props = {
   clientId: string | undefined;
+  session: Awaited<ReturnType<typeof currentAccount>>;
 };
 
-export const ChatBox = ({ clientId }: Props) => {
+export const ChatBox = ({ clientId, session }: Props) => {
   const [isSoundOn, setIsSoundOn] = useState(true);
   const [mounted, setMounted] = useState(false);
 
@@ -32,9 +33,7 @@ export const ChatBox = ({ clientId }: Props) => {
     messages: receivedMessages,
     loading,
     channel,
-  } = useChatMessages(clientId);
-
-  const { data } = useSession();
+  } = useChatMessages(session, clientId);
 
   let messageEnd = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -69,10 +68,12 @@ export const ChatBox = ({ clientId }: Props) => {
     resolver: zodResolver(ChatSupportSchema),
     mode: "onBlur",
     defaultValues: {
+      name: session?.name ?? undefined,
+      email: session?.email ?? undefined,
       role: ChatSessionRole.USER,
       message: "",
       clientId: clientId,
-      userId: data?.user.id,
+      userId: session?.id,
     },
   });
 

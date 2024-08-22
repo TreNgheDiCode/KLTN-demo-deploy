@@ -3,7 +3,7 @@ import { auth } from "@/auth";
 export const Save = async (postId: string) => {
   try {
     const session = await auth();
-    const studentCode = session?.user.studentCode;
+    const studentCode = session?.user.student.studentCode;
     const Url = `${process.env.NEXT_PUBLIC_API}/api/accounts/students/profiles/${studentCode}/posts/${postId}/save`;
     const reqUrl = await fetch(Url, {
       method: "GET",
@@ -18,7 +18,7 @@ export const Save = async (postId: string) => {
 export const onDeleteListSave = async (saveId: string) => {
   try {
     const session = await auth();
-    const requestUrl = `${process.env.NEXT_PUBLIC_API}/api/accounts/students/profiles/${session?.user.studentCode}/save/${saveId}`;
+    const requestUrl = `${process.env.NEXT_PUBLIC_API}/api/accounts/students/profiles/${session?.user.student.studentCode}/save/${saveId}`;
     const res = await fetch(requestUrl, {
       method: "DELETE",
     });

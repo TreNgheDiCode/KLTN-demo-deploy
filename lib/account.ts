@@ -12,9 +12,7 @@ export const currentAccount = async () => {
 
 export const GetAccountIdLib = async (id: string) => {
   try {
-    const req = await fetch(
-      `${process.env.NEXT_PUBLIC_API}/api/accounts/${id}`,
-    );
+    const req = await fetch(`${process.env.API_URL}/api/accounts/${id}`);
 
     const res = await req.json();
 

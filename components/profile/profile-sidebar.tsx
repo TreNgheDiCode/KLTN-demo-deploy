@@ -14,7 +14,7 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 interface ProfileSidebarProps {
-  user: Pick<ExtendedUser, "image" | "name" | "studentCode">;
+  user: Pick<ExtendedUser, "image" | "name" | "student">;
   schoolName: string;
 }
 
@@ -26,14 +26,14 @@ export const ProfileSidebar = ({ user, schoolName }: ProfileSidebarProps) => {
       <CardHeader className="">
         <Link
           isBlock
-          href={`/student/profile/${user.studentCode}`}
+          href={`/student/profile/${user.student.studentCode}`}
           className={cn(
             "w-full p-0",
-            pathname.includes(`/student/profile/${user.studentCode}`) &&
+            pathname.includes(`/student/profile/${user.student.studentCode}`) &&
               "rounded-xl border-3 border-[#7d1f1f56] dark:border-primary",
           )}
         >
-          <div className="flex w-full items-center justify-center  gap-3 p-2 lg:justify-start">
+          <div className="flex w-full items-center justify-center gap-3 p-2 lg:justify-start">
             <Avatar
               isBordered
               radius="full"

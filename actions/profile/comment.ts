@@ -135,7 +135,7 @@ export const DeleteComment = async (id: string) => {
 export const LikeCmt = async (id: string) => {
   try {
     const session = await auth();
-    const studentCode = session?.user.studentCode;
+    const studentCode = session?.user.student.studentCode;
     const postComment = await db.postComment.findFirst({
       where: {
         id: id,
