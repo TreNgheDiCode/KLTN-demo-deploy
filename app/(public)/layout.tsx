@@ -1,4 +1,4 @@
-import ChatTrigger from "@/components/chat/chat-trigger";
+import ChatTrigger from "@/components/supports/chat/chat-trigger";
 import FooterDemo from "@/components/footer/footer";
 import { PublicNavbar } from "@/components/navbar/public-navbar";
 import { GetAccountIdLib, currentAccount } from "@/lib/account";

@@ -16,9 +16,9 @@ import Image from "next/image";
 import { KeyboardEventHandler, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { Button } from "../ui/button";
-import { Form, FormControl, FormField, FormItem } from "../ui/form";
-import { Textarea } from "../ui/textarea";
+import { Button } from "../../ui/button";
+import { Form, FormControl, FormField, FormItem } from "../../ui/form";
+import { Textarea } from "../../ui/textarea";
 
 type Props = {
   clientId: string | undefined;
