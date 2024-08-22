@@ -79,7 +79,11 @@ export const AIWrapper = () => {
                     {format(message.createdAt ?? new Date(), "HH:mm")}
                   </span>
                 </div>
-                <div className="text-sm">{message.content}</div>
+                <div className="text-sm">{message.content.length > 0 ? 
+                  message.content : <span className="italic font-light">
+                  {"Đang đồng bộ dữ liệu: " + message?.toolInvocations?.[0].toolName}
+                </span>  
+              }</div>
               </div>
 
               {message.role === "user" && (

@@ -14,3 +14,6 @@ export const getDate = (sub: number = 0) => {
 };
 
 export const nanoid = customAlphabet("abcdefghijklmnopqrstuvwxyz0123456789");
+
+export const sleep = (ms: number) =>
+  new Promise((resolve) => setTimeout(resolve, ms));
