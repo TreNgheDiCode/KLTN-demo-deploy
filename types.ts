@@ -146,6 +146,28 @@ export type AccountIdLib = {
     profile: Profile;
   };
 };
+export type StudentEmail = {
+  dob: Date;
+  address: string;
+  name: string;
+  image: string;
+  email: string;
+  idCardNumber: string;
+  gender: string;
+  student: {
+    cover: string;
+    certificateType: string;
+    gradeScore: string;
+    status: string;
+    degreeType: string;
+    school: {
+      name: string;
+      programs: {
+        name: string;
+      }[];
+    };
+  };
+};
 
 export type StudentLib = Student & {
   account: {

@@ -12,11 +12,9 @@ export const GetNameSchools = async (): Promise<NameSchool[]> => {
     }
 
     const data = await res.json();
-    console.log(data);
 
     return data;
   } catch (error) {
-    console.error("Error fetching name schools:", error);
     return []; // Trả về mảng rỗng nếu có lỗi
   }
 };

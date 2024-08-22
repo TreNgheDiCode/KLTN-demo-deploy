@@ -3,11 +3,12 @@
 import * as z from "zod";
 
 import { RegisterSchema } from "@/schemas";
+import { analytics } from "@/lib/analytics";
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_REGISTER}/api/auth/register`,
+      `${process.env.NEXT_PUBLIC_API}/api/auth/register`,
       {
         method: "POST",
         cache: "no-cache",
@@ -23,6 +24,17 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     if (result.error) {
       return { error: result.error };
     }
+
+    await analytics.track(
+      "register",
+      {
+        country: values.country,
+        school: values.schoolName,
+        program: values.programName,
+        date: new Date().toISOString(),
+      },
+      { persist: true },
+    );
 
     return {
       success:

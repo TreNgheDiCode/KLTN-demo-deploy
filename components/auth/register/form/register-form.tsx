@@ -17,6 +17,8 @@ import { InformationInputs } from "./information-input";
 import { EducationInputs } from "./education-inputs";
 import { AccountInputs } from "./account-inputs";
 import { PreviewRegister } from "../preview-register";
+import { register } from "@/actions/auth/register";
+import { toast } from "sonner";
 
 type Props = {
   schools: Awaited<SchoolAuth[]>;
@@ -42,7 +44,20 @@ const RegisterForm = ({ schools }: Props) => {
     formState: { errors },
   } = form;
 
-  const onSubmit = async () => {};
+  const onSubmit = async () => {
+    if (!data) return;
+    setLoading(true);
+    await register(data)
+      .then((res) => {
+        if (res.success) {
+          toast.success(res.success);
+          router.push("/auth/login");
+        } else {
+          toast.error(res.error);
+        }
+      })
+      .finally(() => setLoading(false));
+  };
 
   const processForm: SubmitHandler<RegisterFormValues> = (data) => {
     setData(data);

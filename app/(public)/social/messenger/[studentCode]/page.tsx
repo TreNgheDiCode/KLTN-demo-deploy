@@ -353,6 +353,7 @@ const Messenger = ({
           </button>
         </form>
       </div>
+      <div className="w-[70px] bg-white"></div>
     </div>
   );
 };
