@@ -21,5 +21,6 @@
   "messenger": "Messenger",
   "desMess": "Write description problem you having",
   "errorMess": "Please enter messenger",
-  "button": "Send request"
+  "button": "Send request",
+  "NoSchoolsAvailable": "Not School Available"
 }

@@ -19,7 +19,7 @@ import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
 import { AccountMenu } from "./account-menu";
 import { ThemeToggle } from "./theme-toggle";
-import { AccountIdLib, SchoolData, SchoolLib } from "@/types";
+import { AccountIdLib, NameSchool, SchoolData, SchoolLib } from "@/types";
 import { usePathname } from "next/navigation";
 import { LanguageToggle } from "../language-switcher";
 import { useTranslation } from "react-i18next";
@@ -29,7 +29,7 @@ import ReactCountryFlag from "react-country-flag";
 
 interface PublicNavbarProps {
   account?: AccountIdLib;
-  schools?: SchoolData;
+  schools?: NameSchool[];
 }
 type NavItem = {
   key: string;
@@ -86,27 +86,27 @@ export const PublicNavbar = ({ account, schools }: PublicNavbarProps) => {
   const renderSchoolList = () => (
     <Dropdown>
       <DropdownTrigger>
-        <Button className="text-[#7D1F1F] dark:text-primary" variant="light">
+        <button className="text-[16px] text-[#7D1F1F] dark:text-primary">
           {t("School")}
-        </Button>
+        </button>
       </DropdownTrigger>
 
       <DropdownMenu
-        aria-label="School List"
-        className="rounded-xl border-2 border-[#cccccc]"
-      >
-        {schools.length > 0 ? (
-          schools.map((school) => (
-            <DropdownItem key={school.id} className="text-primary">
-              <Link href={`/schools/${school.id}`}>{school.name}</Link>
-            </DropdownItem>
-          ))
-        ) : (
-          <DropdownItem className="text-black dark:text-primary">
-            {t("NoSchoolFound")}
+      aria-label="School List"
+      className="rounded-xl border-2 border-[#cccccc]"
+    >
+      {schools.length > 0 ? (
+        schools.map((school) => (
+          <DropdownItem key={school.id} className="text-primary">
+            <Link href={`/schools/${school.id}`}>{school.name}</Link>
           </DropdownItem>
-        )}
-      </DropdownMenu>
+        ))
+      ) : (
+        <DropdownItem className="text-black dark:text-primary">
+          {t("NoSchoolFound")}
+        </DropdownItem>
+      )}
+    </DropdownMenu>
     </Dropdown>
   );
 
@@ -304,6 +304,7 @@ export const PublicNavbar = ({ account, schools }: PublicNavbarProps) => {
         <NavbarMenu className="flex min-h-screen flex-col justify-between space-y-4 bg-gray-50 p-4 dark:bg-gray-900 md:hidden">
           <div className="space-y-4">
             <div className="space-y-2">{renderNavItems()}</div>
+
             <div className="flex justify-center py-2">
               <NavbarItem>
                 <Dropdown>
@@ -345,6 +346,11 @@ export const PublicNavbar = ({ account, schools }: PublicNavbarProps) => {
                     </DropdownItem>
                   </DropdownMenu>
                 </Dropdown>
+              </NavbarItem>
+            </div>
+            <div className="flex justify-center">
+              <NavbarItem>
+                <ThemeToggle />
               </NavbarItem>
             </div>
             <div className="w-full space-y-3">

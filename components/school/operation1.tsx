@@ -27,6 +27,7 @@ export function Operation1() {
                 width={400}
                 height={340}
                 className="rounded-lg"
+                loading="lazy"
               />
             </div>
           </div>
