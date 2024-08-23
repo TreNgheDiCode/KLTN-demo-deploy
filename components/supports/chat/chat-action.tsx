@@ -15,12 +15,14 @@ import {
   DropdownMenuTrigger,
 } from "../../ui/dropdown-menu";
 import { AlertModal } from "./alert-modal";
+import { SUPPORT_VARIANT } from "./chat-trigger";
 
 type Props = {
   clientId: string;
+  setVariant: (variant: SUPPORT_VARIANT | null) => void;
 };
 
-export const ChatAction = ({ clientId }: Props) => {
+export const ChatAction = ({ clientId, setVariant }: Props) => {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const router = useRouter();
@@ -36,6 +38,7 @@ export const ChatAction = ({ clientId }: Props) => {
       if (res.success) {
         toast.success(res.success);
         setOpen(false);
+        setVariant(null);
       }
     });
 

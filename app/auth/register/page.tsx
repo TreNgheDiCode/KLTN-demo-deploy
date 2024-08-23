@@ -12,7 +12,7 @@ const RegisterPage = async () => {
   const schools = await GetSchoolsAuth();
 
   if (!schools || schools.length === 0) {
-    redirect("/");
+  redirect("/");
   }
 
   return (

@@ -24,21 +24,18 @@ type Props = {
   session: Awaited<ReturnType<typeof currentAccount>>;
 };
 
-enum SUPPORT_VARIANT {
+export enum SUPPORT_VARIANT {
   AI = "AI",
-  FEEDBACK = "FEEDBACK",
   CHAT = "CHAT",
 }
 
 const supportVariantLabelMap: Record<SUPPORT_VARIANT, string> = {
   [SUPPORT_VARIANT.AI]: "Trợ lý ảo",
-  [SUPPORT_VARIANT.FEEDBACK]: "Gửi phản hồi",
   [SUPPORT_VARIANT.CHAT]: "Chat trực tuyến",
 };
 
 const supportVariantIconMap: Record<SUPPORT_VARIANT, JSX.Element> = {
   [SUPPORT_VARIANT.AI]: <IconBrandOpenai className="mr-2.5 h-6 w-6" />,
-  [SUPPORT_VARIANT.FEEDBACK]: <IconInfoSquare className="mr-2.5 h-6 w-6" />,
   [SUPPORT_VARIANT.CHAT]: <IconBrandWechat className="mr-2.5 h-6 w-6" />,
 };
 
@@ -70,9 +67,12 @@ const ChatTrigger = ({ clientId, session }: Props) => {
                     onClick={() => setVariant(null)}
                   />
                 )}
-                {variant && <span className="flex items-center gap-2.5">{supportVariantLabelMap[variant]}
+                {variant && (
+                  <span className="flex items-center gap-2.5">
+                    {supportVariantLabelMap[variant]}
                     {supportVariantIconMap[variant]}
-                  </span>}
+                  </span>
+                )}
                 {!variant && (
                   <div className="flex w-full flex-col items-center gap-6">
                     <Button
@@ -81,13 +81,6 @@ const ChatTrigger = ({ clientId, session }: Props) => {
                     >
                       <IconBrandOpenai className="mr-2.5 h-6 w-6" />
                       Trợ lý ảo
-                    </Button>
-                    <Button
-                      onClick={() => setVariant(SUPPORT_VARIANT.FEEDBACK)}
-                      className="w-full bg-green-500 text-white shadow-lg hover:bg-green-600 hover:shadow-xl dark:bg-green-700 dark:text-white dark:shadow-md dark:hover:bg-green-800 dark:hover:shadow-xl"
-                    >
-                      <IconInfoSquare className="mr-2.5 h-6 w-6" />
-                      Tạo phiếu phản hồi
                     </Button>
                     <Button
                       onClick={() => setVariant(SUPPORT_VARIANT.CHAT)}
@@ -100,7 +93,7 @@ const ChatTrigger = ({ clientId, session }: Props) => {
                 )}
               </div>
               {clientId && variant === SUPPORT_VARIANT.CHAT && (
-                <ChatAction clientId={clientId} />
+                <ChatAction clientId={clientId} setVariant={setVariant} />
               )}
             </div>
             <div className="flex flex-col gap-2">
