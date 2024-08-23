@@ -33,7 +33,7 @@ export async function submitUserMessage(input: string): Promise<ClientMessage> {
   let textNode: undefined | React.ReactNode;
 
   const result = await streamUI({
-    model: openai("gpt-3.5-turbo"),
+    model: openai("gpt-4o"),
     initial: <Loading />,
     system: `\
     Bạn là trợ lý tự vấn đăng ký hồ sơ du học và bạn sẽ giúp người dùng trả lời các câu hỏi liên quan đến việc tiếp nhận hồ sơ đăng ký, quy trình từng bước và các yêu cầu cần thiết.
