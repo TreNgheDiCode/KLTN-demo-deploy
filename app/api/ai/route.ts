@@ -8,17 +8,17 @@ import { z } from "zod";
 export const maxDuration = 30;
 
 export async function POST(req: Request) {
-  const {messages} = await req.json();
+  const { messages } = await req.json();
 
   const result = await streamText({
-    model: openai("gpt-3.5-turbo"),
+    model: openai("gpt-4o-2024-08-06"),
     messages: convertToCoreMessages(messages),
-    system: `You are a helpful assistant. Check your knowledge base before answering any questions.
+    system: `You are a helpful assistant. Check your knowledge base before answering any questions related to scholarship applications, the step-by-step process, and the necessary requirements, schools, and programs. You can also answer questions about the company you serve. Dont't answer questions about other schools. If you don't have information about a school, direct the user to contact the school directly for support. Use Markdown to present answers clearly and concisely. A complete answer must include an introduction, content, and conclusion. However, these parts should not be explicitly stated but should be shown through the structure of the answer.
     Only respond to questions using information from tool calls after calling summarize the knowledge first.
     Only respond to users using the user's language.
     Ask users for feedback after answering their questions.
     If there are attachments, use the information in the attachments to answer the question.
-    If the user's request forces into multiple choices, respond to the user "I'm sorry, but I'm only able to provide one answer at a time. For more information, please look at the site: https://kltn-demo-deploy.vercel.app/chatbot". 
+    If the user's request forces into multiple choices, respond to the user "I'm sorry, but I'm only able to provide one answer at a time. For more information, please look at the site: https://kltn-demo-deploy.vercel.app/chatbot".
     if no relevant information is found in the tool calls, respond, you don't know with the user's language.`,
     tools: {
       addResource: tool({
@@ -51,7 +51,7 @@ export async function POST(req: Request) {
         parameters: z.object({
           content: z.string().describe("The content to summarize"),
         }),
-      })
+      }),
     },
   });
 

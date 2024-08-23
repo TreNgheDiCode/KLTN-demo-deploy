@@ -12,9 +12,8 @@ export function ChatBotSidebar() {
   return (
     <Sidebar open={open} setOpen={setOpen}>
       <SidebarBody className="justify-between gap-10">
-        <div className="flex flex-col flex-1">
+        <div className="flex flex-1 flex-col">
           {open ? <Logo /> : <LogoIcon />}
-          <ChatBotPlus />
         </div>
       </SidebarBody>
     </Sidebar>
@@ -24,18 +23,18 @@ export const Logo = () => {
   return (
     <Link
       href="/"
-      className="font-normal flex items-center text-sm dark:text-white py-3 relative z-20 shadow-md border-main bg-white dark:bg-main-component rounded-lg px-2 mb-4 text-main"
+      className="relative z-20 mb-4 flex items-center rounded-lg border-main bg-white px-2 py-3 text-sm font-normal text-main shadow-md dark:bg-main-component dark:text-white"
     >
       <Image
         src="/logo_icon_light.png"
-        className="bg-transparent mr-2 dark:mr-0 dark:hidden"
+        className="mr-2 bg-transparent dark:mr-0 dark:hidden"
         alt="logo"
         width={43}
         height={43}
       />
       <Image
         src="/logo_icon_dark.png"
-        className="hidden dark:mr-2 mr-0 bg-transparent dark:block"
+        className="mr-0 hidden bg-transparent dark:mr-2 dark:block"
         alt="logo"
         width={43}
         height={43}
@@ -43,7 +42,7 @@ export const Logo = () => {
       <motion.span
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="font-semibold whitespace-pre"
+        className="whitespace-pre font-semibold"
       >
         CEMC Co,. Ltd
       </motion.span>
@@ -54,7 +53,7 @@ export const LogoIcon = () => {
   return (
     <Link
       href="/"
-      className="font-normal flex items-center text-sm text-black py-1 relative z-20"
+      className="relative z-20 flex items-center py-1 text-sm font-normal text-black"
     >
       <Image
         src="/logo_icon_light.png"

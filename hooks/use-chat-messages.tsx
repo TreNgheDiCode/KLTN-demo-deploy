@@ -125,10 +125,11 @@ export const useChatMessages = (
           });
 
         if (newHistoryMessages.length > 0) {
-          setMessages((prevMessages) => [
-            ...prevMessages,
-            ...newHistoryMessages,
-          ]);
+          setMessages((prevMessages) => {
+            return [...prevMessages, ...newHistoryMessages].sort(
+              (a, b) => a.createdAt.getTime() - b.createdAt.getTime(),
+            );
+          });
         }
 
         history = await history.next();
