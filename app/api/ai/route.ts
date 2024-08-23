@@ -11,7 +11,7 @@ export async function POST(req: Request) {
   const { messages } = await req.json();
 
   const result = await streamText({
-    model: openai("gpt-4o-2024-08-06"),
+    model: openai("gpt-4o"),
     messages: convertToCoreMessages(messages),
     system: `You are a helpful assistant. Check your knowledge base before answering any questions related to scholarship applications, the step-by-step process, and the necessary requirements, schools, and programs. You can also answer questions about the company you serve. Dont't answer questions about other schools. If you don't have information about a school, direct the user to contact the school directly for support. Use Markdown to present answers clearly and concisely. A complete answer must include an introduction, content, and conclusion. However, these parts should not be explicitly stated but should be shown through the structure of the answer.
     Only respond to questions using information from tool calls after calling summarize the knowledge first.
