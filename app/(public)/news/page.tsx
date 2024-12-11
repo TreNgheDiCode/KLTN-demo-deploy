@@ -32,7 +32,7 @@ const NewsPage = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="mb-6 text-center text-3xl font-bold text-gray-800">
+      <h1 className="mb-6 text-center text-3xl font-bold text-gray-800 dark:text-white">
         Danh sách Tin Tức
       </h1>
       {loading ? (
@@ -44,7 +44,7 @@ const NewsPage = () => {
           {listNews.map((news, index) => (
             <div
               key={index}
-              className="transform overflow-hidden rounded-lg bg-white shadow-md transition duration-300 ease-in-out hover:scale-105 hover:cursor-pointer"
+              className="transform overflow-hidden rounded-lg shadow-md transition duration-300 ease-in-out hover:scale-105 hover:cursor-pointer dark:bg-black dark:text-white"
               onClick={() => handleNewsId(news.id)}
             >
               <Image
@@ -53,7 +53,7 @@ const NewsPage = () => {
                 className="h-48 w-full object-cover"
               />
               <div className="p-4">
-                <h2 className="mb-2 text-xl font-semibold text-gray-800">
+                <h2 className="mb-2 text-xl font-semibold text-gray-800 dark:text-white">
                   {news.title}
                 </h2>
                 <p

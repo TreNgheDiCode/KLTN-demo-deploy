@@ -73,7 +73,7 @@ const Program = () => {
               key={program.id}
               className={`transition-all duration-300 ${
                 activeView === program.id
-                  ? "max-h-[1000px] opacity-100"
+                  ? "h-auto opacity-100"
                   : "max-h-0 overflow-hidden opacity-0"
               }`}
             >

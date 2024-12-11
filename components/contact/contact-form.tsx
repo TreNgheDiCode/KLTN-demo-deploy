@@ -2,7 +2,7 @@
 
 import { createContact } from "@/actions/contact";
 import { ContactFormValues, ContactSchema } from "@/schemas";
-import { SchoolData } from "@/types";
+import { NameSchool, SchoolData } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -28,11 +28,12 @@ import {
 } from "../ui/select";
 import { Textarea } from "../ui/textarea";
 import { FeedbackType } from "@prisma/client";
+import { Key, School } from "lucide-react";
 
 type Props = {
-  schools: SchoolData | null;
+  schools?: NameSchool[];
 };
-export const ContactForm = ({ schools }: Readonly<Props>) => {
+export const ContactForm = ({ schools }: Props) => {
   const { t } = useTranslation("contact");
   const titleLabelMap: Record<FeedbackType, string> = {
     [FeedbackType.FEEDBACK]: `${t("request")}`,
@@ -118,6 +119,7 @@ export const ContactForm = ({ schools }: Readonly<Props>) => {
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="schoolId"
@@ -133,16 +135,23 @@ export const ContactForm = ({ schools }: Readonly<Props>) => {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {schools?.map((school) => (
-                        <SelectItem key={school.id} value={school.id}>
-                          {school.name}
+                      {schools && schools.length > 0 ? (
+                        schools.map((school) => (
+                          <SelectItem key={school.id} value={school.id}>
+                            {school.name}
+                          </SelectItem>
+                        ))
+                      ) : (
+                        <SelectItem value="no-schools" disabled>
+                          {t("NoSchoolInformation")}
                         </SelectItem>
-                      ))}
+                      )}
                     </SelectContent>
                   </Select>
                 </FormItem>
               )}
             />
+
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
               <FormField
                 control={form.control}

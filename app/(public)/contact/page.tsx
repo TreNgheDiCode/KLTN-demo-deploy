@@ -1,15 +1,15 @@
 import { ContactForm } from "@/components/contact/contact-form";
-import { GetSchoolLib } from "@/lib/school";
+import { GetNameSchools } from "@/lib/nameSchools";
 import { redirect } from "next/navigation";
 
 const ContactUsPage = async () => {
-  const schools = await GetSchoolLib();
+  const schools = await GetNameSchools();
 
   if (!schools) {
     redirect("/");
   }
 
-  return <ContactForm schools={schools.data} />;
+  return <ContactForm schools={schools} />;
 };
 
 export default ContactUsPage;

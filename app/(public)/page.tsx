@@ -17,7 +17,7 @@ export default async function Home() {
 
   return (
     <main className="flex flex-col">
-      <HeroHeader schools={schools?.data} />
+      <HeroHeader schools={schools} />
       <VideoSection />
       <AutoViewLogo />
       <div className="pl-[99px] pr-[110px]">

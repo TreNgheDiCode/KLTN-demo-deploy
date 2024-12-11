@@ -7,14 +7,17 @@ import { analytics } from "@/lib/analytics";
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
   try {
-    const res = await fetch(`${process.env.API_URL}/api/auth/register`, {
-      method: "POST",
-      cache: "no-cache",
-      headers: {
-        "Content-Type": "application/json",
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API}/api/auth/register`,
+      {
+        method: "POST",
+        cache: "no-cache",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
       },
-      body: JSON.stringify(values),
-    });
+    );
 
     const result = await res.json();
 
@@ -38,8 +41,6 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
         "Register successfully, please check your email for verification",
     };
   } catch (error) {
-    console.log("REGISTER ERROR", error);
-
     return { error: "Register failed" };
   }
 };

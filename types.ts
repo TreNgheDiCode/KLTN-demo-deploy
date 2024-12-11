@@ -51,6 +51,11 @@ export type ListSave = {
   };
 };
 
+export type NameSchool = {
+  id: string;
+  name: string;
+};
+
 export type SchoolData = (School & {
   news: News[];
   galleries: (SchoolGallery & {
@@ -139,6 +144,28 @@ export type AccountIdLib = {
     studentCode: string;
     status: StudentStatus;
     profile: Profile;
+  };
+};
+export type StudentEmail = {
+  dob: Date;
+  address: string;
+  name: string;
+  image: string;
+  email: string;
+  idCardNumber: string;
+  gender: string;
+  student: {
+    cover: string;
+    certificateType: string;
+    gradeScore: string;
+    status: string;
+    degreeType: string;
+    school: {
+      name: string;
+      programs: {
+        name: string;
+      }[];
+    };
   };
 };
 

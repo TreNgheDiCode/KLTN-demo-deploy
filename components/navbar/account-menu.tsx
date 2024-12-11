@@ -3,7 +3,6 @@
 import { logout } from "@/actions/auth/logout";
 import { AccountIdLib } from "@/types";
 import {
-  Chip,
   Dropdown,
   DropdownItem,
   DropdownMenu,

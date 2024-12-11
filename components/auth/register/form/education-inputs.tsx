@@ -59,7 +59,6 @@ export const EducationInputs = ({ control, watch, setValue }: Props) => {
             }
           });
       } catch (error) {
-        console.error(error);
         setCertificate(undefined);
         toast.error("Có lỗi xảy ra khi tải ảnh lên");
       } finally {

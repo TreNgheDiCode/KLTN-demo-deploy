@@ -1,4 +1,4 @@
-import { StudentLib } from "@/types";
+import { StudentEmail, StudentLib } from "@/types";
 import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
 import { format, parse } from "date-fns";
@@ -13,7 +13,7 @@ interface InfoItemProps {
   value: string;
 }
 
-const StatusProfileContent = ({ student }: { student: StudentLib }) => {
+const StatusProfileContent = ({ account }: { account: StudentEmail }) => {
   const translateValue = (value: string) => {
     const translations: { [key: string]: string } = {
       STUDYING: "Đang học",
@@ -43,21 +43,21 @@ const StatusProfileContent = ({ student }: { student: StudentLib }) => {
       <div className="p-6 text-black dark:text-primary">
         <div className="mb-6 text-center text-3xl font-bold">
           Trạng Thái:{" "}
-          <span className="text-green-800">
-            {translateValue(student.status)}
+          <span className="text-red-800">
+            {translateValue(account.student.status)}
           </span>
         </div>
 
         <div className="relative mb-6 h-64">
           <Image
-            src={student.cover || "/black.jpg"}
+            src={account.student.cover || "/black.jpg"}
             alt="Background"
             layout="fill"
             objectFit="cover"
             className="rounded-t-lg"
           />
           <Image
-            src={student.account.image || "/avatar.jpg"}
+            src={account.image || "/avatar.jpg"}
             alt="avatar"
             width={100}
             height={100}
@@ -68,58 +68,57 @@ const StatusProfileContent = ({ student }: { student: StudentLib }) => {
         {/* Information Sections */}
         <div className="grid gap-6 text-black dark:text-primary md:grid-cols-2">
           <InfoSection title="Thông Tin Cá Nhân">
-            <InfoItem
-              label="Mã Học sinh"
-              value={student.studentCode || "Không có thông tin"}
-            />
+            <InfoItem label="Mã Học sinh" value={"Chưa có mã sinh viên"} />
             <InfoItem
               label="Họ và tên"
-              value={student.account.name || "Không có thông tin"}
+              value={account.name || "Không có thông tin"}
             />
             <InfoItem
               label="Giới tính"
-              value={
-                translateValue(student.account.gender) || "Không có thông tin"
-              }
+              value={translateValue(account.gender) || "Không có thông tin"}
             />
-            <InfoItem
-              label="Ngày sinh"
-              value={formatDate(student.account.dob)}
-            />
+            <InfoItem label="Ngày sinh" value={formatDate(account.dob)} />
             <InfoItem
               label="CCCD"
-              value={student.account.idCardNumber || "Không có thông tin"}
+              value={account.idCardNumber || "Không có thông tin"}
             />
             <InfoItem
               label="Email"
-              value={student.account.email || "không có thông tin"}
+              value={account.email || "không có thông tin"}
             />
             <InfoItem
               label="Địa chỉ"
-              value={student.account.address || "Không có thông tin"}
+              value={account.address || "Không có thông tin"}
             />
           </InfoSection>
 
           {/* Educational Information */}
           <InfoSection title="Thông Tin Đào Tạo">
-            <InfoItem label="Trường học" value={student.school.name} />
+            <InfoItem label="Trường học" value={account.name} />
             <InfoItem
               label="Ngành đào tạo"
-              value={student.school.programs[0]?.name || "Không có thông tin"}
+              value={
+                account.student.school.programs[0].name || "Không có thông tin"
+              }
             />
             <InfoItem label="Cơ sở" value="Không có thông tin" />
             <InfoItem label="Địa chỉ cơ sở chính" value="Không có thông tin" />
             <InfoItem
               label="Điểm trung bình tích lũy"
-              value={student.gradeScore?.toString() || "Không có thông tin"}
+              value={
+                account.student.gradeScore?.toString() || "Không có thông tin"
+              }
             />
             <InfoItem
               label="Chứng chỉ ngoại ngữ"
-              value={student.certificateType || "Không có thông tin"}
+              value={account.student.certificateType || "Không có thông tin"}
             />
             <InfoItem
               label="Trình độ học tập"
-              value={translateValue(student.degreeType) || "Không có thông tin"}
+              value={
+                translateValue(account.student.degreeType) ||
+                "Không có thông tin"
+              }
             />
           </InfoSection>
         </div>

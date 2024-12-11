@@ -33,8 +33,6 @@ export const deleteAccount = async (values: DeleteFormValues) => {
 
     return { success: res.success };
   } catch (error) {
-    console.log("DELETE ACCOUNT ERROR: ", error);
-
     return {
       error:
         "An error occurred while deleting your account. Please try again later.",
@@ -63,8 +61,6 @@ export const confirmDelete = async (token?: string) => {
 
     return { success: res.success };
   } catch (error) {
-    console.log("CONFIRM DELETE ERROR: ", error);
-
     return {
       error:
         "An error occurred while confirming the deletion of your account. Please try again later.",
